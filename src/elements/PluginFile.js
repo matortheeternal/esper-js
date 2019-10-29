@@ -8,14 +8,14 @@ class PluginFile {
         this.filePath = filePath;
         this.fileName = getFileName(filePath);
         this.file = this;
-        if (!init) return;
-        this._fileHeader = new MainRecord('TES4');
         this._groups = [];
+        if (init) this.init();
     }
 
     static load(filePath) {
         let plugin = new PluginFile(filePath, false);
         plugin.memoryMap = new MemoryMap(filePath);
+        plugin.fileSize = plugin.memoryMap.getSize();
         plugin.parseFileHeader();
         plugin.parseGroups();
         return plugin;
@@ -23,6 +23,10 @@ class PluginFile {
 
     parseFileHeader() {
         this._fileHeader = MainRecord.load(this, 0, 'TES4');
+        this.loadMasters();
+    }
+
+    loadMasters() {
         let masterFileElements = this.fileHeader.getElements('Masters Files');
         this._masters = masterFileElements.map(masterFileElement => {
             let filename = masterFileElement.getValue('MAST');
@@ -30,26 +34,27 @@ class PluginFile {
         });
     }
 
+    parseGroups() {
+        this.memoryMap.setPos(this.fileHeader.dataSize);
+        while (this.memoryMap.getPos() < this.fileSize)
+            this._groups.push(GroupRecord.load(this));
+    }
+
     get fileHeader() {
         return this._fileHeader;
     }
 
-    parseGroups() {
-        this._groups = [];
-        let offset = this.fileHeader.nextOffset;
-        while (offset < this.memoryMap.length) {
-            let group = GroupRecord.load(this, offset, 'GRUP');
-            this._groups.push(group);
-        }
+    get masters() {
+        return this._masters.slice();
     }
 
     get groups() {
-        if (!this._groups) this.parseGroups();
-        return this._groups;
+        return this._groups.slice();
     }
 
-    get masters() {
-        return this._masters.slice();
+    init() {
+        // TODO: initialize ESM/ESL flag based on filename
+        this._fileHeader = new MainRecord('TES4');
     }
 
     // TODO: verify next id isn't in use

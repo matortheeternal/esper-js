@@ -7,7 +7,7 @@ class Record {
     }
 
     parseSignature(expectedSig) {
-        this._signature = Signature.parse(this.memoryMap, this.offset);
+        this._signature = Signature.parse(this.memoryMap);
         if (!expectedSig) return;
         if (this.signature !== expectedSig)
             throw new Error(`Expected signature ${expectedSig}, found ${this.signature}`);

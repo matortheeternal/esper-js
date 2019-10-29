@@ -4,8 +4,7 @@ class Signature {
         this._data = data;
     }
 
-    static parse(memoryMap, offset) {
-        memoryMap.goto(offset);
+    static parse(memoryMap) {
         let data = memoryMap.read(4);
         return new Signature(data);
     }

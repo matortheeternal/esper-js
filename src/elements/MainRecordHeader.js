@@ -35,7 +35,6 @@ class MainRecordHeader extends RecordHeader {
     }
 
     parse() {
-        this.memoryMap.goto(this.offset);
         ffp.parseSchema(this.memoryMap, 'MainRecordHeader', this);
     }
 

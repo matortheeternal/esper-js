@@ -7,9 +7,8 @@ class GroupRecord extends Record {
         if (values) this.init(values);
     }
 
-    static load(container, offset) {
+    static load(container) {
         let group = new GroupRecord(container);
-        group.offset = offset;
         group.parseSignature('GRUP');
         group.parseGroupHeader();
         return group;

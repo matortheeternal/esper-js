@@ -7,10 +7,6 @@ class RecordHeader {
     get memoryMap() {
         return this.file.memoryMap;
     }
-
-    get offset() {
-        return this.container.offset + 4;
-    }
 }
 
 module.exports = RecordHeader;

@@ -13,7 +13,6 @@ class ValueElement extends Element {
     }
 
     readData() {
-        this.memoryMap.setPos(this.offset);
         this._data = this.def.read(this.memoryMap);
     }
 

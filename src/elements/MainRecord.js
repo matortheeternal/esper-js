@@ -9,12 +9,12 @@ class MainRecord extends Record {
         if (signature) this.init(signature);
     }
 
-    static load(container, offset, expectedSig) {
+    static load(container, expectedSig) {
         let record = new MainRecord(container);
-        record.offset = offset;
         record.parseSignature(expectedSig);
         record.loadDef();
         record.parseRecordHeader();
+        record.bodyOffset = this.memoryMap.getPos();
         return record;
     }
 
@@ -27,7 +27,8 @@ class MainRecord extends Record {
     }
 
     parseMembers() {
-
+        this.memoryMap.setPos(this.bodyOffset);
+        // TODO
     }
 
     init(signature) {

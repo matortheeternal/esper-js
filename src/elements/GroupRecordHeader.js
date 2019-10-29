@@ -33,7 +33,6 @@ class GroupRecordHeader extends RecordHeader {
     }
 
     parse() {
-        this.memoryMap.goto(this.offset);
         ffp.parseSchema(this.memoryMap, 'GroupRecordHeader', this);
     }
 
