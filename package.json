@@ -1,0 +1,38 @@
+{
+  "name": "esp-api",
+  "description": "An API for reading and writing Bethesda Plugin files.",
+  "version": "0.0.1",
+  "author": "Mator",
+  "homepage": "https://github.com/matortheeternal/esp-api#readme",
+  "license": "MIT",
+  "main": "index.js",
+  "keywords": [
+    "bethesda",
+    "skyrim",
+    "fallout",
+    "oblivion",
+    "plugin",
+    "esp",
+    "esm",
+    "esl",
+    "parser",
+    "reader",
+    "writer"
+  ],
+  "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true
+  },
+  "scripts": {
+    "test": "jest --bail"
+  },
+  "dependencies": {
+    "file-format-parser": "^2.1.0",
+    "legacy-encoding": "^3.0.0",
+    "memory-map": "github:matortheeternal/memory-map"
+  },
+  "devDependencies": {
+    "codecov": "^3.6.1",
+    "jest": "^24.9.0"
+  }
+}
