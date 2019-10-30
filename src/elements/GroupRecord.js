@@ -1,9 +1,11 @@
 const Record = require('./Record');
+const MainRecord = require('./MainRecord');
 const GroupRecordHeader = require('./GroupRecordHeader');
 
 class GroupRecord extends Record {
     constructor(container, values) {
         super(container);
+        this._records = [];
         if (values) this.init(values);
     }
 
@@ -11,6 +13,15 @@ class GroupRecord extends Record {
         let group = new GroupRecord(container);
         group.parseSignature('GRUP');
         group.parseGroupHeader();
+        group.parseRecords();
+        return group;
+    }
+
+    static loadKS(container, signature) {
+        let group = new GroupRecord(container);
+        group._signature = signature;
+        group.parseGroupHeader();
+        group.parseRecords();
         return group;
     }
 
@@ -18,8 +29,24 @@ class GroupRecord extends Record {
         this._groupHeader = GroupRecordHeader.load(this);
     }
 
+    parseRecords() {
+        let startPos = this.memoryMap.getPos(),
+            endPos = startPos + this.groupHeader.groupSize;
+        while (this.memoryMap.getPos() < endPos) {
+            let signature = Signature.parse(this.memoryMap),
+                RecordClass = signature.toString() === 'GRUP'
+                    ? GroupRecord
+                    : MainRecord;
+            this._records.push(RecordClass.loadKS(this, signature));
+        }
+    }
+
     get groupHeader() {
         return this._groupHeader;
+    }
+
+    get records() {
+        return this._records.slice();
     }
 
     init(values) {

@@ -18,6 +18,15 @@ class MainRecord extends Record {
         return record;
     }
 
+    static loadKS(container, signature) {
+        let record = new MainRecord(container);
+        record._signature = signature;
+        record.loadDef();
+        record.parseRecordHeader();
+        record.bodyOffset = this.memoryMap.getPos();
+        return record;
+    }
+
     parseRecordHeader() {
         this._recordHeader = MainRecordHeader.load(this);
     }
