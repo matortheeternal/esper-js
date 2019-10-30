@@ -14,14 +14,18 @@ buildChars(0x30, 0x60, String.fromCharCode);
 
 let getCharacter = function(n) {
     let char = chars[n];
-    if (!char) throw new Error(`Unknown signature character #${n}`);
+    if (char === undefined)
+        throw new Error(`Unknown signature character #${n}`);
     return char;
 };
 
 let getCharCode = function(char) {
-    return Object.keys(chars).find(key => {
+    let charCode = Object.keys(chars).find(key => {
         return chars[key] === char;
     });
+    if (charCode === undefined)
+        throw new Error(`Unknown signature character ${char}`);
+    return charCode;
 };
 
 module.exports = {getCharacter, getCharCode};
