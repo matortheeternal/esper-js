@@ -1,15 +1,10 @@
+const Element = require('./Element');
 const Signature = require('./Signature');
 
-class Record {
-    constructor(container) {
-        this.container = container;
-        this.file = container.file;
-    }
-
+class Record extends Element {
     parseSignature(expectedSig) {
         this._signature = Signature.parse(this.memoryMap);
-        if (!expectedSig) return;
-        if (this.signature !== expectedSig)
+        if (expectedSig && this.signature !== expectedSig)
             throw new Error(`Expected signature ${expectedSig}, found ${this.signature}`);
     }
 
