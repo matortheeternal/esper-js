@@ -7,7 +7,7 @@ class FormIdDef extends UInt32Def {
     }
 
     setValue(element, value) {
-        this.setData(element, value.toData(element.file));
+        this.setData(element, value.toFileFormId(element.file));
     }
 }
 

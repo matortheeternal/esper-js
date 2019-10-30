@@ -23,6 +23,13 @@ class FormIdValue {
         return FormIdValue.fromFileFormId(element.file, element._data);
     }
 
+    toFileFormId(file) {
+        let ordinal = file.fileToOrdinal(this.file);
+        if (ordinal === -1)
+            throw new Error(`Target file ${file.filename} does not have ${this.file.filename} as a master.`);
+        return ordinal * 0x1000000 + this.localFormId;
+    }
+
     toString() {
         return `{${this.file.fileName}:${this.localFormId.toString(16)}}`;
     }

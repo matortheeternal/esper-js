@@ -68,6 +68,11 @@ class PluginFile {
         if (this.masters.length <= ordinal) return this;
         return this.masters[ordinal];
     }
+
+    fileToOrdinal(file) {
+        if (this === file) return this.masters.length;
+        return file.masters.indexOf(file);
+    }
 }
 
 module.exports = PluginFile;
