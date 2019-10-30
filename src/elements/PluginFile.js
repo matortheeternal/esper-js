@@ -35,7 +35,7 @@ class PluginFile {
     }
 
     parseGroups() {
-        this.memoryMap.setPos(this.fileHeader.dataSize);
+        this.memoryMap.setPos(this.fileHeader.nextOffset);
         while (this.memoryMap.getPos() < this.fileSize)
             this._groups.push(GroupRecord.load(this));
     }
@@ -59,8 +59,8 @@ class PluginFile {
 
     // TODO: verify next id isn't in use
     useNextFormId() {
-        let nextId = this._fileHeader.getValue('HEDR/Next Object ID');
-        this._fileHeader.setValue('HEDR/Next Object ID', nextId + 1);
+        let nextId = this._fileHeader.getData('HEDR/Next Object ID');
+        this._fileHeader.setData('HEDR/Next Object ID', nextId + 1);
         return nextId;
     }
 

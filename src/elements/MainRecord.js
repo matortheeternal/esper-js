@@ -22,13 +22,17 @@ class MainRecord extends Record {
         this._recordHeader = MainRecordHeader.load(this);
     }
 
+    parseMembers() {
+        this.memoryMap.setPos(this.bodyOffset);
+        // TODO
+    }
+
     get recordHeader() {
         return this._recordHeader;
     }
 
-    parseMembers() {
-        this.memoryMap.setPos(this.bodyOffset);
-        // TODO
+    get nextOffset() {
+        return this.bodyOffset + this.recordHeader.dataSize;
     }
 
     init(signature) {
