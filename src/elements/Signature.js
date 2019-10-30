@@ -1,4 +1,5 @@
-// TODO: special character mappings
+const {getCharCode, getCharacter} = require('../signatureChars');
+
 class Signature {
     constructor(data) {
         this._data = data;
@@ -11,12 +12,16 @@ class Signature {
 
     static fromString(str) {
         let data = new Buffer(4);
-        data.write(str, 'ascii');
+        str.split('').forEach((char, n) => {
+            data[n] = getCharCode(char);
+        });
         return new Signature(data);
     }
 
     toString() {
-        return this._data.toString('ascii');
+        return Array.from(this._data).map(n => {
+            return getCharacter(n);
+        });
     }
 }
 
