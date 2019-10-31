@@ -1,8 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 
-const RecordDef = require('./defs/RecordDef');
-
 class DefinitionManager {
     constructor() {
         this.defClasses = {};
@@ -12,15 +10,6 @@ class DefinitionManager {
     loadDefinitions(game) {
         let filePath = path.resolve(__dirname, 'defs', `${game}.json`);
         this.defs = fs.readFileSync(filePath);
-        this.buildRecordDefs();
-    }
-
-    buildRecordDefs() {
-        this.recordDefs = [];
-        this.defs.forEach(def => {
-            if (def.type !== 'record') return;
-            this.recordDefs.push(new RecordDef(def));
-        });
     }
 
     resolveDef(key) {
@@ -33,13 +22,12 @@ class DefinitionManager {
         let defsPath = path.resolve('./src/defs'),
             files = fs.readdirSync(defsPath);
         files.forEach(filename => {
-            let filePath = `${defsPath}/${filename}`;
-            require(filePath);
+            let filePath = `${defsPath}/${filename}`,
+                DefClass = require(filePath),
+                key = DefClass.defType;
+            if (!key) return;
+            this.defClasses[key] = DefClass;
         });
-    }
-
-    registerDefClass(key, defClass) {
-        this.defClasses[key] = defClass;
     }
 
     resolveDefClass(key) {
