@@ -3,6 +3,7 @@ class Element {
         this.container = container;
         this.file = container.file;
         if (def) this.def = def;
+        container.elementAdded(this);
     }
 
     static load(container, def) {

@@ -33,7 +33,11 @@ class MainRecord extends Record {
 
     parseMembers() {
         this.memoryMap.setPos(this.bodyOffset);
-        // TODO
+        let endPos = this.bodyOffset + this.recordHeader.dataSize;
+        while (this.memoryMap.getPos() < endPos) {
+            let signature = Signature.parse(this.memoryMap);
+            this.def.loadElement(this, signature);
+        }
     }
 
     get recordHeader() {
@@ -52,6 +56,11 @@ class MainRecord extends Record {
 
     loadDef() {
         this.def = getRecordDef(this.signature);
+        this.def.initElements(this);
+    }
+
+    get sorted() {
+        return true;
     }
 }
 

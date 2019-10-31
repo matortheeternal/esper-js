@@ -1,7 +1,7 @@
-const Element = require('./Element');
+const Container = require('./Container');
 const Signature = require('./Signature');
 
-class Record extends Element {
+class Record extends Container {
     parseSignature(expectedSig) {
         this._signature = Signature.parse(this.memoryMap);
         if (expectedSig && this.signature !== expectedSig)

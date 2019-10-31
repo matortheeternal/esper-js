@@ -5,7 +5,6 @@ const GroupRecordHeader = require('./GroupRecordHeader');
 class GroupRecord extends Record {
     constructor(container, values) {
         super(container);
-        this._records = [];
         if (values) this.init(values);
     }
 
@@ -37,16 +36,12 @@ class GroupRecord extends Record {
                 RecordClass = signature.toString() === 'GRUP'
                     ? GroupRecord
                     : MainRecord;
-            this._records.push(RecordClass.loadKS(this, signature));
+            RecordClass.loadKS(this, signature);
         }
     }
 
     get groupHeader() {
         return this._groupHeader;
-    }
-
-    get records() {
-        return this._records.slice();
     }
 
     init(values) {

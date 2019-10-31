@@ -1,18 +1,17 @@
-const {buildDefs} = require('../definitionManager');
 const MainRecord = require('../elements/MainRecord');
-const Def = require('./Def');
+const MembersDef = require('./MembersDef');
 
-class MainRecordDef extends Def {
-    constructor(def) {
-        super(def);
-        this.memberDefs = buildDefs(this.members);
+class MainRecordDef extends MembersDef {
+    getAdditionalElements(record) {
+        // TODO: cell, worldspace, etc?
+        return [record.recordHeader];
     }
 
-    findMemberDef(signature) {
-        return this.memberDefs.find(member => {
-            return member.signature === signature ||
-                member.containsSignature(signature);
-        });
+    initElements(record) {
+        record._elements = Array.prototype.concat(
+            this.getAdditionalElements(record),
+            this.memberDefs.map(() => {})
+        );
     }
 }
 
