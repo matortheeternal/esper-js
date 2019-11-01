@@ -1,6 +1,7 @@
-const {getRecordDef} = require('../definitionManager');
+const {resolveDef} = require('../definitionManager');
 const Record = require('./Record');
-const MainRecordHeader = require('./MainRecordHeader');
+const Signature = require('../Signature');
+const StructElement = require('./StructElement');
 
 class MainRecord extends Record {
     // TODO: initialize persistent flag for records added to Persistent groups
@@ -28,7 +29,7 @@ class MainRecord extends Record {
     }
 
     parseRecordHeader() {
-        this._recordHeader = MainRecordHeader.load(this);
+        this._recordHeader = StructElement.load(this, mainRecordHeaderDef);
     }
 
     parseMembers() {
@@ -50,12 +51,12 @@ class MainRecord extends Record {
 
     init(signature) {
         this.signature = signature;
-        this._recordHeader = new MainRecordHeader(this, {});
+        this._recordHeader = new StructElement(this, mainRecordHeaderDef);
         this.loadDef();
     }
 
     loadDef() {
-        this.def = getRecordDef(this.signature);
+        this.def = resolveDef(this.signature);
         this.def.initElements(this);
     }
 

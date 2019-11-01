@@ -1,6 +1,10 @@
+const {strToBuffer} = require('../helpers');
+const {resolveDef} = require('../definitionManager');
 const Record = require('./Record');
 const MainRecord = require('./MainRecord');
-const GroupRecordHeader = require('./GroupRecordHeader');
+const StructElement = require('./StructElement');
+
+const groupRecordHeaderDef = resolveDef('GroupRecordHeader');
 
 class GroupRecord extends Record {
     constructor(container, values) {
@@ -25,7 +29,7 @@ class GroupRecord extends Record {
     }
 
     parseGroupHeader() {
-        this._groupHeader = GroupRecordHeader.load(this);
+        this._groupHeader = StructElement.load(this, groupRecordHeaderDef);
     }
 
     parseRecords() {
@@ -44,8 +48,10 @@ class GroupRecord extends Record {
         return this._groupHeader;
     }
 
-    init(values) {
-        this._groupHeader = new GroupRecordHeader(this, values);
+    init({groupType, label}) {
+        this._groupHeader = new StructElement(this, groupRecordHeaderDef);
+        if (groupType) this._groupHeader.setData('Group Type', groupType);
+        if (label) this._groupHeader.setData('Label', strToBuffer(label));
     }
 }
 

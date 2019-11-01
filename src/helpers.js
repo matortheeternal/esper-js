@@ -11,4 +11,20 @@ let minmax = function(num, minimum, maximum) {
     return Math.min(Math.max(num, minimum), maximum);
 };
 
-module.exports = {makeReadableStream, minmax};
+let strToBuffer = function(string) {
+    let buf = new Buffer(string.length);
+    buf.write(string);
+    return buf;
+};
+
+let readUntil = function(stream, val, size = 1, methodName = 'readUInt8') {
+    let bytes = [];
+    while (true) {
+        let chunk = stream.read(size);
+        if (chunk[methodName]() === val) break;
+        bytes.push(chunk);
+    }
+    return Buffer.concat(bytes);
+};
+
+module.exports = {makeReadableStream, minmax, strToBuffer, readUntil};

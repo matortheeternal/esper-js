@@ -1,5 +1,5 @@
 const Container = require('./Container');
-const Signature = require('./Signature');
+const Signature = require('../Signature');
 
 class Record extends Container {
     parseSignature(expectedSig) {

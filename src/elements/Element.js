@@ -7,7 +7,12 @@ class Element {
     }
 
     static load(container, def) {
-        return new def.constructor.ElementClass(container, def);
+        let {ElementClass} = def.constructor;
+        if (def.hasOwnProperty('inheritFrom')) {
+            let value = container[def.inheritFrom];
+            return new ElementClass(container, def, value);
+        }
+        return ElementClass.load(container, def);
     }
 
     static splitPath(path) {

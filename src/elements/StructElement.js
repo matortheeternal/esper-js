@@ -1,7 +1,7 @@
 const Element = require('./Element');
 const Container = require('./Container');
 
-class Struct extends Container {
+class StructElement extends Container {
     static load(container, def) {
         let struct = new Struct(container, def);
         struct.loadElements();
@@ -19,4 +19,4 @@ class Struct extends Container {
     }
 }
 
-module.exports = Struct;
+module.exports = StructElement;
