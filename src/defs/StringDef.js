@@ -1,12 +1,14 @@
 const ValueDef = require('./ValueDef');
-const ffp = require('file-format-parser');
+const {readUntil} = require('../helpers');
 const legacy = require('legacy-encoding');
 
 // TODO: other encoding support
 // TODO: translated string support
 class StringDef extends ValueDef {
     read(stream) {
-        let buf = ffp.readUntil(stream, 0x00);
+        let buf = this.hasOwnProperty('size')
+            ? stream.read(this.size)
+            : readUntil(stream, 0x00);
         return legacy.decode(buf, 'cp1252');
     }
 
