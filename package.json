@@ -27,7 +27,6 @@
     "test": "jest --bail"
   },
   "dependencies": {
-    "file-format-parser": "^2.1.0",
     "legacy-encoding": "^3.0.0",
     "memory-map": "github:matortheeternal/memory-map"
   },
