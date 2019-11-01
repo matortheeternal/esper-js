@@ -33,13 +33,13 @@ class Element {
     }
 
     getData(path) {
-        let element = this.resolveElement(path);
+        let element = this.getElement(path);
         if (!element) return;
         return element.data;
     }
 
     setData(path, data) {
-        let element = this.resolveElement(path);
+        let element = this.getElement(path);
         if (!element) return;
         element.data = data;
     }
