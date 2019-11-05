@@ -1,11 +1,5 @@
-const SyncReadableStream = require('file-format-parser/src/syncReadableStream');
-
-let makeReadableStream = function(buffer) {
-    let stream = Object.create(SyncReadableStream.prototype);
-    stream._buffer = buffer;
-    stream._pos = 0;
-    return stream;
-};
+const PropertyTypeError = require('./errors/PropertyTypeError');
+const path = require('path');
 
 let minmax = function(num, minimum, maximum) {
     return Math.min(Math.max(num, minimum), maximum);
@@ -15,6 +9,12 @@ let strToBuffer = function(string) {
     let buf = new Buffer(string.length);
     buf.write(string);
     return buf;
+};
+
+let strEquals = function(str1, str2) {
+    return str1.localeCompare(str2, undefined, {
+        sensitivity: 'accent'
+    }) === 0;
 };
 
 let readUntil = function(stream, val, size = 1, methodName = 'readUInt8') {
@@ -27,4 +27,26 @@ let readUntil = function(stream, val, size = 1, methodName = 'readUInt8') {
     return Buffer.concat(bytes);
 };
 
-module.exports = {makeReadableStream, minmax, strToBuffer, readUntil};
+let getPropType = function(prop) {
+    if (prop === null) return 'null';
+    let propType = typeof prop;
+    if (propType !== 'object') return propType;
+    return prop.constructor.name;
+};
+
+let expectProperties = function(obj, schema) {
+    Object.keys(schema).forEach(key => {
+        let propType = getPropType(obj[key]);
+        if (propType !== schema[key])
+            throw new PropertyTypeError(schema, key, propType);
+    })
+};
+
+let getFileName = function(filePath) {
+    return path.basename(filePath);
+};
+
+module.exports = {
+    minmax, strToBuffer, strEquals, readUntil,
+    expectProperties, getFileName
+};
