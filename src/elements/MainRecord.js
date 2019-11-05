@@ -56,7 +56,8 @@ class MainRecord extends Record {
     }
 
     loadDef() {
-        this.def = this.resolveDef(this.signature);
+        let {resolveRecordDef} = this.file.definitionManager;
+        this.def = resolveRecordDef(this.signature);
         this.def.initElements(this);
     }
 
