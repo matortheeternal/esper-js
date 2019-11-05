@@ -1,6 +1,6 @@
 const DefinitionManager = require('../src/DefinitionManager');
 
-describe('Definition Manager', () => {
+describe('DefinitionManager', () => {
     let definitionManager;
 
     describe('constructor', () => {
@@ -20,15 +20,15 @@ describe('Definition Manager', () => {
         });
 
         it('should load def classes', () => {
-            expect(definitionManager.defClasses).toBeDefined();
+            expect(definitionManager._defClasses).toBeDefined();
         });
 
         it('should set defs', () => {
-            expect(definitionManager.defs).toBeDefined();
+            expect(definitionManager._defs).toBeDefined();
         });
 
         it('should set recordDefs', () => {
-            expect(definitionManager.recordDefs).toBeDefined();
+            expect(definitionManager._recordDefs).toBeDefined();
         });
     });
 
@@ -55,6 +55,19 @@ describe('Definition Manager', () => {
         it('should return the def class', () => {
             let StringDef = definitionManager.resolveDefClass('string');
             expect(StringDef).toBeDefined();
+        });
+    });
+
+    describe('resolveRecordDef', () => {
+        it('should throw an error if record def does not exist', () => {
+            expect(() => {
+                definitionManager.resolveRecordDef('abcd');
+            }).toThrow('Failed to resolve record def: abcd');
+        });
+
+        it('should return the record def', () => {
+            let armoDef = definitionManager.resolveRecordDef('ARMO');
+            expect(armoDef).toBeDefined();
         });
     });
 

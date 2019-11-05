@@ -21,8 +21,8 @@ let loadDefinitions = function(game) {
 };
 
 let buildRecordDefs = function(manager) {
-    return Object.keys(manager.defs).reduce((recordDefs, id) => {
-        let def = manager.defs[id];
+    return Object.keys(manager._defs).reduce((recordDefs, id) => {
+        let def = manager._defs[id];
         if (def.type === 'record' && def.signature)
             recordDefs[id] = manager.buildDef(def);
         return recordDefs;
@@ -31,20 +31,26 @@ let buildRecordDefs = function(manager) {
 
 class DefinitionManager {
     constructor(game) {
-        this.defClasses = loadDefClasses();
-        this.defs = loadDefinitions(game);
-        this.recordDefs = buildRecordDefs(this);
+        this._defClasses = loadDefClasses();
+        this._defs = loadDefinitions(game);
+        this._recordDefs = buildRecordDefs(this);
     }
 
     resolveDef(key) {
-        let value = this.defs[key];
+        let value = this._defs[key];
         if (!value) throw new Error(`Failed to resolve def: ${key}`);
         return value;
     }
 
     resolveDefClass(key) {
-        let value = this.defClasses[key];
+        let value = this._defClasses[key];
         if (!value) throw new Error(`Failed to resolve def class: ${key}`);
+        return value;
+    }
+
+    resolveRecordDef(key) {
+        let value = this._recordDefs[key];
+        if (!value) throw new Error(`Failed to resolve record def: ${key}`);
         return value;
     }
 
