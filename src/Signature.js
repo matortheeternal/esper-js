@@ -21,7 +21,7 @@ class Signature {
     toString() {
         return Array.from(this._data).map(n => {
             return getCharacter(n);
-        });
+        }).join('');
     }
 }
 
