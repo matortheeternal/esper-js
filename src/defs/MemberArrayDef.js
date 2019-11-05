@@ -1,11 +1,10 @@
-const {buildDef} = require('../definitionManager');
 const Def = require('./Def');
 const MemberArray = require('../elements/MemberArray');
 
 class MemberArrayDef extends Def {
-    constructor(def) {
-        super(def);
-        this.memberDef = buildDef(this.member);
+    constructor(manager, def, parent) {
+        super(manager, def, parent);
+        this.memberDef = manager.buildDef(this.member, this);
     }
 
     initElement(record) {

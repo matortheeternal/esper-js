@@ -1,10 +1,9 @@
-const {buildDefs} = require('../definitionManager');
 const Def = require('./Def');
 
 class StructDef extends Def {
-    constructor(def) {
-        super(def);
-        this.elementDefs = buildDefs(this.fields);
+    constructor(manager, def, parent) {
+        super(manager, def, parent);
+        this.elementDefs = manager.buildDefs(this.elements, this);
     }
 }
 

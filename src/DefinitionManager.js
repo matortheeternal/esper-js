@@ -1,15 +1,39 @@
 const fs = require('fs');
 const path = require('path');
 
-class DefinitionManager {
-    constructor() {
-        this.defClasses = {};
-        this.loadDefClasses();
-    }
+let loadDefClasses = function() {
+    let defsPath = path.resolve('./src/defs'),
+        files = fs.readdirSync(defsPath);
+    return files.reduce((defClasses, filename) => {
+        let filePath = `${defsPath}/${filename}`,
+            DefClass = require(filePath),
+            key = DefClass.defType;
+        if (key) defClasses[key] = DefClass;
+        return defClasses;
+    }, {});
+};
 
-    loadDefinitions(game) {
-        let filePath = path.resolve(__dirname, 'defs', `${game}.json`);
-        this.defs = fs.readFileSync(filePath);
+let loadDefinitions = function(game) {
+    let filePath = path.resolve(`./defs/${game}.json`);
+    if (!fs.existsSync(filePath))
+        throw new Error(`Couldn't find definitions for game ${game}.`);
+    return JSON.parse(fs.readFileSync(filePath));
+};
+
+let buildRecordDefs = function(manager) {
+    return Object.keys(manager.defs).reduce((recordDefs, id) => {
+        let def = manager.defs[id];
+        if (def.type === 'record' && def.signature)
+            recordDefs[id] = manager.buildDef(def);
+        return recordDefs;
+    }, {});
+};
+
+class DefinitionManager {
+    constructor(game) {
+        this.defClasses = loadDefClasses();
+        this.defs = loadDefinitions(game);
+        this.recordDefs = buildRecordDefs(this);
     }
 
     resolveDef(key) {
@@ -18,34 +42,22 @@ class DefinitionManager {
         return value;
     }
 
-    loadDefClasses() {
-        let defsPath = path.resolve('./src/defs'),
-            files = fs.readdirSync(defsPath);
-        files.forEach(filename => {
-            let filePath = `${defsPath}/${filename}`,
-                DefClass = require(filePath),
-                key = DefClass.defType;
-            if (!key) return;
-            this.defClasses[key] = DefClass;
-        });
-    }
-
     resolveDefClass(key) {
         let value = this.defClasses[key];
         if (!value) throw new Error(`Failed to resolve def class: ${key}`);
         return value;
     }
 
-    buildDef(def) {
-        let defId = def.def;
-        if (defId) def = Object.assign({}, this.resolveDef(defId), def);
+    buildDef(def, parent) {
+        let id = def.id;
+        if (id) def = Object.assign({}, this.resolveDef(id), def);
         let DefClass = this.resolveDefClass(def.type);
-        return new DefClass(def);
+        return new DefClass(this, def, parent);
     }
 
-    buildDefs(defs) {
-        return defs.map(def => this.buildDef(def));
+    buildDefs(defs, parent) {
+        return defs.map(def => this.buildDef(def, parent));
     }
 }
 
-module.exports = new DefinitionManager();
+module.exports = DefinitionManager;

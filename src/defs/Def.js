@@ -1,6 +1,8 @@
 class Def {
-    constructor(def) {
+    constructor(manager, def, parent) {
+        this.manager = manager; // not necessary?
         Object.assign(this, def);
+        if (parent) this.parent = parent;
     }
 
     containsSignature(signature) {

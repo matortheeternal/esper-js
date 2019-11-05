@@ -1,10 +1,9 @@
-const {buildDefs} = require('../definitionManager');
 const Def = require('./Def');
 
 class MemberUnionDef extends Def {
-    constructor(def) {
-        super(def);
-        this.memberDefs = buildDefs(this.members);
+    constructor(manager, def, parent) {
+        super(def, parent);
+        //this.memberDefs = manager.buildDefs(this.members, this);
     }
 
     initElement(container) {

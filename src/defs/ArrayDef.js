@@ -1,11 +1,10 @@
-const {buildDef} = require('../definitionManager');
 const ArrayElement = require('../elements/ArrayElement');
 const Def = require('./Def');
 
 class ArrayDef extends Def {
-    constructor(def) {
-        super(def);
-        this.elementDef = buildDef(this.field);
+    constructor(manager, def, parent) {
+        super(manager, def, parent);
+        this.elementDef = manager.buildDef(this.element);
     }
 
     initElement(container) {

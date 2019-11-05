@@ -1,11 +1,10 @@
-const {buildDef} = require('../definitionManager');
 const SubrecordElement = require('../elements/Subrecord');
 const Def = require('./Def');
 
 class SubrecordDef extends Def {
-    constructor(def) {
-        super(def);
-        this.elementDef = buildDef(def.field);
+    constructor(manager, def, parent) {
+        super(manager, def, parent);
+        this.elementDef = manager.buildDef(def.element, this);
     }
 
     initElement(container) {
