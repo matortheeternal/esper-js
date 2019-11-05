@@ -105,5 +105,19 @@ describe('Definition Manager', () => {
             expect(builtDefs[1].name).toBe('Description');
             expect(builtDefs[1].constructor.name).toBe('StringDef');
         });
+
+        it('should set sort order', () => {
+            let builtDefs = definitionManager.buildDefs([{
+                name: 'Unknown',
+                type: 'bytes',
+                size: 4
+            }, {
+                name: 'Description',
+                type: 'string'
+            }]);
+
+            expect(builtDefs[0].sortOrder).toBe(0);
+            expect(builtDefs[1].sortOrder).toBe(1);
+        });
     });
 });
