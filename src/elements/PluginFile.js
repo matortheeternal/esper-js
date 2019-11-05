@@ -67,7 +67,6 @@ class PluginFile extends Container {
     initHeaderDefs() {
         let {resolveDef, buildDef} = this.definitionManager;
         this.groupHeaderDef = buildDef(resolveDef('GroupRecordHeader'));
-        this.recordHeaderDef = buildDef(resolveDef('MainRecordHeader'));
     }
 
     init() {
