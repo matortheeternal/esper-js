@@ -36,21 +36,21 @@ class DefinitionManager {
         this._recordDefs = buildRecordDefs(this);
     }
 
-    resolveDef(key) {
-        let value = this._defs[key];
-        if (!value) throw new Error(`Failed to resolve def: ${key}`);
+    resolveDef(id) {
+        let value = this._defs[id];
+        if (!value) throw new Error(`Failed to resolve def: ${id}`);
         return value;
     }
 
-    resolveDefClass(key) {
-        let value = this._defClasses[key];
-        if (!value) throw new Error(`Failed to resolve def class: ${key}`);
+    resolveDefClass(defType) {
+        let value = this._defClasses[defType];
+        if (!value) throw new Error(`Failed to resolve def class: ${defType}`);
         return value;
     }
 
-    resolveRecordDef(key) {
-        let value = this._recordDefs[key];
-        if (!value) throw new Error(`Failed to resolve record def: ${key}`);
+    resolveRecordDef(id) {
+        let value = this._recordDefs[id];
+        if (!value) throw new Error(`Failed to resolve record def: ${id}`);
         return value;
     }
 
