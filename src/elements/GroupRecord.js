@@ -6,6 +6,7 @@ const StructElement = require('./StructElement');
 class GroupRecord extends Record {
     constructor(container, values) {
         super(container);
+        this.headerDef = this.file.groupHeaderDef;
         if (values) this.init(values);
     }
 
@@ -26,8 +27,7 @@ class GroupRecord extends Record {
     }
 
     parseGroupHeader() {
-        let groupRecordHeaderDef = this.resolveDef('GroupRecordHeader');
-        this._groupHeader = StructElement.load(this, groupRecordHeaderDef);
+        this._groupHeader = StructElement.load(this, this.headerDef);
     }
 
     parseRecords() {
@@ -47,8 +47,7 @@ class GroupRecord extends Record {
     }
 
     init({groupType, label}) {
-        let groupRecordHeaderDef = this.resolveDef('GroupRecordHeader');
-        this._groupHeader = new StructElement(this, groupRecordHeaderDef);
+        this._groupHeader = new StructElement(this, this.headerDef);
         if (groupType) this._groupHeader.setData('Group Type', groupType);
         if (label) this._groupHeader.setData('Label', strToBuffer(label));
     }

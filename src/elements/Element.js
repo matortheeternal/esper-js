@@ -28,10 +28,6 @@ class Element {
         if (!this.container) return this.pathName;
         return `${this.container.path}\\${this.pathName}`;
     }
-
-    resolveDef(id) {
-        return this.file.definitionManager.resolveDef(id);
-    }
 }
 
 module.exports = Element;

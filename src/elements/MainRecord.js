@@ -6,6 +6,7 @@ class MainRecord extends Record {
     // TODO: initialize persistent flag for records added to Persistent groups
     constructor(container, signature) {
         super(container);
+        this.headerDef = this.file.recordHeaderDef;
         if (signature) this.init(signature);
     }
 
@@ -28,8 +29,7 @@ class MainRecord extends Record {
     }
 
     parseRecordHeader() {
-        let mainRecordHeaderDef = this.resolveDef('MainRecordHeader');
-        this._recordHeader = StructElement.load(this, mainRecordHeaderDef);
+        this._recordHeader = StructElement.load(this, this.headerDef);
     }
 
     parseMembers() {
@@ -51,8 +51,7 @@ class MainRecord extends Record {
 
     init(signature) {
         this.signature = signature;
-        let mainRecordHeaderDef = this.resolveDef('MainRecordHeader');
-        this._recordHeader = new StructElement(this, mainRecordHeaderDef);
+        this._recordHeader = new StructElement(this, this.headerDef);
         this.loadDef();
     }
 

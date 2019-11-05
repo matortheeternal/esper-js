@@ -11,6 +11,7 @@ class PluginFile extends Container {
         this.filePath = filePath;
         this.fileName = getFileName(filePath);
         this.file = this;
+        this.initHeaderDefs();
         if (init) this.init();
     }
 
@@ -61,6 +62,12 @@ class PluginFile extends Container {
 
     get definitionManager() {
         return this.session.definitionManager;
+    }
+
+    initHeaderDefs() {
+        let {resolveDef, buildDef} = this.definitionManager;
+        this.groupHeaderDef = buildDef(resolveDef('GroupRecordHeader'));
+        this.recordHeaderDef = buildDef(resolveDef('MainRecordHeader'));
     }
 
     init() {
