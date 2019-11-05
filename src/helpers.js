@@ -46,7 +46,25 @@ let getFileName = function(filePath) {
     return path.basename(filePath);
 };
 
+let clone = function(value) {
+    if (value === null || typeof value !== 'object') return value;
+    return value.constructor === Array
+        ? cloneArray(value)
+        : cloneObject(value);
+};
+
+let cloneArray = function(ary) {
+    return ary.map(v => clone(v));
+};
+
+let cloneObject = function(obj) {
+    return Object.keys(obj).reduce((newObj, key) => {
+        newObj[key] = clone(obj[key]);
+        return newObj;
+    }, {});
+};
+
 module.exports = {
     minmax, strToBuffer, strEquals, readUntil,
-    expectProperties, getFileName
+    expectProperties, getFileName, clone
 };
