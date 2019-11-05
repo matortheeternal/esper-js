@@ -1,4 +1,3 @@
-const {resolveDef} = require('../definitionManager');
 const Record = require('./Record');
 const Signature = require('../Signature');
 const StructElement = require('./StructElement');
@@ -29,6 +28,7 @@ class MainRecord extends Record {
     }
 
     parseRecordHeader() {
+        let mainRecordHeaderDef = this.resolveDef('MainRecordHeader');
         this._recordHeader = StructElement.load(this, mainRecordHeaderDef);
     }
 
@@ -51,12 +51,13 @@ class MainRecord extends Record {
 
     init(signature) {
         this.signature = signature;
+        let mainRecordHeaderDef = this.resolveDef('MainRecordHeader');
         this._recordHeader = new StructElement(this, mainRecordHeaderDef);
         this.loadDef();
     }
 
     loadDef() {
-        this.def = resolveDef(this.signature);
+        this.def = this.resolveDef(this.signature);
         this.def.initElements(this);
     }
 
