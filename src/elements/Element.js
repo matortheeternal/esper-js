@@ -1,8 +1,9 @@
 class Element {
     constructor(container, def) {
+        if (def) this.def = def;
+        if (!container) return;
         this.container = container;
         this.file = container.file;
-        if (def) this.def = def;
         container.elementAdded(this);
     }
 
@@ -15,33 +16,21 @@ class Element {
         return ElementClass.load(container, def);
     }
 
-    static splitPath(path) {
-        let separatorIndex = path.indexOf('\\');
-        if (separatorIndex === -1) separatorIndex = path.length;
-        return [
-            path.slice(0, separatorIndex),
-            path.slice(separatorIndex + 1)
-        ];
-    };
-
-    getElement(path) {
-        let [pathPart, remainingPath] = Element.splitPath(path),
-            element = this.resolveElement(pathPart);
-        return remainingPath.length > 0
-            ? element.getElement(pathParts.join('\\'))
-            : element;
+    get name() {
+        return this.def.name;
     }
 
-    getData(path) {
-        let element = this.getElement(path);
-        if (!element) return;
-        return element.data;
+    get displayName() {
+        return this.def.name;
     }
 
-    setData(path, data) {
-        let element = this.getElement(path);
-        if (!element) return;
-        element.data = data;
+    get path() {
+        if (!this.container) return this.pathName;
+        return `${this.container.path}\\${this.pathName}`;
+    }
+
+    resolveDef(id) {
+        return this.file.definitionManager.resolveDef(id);
     }
 }
 
