@@ -56,7 +56,11 @@ class DefinitionManager {
     }
 
     buildDefs(defs, parent) {
-        return defs.map(def => this.buildDef(def, parent));
+        return defs.map((def, sortOrder) => {
+            let builtDef = this.buildDef(def, parent);
+            builtDef.sortOrder = sortOrder;
+            return builtDef;
+        });
     }
 }
 
