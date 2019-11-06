@@ -64,17 +64,19 @@ let cloneObject = function(obj) {
     }, {});
 };
 
-let getBits = function(buf) {
-    let bits = [];
-    Array.from(buf).forEach(byte => {
-        bits.unshift(+Boolean(byte & 0x80));
-        bits.unshift(+Boolean(byte & 0x40));
-        bits.unshift(+Boolean(byte & 0x20));
-        bits.unshift(+Boolean(byte & 0x10));
-        bits.unshift(+Boolean(byte & 0x8));
-        bits.unshift(+Boolean(byte & 0x4));
-        bits.unshift(+Boolean(byte & 0x2));
-        bits.unshift(+Boolean(byte & 0x1));
+let getBits = function(buf, littleEndian = false) {
+    let bits = [],
+        a = Array.from(buf);
+    if (littleEndian) a.reverse();
+    a.forEach(byte => {
+        bits.push(+Boolean(byte & 0x80));
+        bits.push(+Boolean(byte & 0x40));
+        bits.push(+Boolean(byte & 0x20));
+        bits.push(+Boolean(byte & 0x10));
+        bits.push(+Boolean(byte & 0x8));
+        bits.push(+Boolean(byte & 0x4));
+        bits.push(+Boolean(byte & 0x2));
+        bits.push(+Boolean(byte & 0x1));
     });
     return bits;
 };
