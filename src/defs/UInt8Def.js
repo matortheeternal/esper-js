@@ -4,6 +4,12 @@ class UInt8Def extends IntegerDef {
     read(stream) {
         return stream.read(1).readUInt8();
     }
+
+    toBytes(data) {
+        let buf = new Buffer(1);
+        buf.writeUInt8(data);
+        return buf;
+    }
 }
 
 module.exports = Object.assign(UInt8Def, {
