@@ -4,7 +4,7 @@ const {clone} = require('../helpers');
 
 let buildFlagsDef = function(headerDef, def) {
     if (!def.flags) return;
-    headerDef[2].format = def.flags;
+    headerDef.elements[2].format = def.flags;
 };
 
 class MainRecordDef extends MembersDef {
