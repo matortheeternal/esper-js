@@ -7,7 +7,7 @@ let minmax = function(num, minimum, maximum) {
 
 let strToBuffer = function(string) {
     let buf = new Buffer(string.length);
-    buf.write(string);
+    buf.write(string, 'ascii');
     return buf;
 };
 
@@ -39,7 +39,7 @@ let expectProperties = function(obj, schema) {
         let propType = getPropType(obj[key]);
         if (propType !== schema[key])
             throw new PropertyTypeError(schema, key, propType);
-    })
+    });
 };
 
 let getFileName = function(filePath) {
@@ -64,7 +64,22 @@ let cloneObject = function(obj) {
     }, {});
 };
 
+let getBits = function(buf) {
+    let bits = [];
+    Array.from(buf).forEach(byte => {
+        bits.unshift(+Boolean(byte & 0x80));
+        bits.unshift(+Boolean(byte & 0x40));
+        bits.unshift(+Boolean(byte & 0x20));
+        bits.unshift(+Boolean(byte & 0x10));
+        bits.unshift(+Boolean(byte & 0x8));
+        bits.unshift(+Boolean(byte & 0x4));
+        bits.unshift(+Boolean(byte & 0x2));
+        bits.unshift(+Boolean(byte & 0x1));
+    });
+    return bits;
+};
+
 module.exports = {
     minmax, strToBuffer, strEquals, readUntil,
-    expectProperties, getFileName, clone
+    expectProperties, getFileName, clone, getBits
 };
