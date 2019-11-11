@@ -81,7 +81,12 @@ let getBits = function(buf, littleEndian = false) {
     return bits;
 };
 
+let pad = function(num, amount, str = '0') {
+    return num.toString().padStart(amount, str);
+};
+
 module.exports = {
     minmax, strToBuffer, strEquals, readUntil,
-    expectProperties, getFileName, clone, getBits
+    expectProperties, getFileName, clone, getBits,
+    pad
 };
