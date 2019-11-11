@@ -1,16 +1,23 @@
 const fs = require('fs');
 const path = require('path');
 
-let loadDefClasses = function() {
-    let defsPath = path.resolve('./src/defs'),
-        files = fs.readdirSync(defsPath);
-    return files.reduce((defClasses, filename) => {
-        let filePath = `${defsPath}/${filename}`,
-            DefClass = require(filePath),
-            key = DefClass.defType;
+let loadDefClasses = function(defsPath, keyStr) {
+    if (!fs.existsSync(defsPath)) return;
+    return fs.readdirSync(defsPath).reduce((defClasses, filename) => {
+        let defClassPath = path.join(basePath, filename);
+        if (fs.lstatSync(defClassPath).isDirectory()) return;
+        let DefClass = require(defClassPath),
+            key = DefClass[keyStr];
         if (key) defClasses[key] = DefClass;
         return defClasses;
     }, {});
+};
+
+let getDefClasses = function(game) {
+    return Object.assign(
+        loadDefClasses(path.resolve('./src/defs'), 'defType'),
+        loadDefClasses(path.resolve(`./src/defs/${game}`), 'name')
+    );
 };
 
 let loadDefinitions = function(game) {
@@ -31,7 +38,7 @@ let buildRecordDefs = function(manager) {
 
 class DefinitionManager {
     constructor(game) {
-        this._defClasses = loadDefClasses();
+        this._defClasses = getDefClasses(game);
         this._defs = loadDefinitions(game);
         this._recordDefs = buildRecordDefs(this);
     }
