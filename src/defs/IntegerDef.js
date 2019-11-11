@@ -2,6 +2,12 @@ const ValueDef = require('./ValueDef');
 const {minmax} = require('../helpers');
 
 class IntegerDef extends ValueDef {
+    constructor(manager, def, parent) {
+        super(manager, def, parent);
+        if (!def.format) return;
+        this.formatDef = manager.buildDef(def.format);
+    }
+
     static getMinAndMaxValues(bits, signed = true) {
         return {
             MIN_VALUE: signed
