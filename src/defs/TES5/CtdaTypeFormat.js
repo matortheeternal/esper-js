@@ -1,35 +1,13 @@
 const FormatDef = require('../FormatDef');
 const InvalidFormatValueError = require('../../errors/InvalidFormatValueError');
 
-const ctdaTypeEnum = {
-    options: {
-        0x00: 'Equal to',
-        0x20: 'Not equal to',
-        0x40: 'Greater than',
-        0x60: 'Greater than or equal to',
-        0x80: 'Less than',
-        0xA0: 'Less than or equal to'
-    },
-    unknownOption: '<Unknown Compare operator>'
-};
-
-const ctdaTypeFlags = {
-    flags: {
-        0x01: 'Or',
-        0x02: 'Use aliases',
-        0x04: 'Use global',
-        0x08: 'Use packdata',
-        0x10: 'Swap Subject and Target'
-    }
-};
-
 const valueExpr = /^([\w\s]+)(?:\/ ([\s\w,]+))?$/;
 
 class CtdaTypeFormat extends FormatDef {
     constructor(manager, def, parent) {
         super(manager, def, parent);
-        this.enumDef = new EnumDef(manager, ctdaTypeEnum, parent);
-        this.flagsDef = new FlagsDef(manager, ctdaTypeFlags, parent);
+        this.enumDef = manager.buildDef({id: 'CtdaTypeEnum'}, parent);
+        this.flagsDef = manager.buildDef({id: 'CtdaTypeFlags'}, parent);
     }
 
     getCompareOperator(element, data) {
