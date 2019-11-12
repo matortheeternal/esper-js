@@ -1,6 +1,6 @@
 module.exports = {
     priority: 10,
-    match: /^\[(\d+)]$/.match,
+    match: /^\[(\d+)]$/.exec,
     resolve: (element, match) => {
         let index = parseInt(match[1]),
             elements = element.assignedElements;
