@@ -1,15 +1,7 @@
-const FormatDef = require('../FormatDef');
+const AliasFormat = require('./AliasFormat');
 
-class ConditionAliasFormat extends FormatDef {
-    dataToValue(element, data) {
-        if (data === -1) return 'None';
-        return data.toString();
-    }
+class ConditionAliasFormat extends AliasFormat {
 
-    valueToData(element, value) {
-        if (value === 'None') return -1;
-        return parseInt(value);
-    }
 }
 
 module.exports = ConditionAliasFormat;
