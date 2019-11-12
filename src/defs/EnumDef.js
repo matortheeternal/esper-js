@@ -1,11 +1,11 @@
 const Def = require('./Def');
 const InvalidEnumValueError = require('../errors/InvalidEnumValueError');
 
-const unknownExpr = /^(?:Unknown )?(-?\d+)$/;
+const unknownExpr = /^<(?:Unknown )?(-?\d+)>$/;
 
 class EnumDef extends Def {
     dataToValue(element, data) {
-        return this.options[data] || `Unknown ${data}`;
+        return this.options[data] || this.unknownOption || `<Unknown ${data}>`;
     }
 
     valueToData(element, value) {
