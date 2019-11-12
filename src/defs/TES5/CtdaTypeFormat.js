@@ -1,12 +1,15 @@
 const Def = require('../Def');
 
-const compareOperators = {
-    0x00: 'Equal to',
-    0x20: 'Not equal to',
-    0x40: 'Greater than',
-    0x60: 'Greater than or equal to',
-    0x80: 'Less than',
-    0xA0: 'Less than or equal to'
+const ctdaTypeEnum = {
+    options: {
+        0x00: 'Equal to',
+        0x20: 'Not equal to',
+        0x40: 'Greater than',
+        0x60: 'Greater than or equal to',
+        0x80: 'Less than',
+        0xA0: 'Less than or equal to'
+    },
+    unknownOption: '<Unknown Compare operator>'
 };
 
 const ctdaTypeFlags = {
@@ -19,7 +22,7 @@ const ctdaTypeFlags = {
     }
 };
 
-const unknownCompareOperator = '<Unknown Compare operator>';
+const valueExpr = /^([\w\s]+)(?:\/ ([\s\w,]+))?$/;
 
 class CtdaTypeFormat extends Def {
     constructor(manager, def, parent) {
@@ -28,8 +31,8 @@ class CtdaTypeFormat extends Def {
         this.flagsDef = new FlagsDef(manager, ctdaTypeFlags, parent);
     }
 
-    getCompareOperator(data) {
-        return compareOperators[data & 0xE0] || unknownCompareOperator;
+    getCompareOperator(element, data) {
+        return this.enumDef.dataToValue(element, data & 0xE0);
     }
 
     getFlags(element, data) {
@@ -37,13 +40,19 @@ class CtdaTypeFormat extends Def {
     }
 
     dataToValue(element, data) {
-        let op = this.getCompareOperator(data),
+        let op = this.getCompareOperator(element, data),
             flags = this.getFlags(element, data);
-        return `${op} / ${flags}`;
+        return flags ? `${op} / ${flags}` : op;
     }
 
     valueToData(element, value) {
-        // TODO
+        let match = value.match(valueExpr);
+        if (!match) throw new Error('Invalid CTDA type value: ' + value);
+        let op = match[1].trimRight(),
+            opData = this.enumDef.valueToData(element, op),
+            flags = match[2] ? match[2].split(', ') : '',
+            flagData = this.flagsDef.valueToData(element, flags);
+        return opData * Math.pow(2, 5) + flagData;
     }
 }
 
