@@ -1,9 +1,9 @@
-const Def = require('../Def');
+const FormatDef = require('../FormatDef');
 const {pad} = require('../../helpers');
 
 const timeExpr = /^(\d{2}):(\d{2})$/;
 
-class ClmtTimeFormat extends Def {
+class ClmtTimeFormat extends FormatDef {
     dataToValue(element, data) {
         let hours = Math.floor(data / 6),
             minutes = (data % 6) * 10;

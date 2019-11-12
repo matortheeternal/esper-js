@@ -1,6 +1,6 @@
-const Def = require('../Def');
+const FormatDef = require('../FormatDef');
 
-class Edge0Format extends Def {
+class Edge0Format extends FormatDef {
     edgeFlagIsSet(element) {
         let flags = element.container.getData('Flags'),
             edgeFlag = Math.pow(2, this.edge());

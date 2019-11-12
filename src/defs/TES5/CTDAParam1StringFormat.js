@@ -1,6 +1,6 @@
-const Def = require('../Def');
+const FormatDef = require('../FormatDef');
 
-class CTDAParam1StringFormat extends Def {
+class CTDAParam1StringFormat extends FormatDef {
     dataToValue(element, data) {
         return element.getValue('..\\..\\CIS1');
     }

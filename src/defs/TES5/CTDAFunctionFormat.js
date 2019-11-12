@@ -1,8 +1,8 @@
-const Def = require('../Def');
+const FormatDef = require('../FormatDef');
 const UnknownCTDAFunctionError = require('../../errors/UnknownCTDAFunctionError');
 const CTDAFunctions = require('./data/CTDAFunctions');
 
-class CTDAFunctionFormat extends Def {
+class CTDAFunctionFormat extends FormatDef {
     dataToValue(element, data) {
         let option = CTDAFunctions[data];
         return option ? option.name : `<Unknown ${data}>`;

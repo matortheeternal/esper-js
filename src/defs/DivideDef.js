@@ -1,6 +1,6 @@
-const Def = require('./Def');
+const FormatDef = require('./FormatDef');
 
-class DivideDef extends Def {
+class DivideDef extends FormatDef {
 
 }
 

@@ -1,9 +1,13 @@
-const Def = require('./Def');
+const FormatDef = require('./FormatDef');
 const InvalidEnumValueError = require('../errors/InvalidEnumValueError');
 
 const unknownExpr = /^<(?:Unknown )?(-?\d+)>$/;
 
-class EnumDef extends Def {
+module.exports = Object.assign(EnumDef, {
+    defType: 'enum'
+});
+
+class EnumDef extends FormatDef {
     dataToValue(element, data) {
         return this.options[data] || this.unknownOption || `<Unknown ${data}>`;
     }
@@ -18,7 +22,3 @@ class EnumDef extends Def {
         throw new InvalidEnumValueError(value);
     }
 }
-
-module.exports = Object.assign(EnumDef, {
-    defType: 'enum'
-});

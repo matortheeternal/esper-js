@@ -1,4 +1,5 @@
-const Def = require('../Def');
+const FormatDef = require('../FormatDef');
+const InvalidFormatValueError = require('../../errors/InvalidFormatValueError');
 
 const ctdaTypeEnum = {
     options: {
@@ -24,7 +25,7 @@ const ctdaTypeFlags = {
 
 const valueExpr = /^([\w\s]+)(?:\/ ([\s\w,]+))?$/;
 
-class CtdaTypeFormat extends Def {
+class CtdaTypeFormat extends FormatDef {
     constructor(manager, def, parent) {
         super(manager, def, parent);
         this.enumDef = new EnumDef(manager, ctdaTypeEnum, parent);
@@ -47,7 +48,7 @@ class CtdaTypeFormat extends Def {
 
     valueToData(element, value) {
         let match = value.match(valueExpr);
-        if (!match) throw new Error('Invalid CTDA type value: ' + value);
+        if (!match) throw new InvalidFormatValueError(this, value);
         let op = match[1].trimRight(),
             opData = this.enumDef.valueToData(element, op),
             flags = match[2] ? match[2].split(', ') : '',

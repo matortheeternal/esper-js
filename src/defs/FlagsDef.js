@@ -1,8 +1,8 @@
-const Def = require('./Def');
+const FormatDef = require('./FormatDef');
 const UnknownFlagError = require('../errors/UnknownFlagError');
 const {getBits} = require('../helpers');
 
-class FlagsDef extends Def {
+class FlagsDef extends FormatDef {
     dataToValue(element, data) {
         let buf = this.parent.toBytes(data);
         return getBits(buf).reduce((a, bit, index) => {

@@ -1,8 +1,8 @@
-const Def = require('../Def');
+const FormatDef = require('../FormatDef');
 
 const moonPhaseExpr = /(Masser(?:, Secunda)?|Secunda|No Moon) \/ (\d+)/;
 
-class ClmtMoonsPhaseLengthFormat extends Def {
+class ClmtMoonsPhaseLengthFormat extends FormatDef {
     moonType(masser, secunda) {
         if (masser && secunda) return 'Masser, Secunda';
         if (masser) return 'Masser';
