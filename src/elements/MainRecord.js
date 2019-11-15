@@ -6,6 +6,7 @@ class MainRecord extends Record {
     // TODO: initialize persistent flag for records added to Persistent groups
     constructor(container, signature) {
         super(container);
+        this.file.recordAdded(this);
         if (signature) this.init(signature);
     }
 
