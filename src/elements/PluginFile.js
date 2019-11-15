@@ -14,16 +14,15 @@ class PluginFile extends Container {
         this._highObjectId = 2048;
         this._recordsByFormId = {};
         this.initHeaderDefs();
+        this.fileManager.addFile(this);
         if (init) this.init();
     }
 
-    static load(filePath) {
-        let plugin = new PluginFile(filePath, false);
+    static load(session, filePath) {
+        let plugin = new PluginFile(session, filePath, false);
         plugin.memoryMap = new MemoryMap(filePath);
-        plugin.fileSize = plugin.memoryMap.getSize();
         plugin.parseFileHeader();
         plugin.parseGroups();
-        plugin.fileManager.addFile(this);
         return plugin;
     }
 
@@ -78,6 +77,11 @@ class PluginFile extends Container {
 
     get definitionManager() {
         return this.session.definitionManager;
+    }
+
+    get fileSize() {
+        if (!this.memoryMap) return;
+        return this.memoryMap.getSize();
     }
 
     initHeaderDefs() {
