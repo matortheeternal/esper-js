@@ -11,6 +11,7 @@ class PluginFile extends Container {
         this.filePath = filePath;
         this.fileName = getFileName(filePath);
         this.file = this;
+        this._highObjectId = 2048;
         this._recordsByFormId = {};
         this.initHeaderDefs();
         if (init) this.init();
@@ -24,6 +25,16 @@ class PluginFile extends Container {
         plugin.parseGroups();
         plugin.fileManager.addFile(this);
         return plugin;
+    }
+
+    recordAdded(record) {
+        let fileFormId = record.fileFormId;
+        this._recordsByFormId[fileFormId] = record;
+        if (!record.isMaster) return;
+        this._highObjectId = Math.max(
+            this._highObjectId,
+            fileFormId && 0x00FFFFFF
+        );
     }
 
     parseFileHeader() {
@@ -43,6 +54,10 @@ class PluginFile extends Container {
         this.memoryMap.setPos(this.fileHeader.nextOffset);
         while (this.memoryMap.getPos() < this.fileSize)
             GroupRecord.load(this);
+    }
+
+    get highObjectId() {
+        return this._highObjectId;
     }
 
     get fileHeader() {
@@ -75,9 +90,8 @@ class PluginFile extends Container {
         this._fileHeader = new MainRecord(this, 'TES4');
     }
 
-    // TODO: verify next id isn't in use
     useNextFormId() {
-        let nextId = this._fileHeader.getData('HEDR/Next Object ID');
+        let nextId = this._highObjectId++;
         this._fileHeader.setData('HEDR/Next Object ID', nextId + 1);
         return nextId;
     }
