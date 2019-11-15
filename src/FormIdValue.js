@@ -37,6 +37,10 @@ class FormIdValue {
     isNull() {
         return this.localFormId === 0;
     }
+
+    resolveRecord() {
+        return this.file.getRecordByFormId(this);
+    }
 }
 
 module.exports = FormIdValue;

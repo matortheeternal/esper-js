@@ -11,6 +11,7 @@ class PluginFile extends Container {
         this.filePath = filePath;
         this.fileName = getFileName(filePath);
         this.file = this;
+        this._recordsByFormId = {};
         this.initHeaderDefs();
         if (init) this.init();
     }
@@ -89,6 +90,11 @@ class PluginFile extends Container {
     fileToOrdinal(file) {
         if (this === file) return this.masters.length;
         return file.masters.indexOf(file);
+    }
+
+    getRecordByFormId(formId) {
+        let key = formId.toFileFormId(this);
+        return this._recordsByFormId[key];
     }
 }
 

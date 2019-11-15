@@ -31,6 +31,11 @@ class ValueElement extends Element {
     set value(value) {
         this.def.setValue(this, value);
     }
+
+    get referencedRecord() {
+        if (this.defType !== 'formId') return;
+        return this.value.resolveRecord();
+    }
 }
 
 module.exports = ValueElement;
