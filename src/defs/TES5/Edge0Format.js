@@ -17,7 +17,7 @@ class Edge0Format extends FormatDef {
     resolveMeshInfo(element, data) {
         let edgeLink = this.getEdgeLink(element, data);
         if (!edgeLink) return [];
-        let meshRec = edgeLink.getElement('@Mesh');
+        let meshRec = edgeLink.getElement('Mesh\\@W');
         if (!meshRec) return [];
         let tri = edgeLink.getData('Triangle');
         return [meshRec, tri];

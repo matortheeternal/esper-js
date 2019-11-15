@@ -4,7 +4,7 @@ const {getTintLayerName} = require('../../tintLayerCache');
 class TintLayerFormat extends FormatDef {
     dataToValue(element, data) {
         let actor = element.record,
-            race = actor.getElement('@RNAM'),
+            race = actor.getElement('RNAM\\@W'),
             female = actor.getFlag('ACBS\\Flags', 'Female');
         if (!race) return `${data}`;
         let name = getTintLayerName(race, female, data);
