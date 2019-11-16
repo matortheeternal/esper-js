@@ -26,6 +26,7 @@ class BytesDef extends ValueDef {
     }
 
     getValue(element) {
+        if (element._data.length === 0) return '';
         let a = Array.from(element._data).map(v => v.toString(16));
         return a.join(' ').toUpperCase();
     }
