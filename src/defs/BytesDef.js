@@ -1,6 +1,9 @@
 const ValueDef = require('./ValueDef');
 const InvalidDefSizeError = require('../errors/InvalidDefSizeError');
+const InvalidValueError = require('../errors/InvalidValueError');
 const {isPositiveInteger} = require('../helpers');
+
+const bytesExpr = /^([0-9a-f]{2} )*([0-9a-f]{2})$/i;
 
 class BytesDef extends ValueDef {
     constructor(manager, def, parent) {
@@ -28,6 +31,8 @@ class BytesDef extends ValueDef {
     }
 
     setValue(element, value) {
+        let match = value.match(bytesExpr);
+        if (!match) throw new InvalidValueError(this, value);
         let a = value.split(' ').map(v => parseInt(v, 16));
         this.setData(element, new Buffer(a));
     }
