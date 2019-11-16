@@ -2,7 +2,7 @@ const Def = require('./Def');
 
 class FormatDef extends Def {
     dataToValue(element, data) {
-        return `${data};`
+        return `${data}`;
     }
 
     valueToData(element, value) {
