@@ -2,19 +2,40 @@ const FormatDef = require('./FormatDef');
 const UnknownFlagError = require('../errors/UnknownFlagError');
 const {getBits} = require('../helpers');
 
+const unknownFlagExpr = /^Unknown (\d+)$/;
+
 class FlagsDef extends FormatDef {
-    dataToValue(element, data) {
-        let buf = this.parent.toBytes(data);
-        return getBits(buf).reduce((a, bit, index) => {
-            if (bit) a.push(this.flags[index]);
+    getFlagValue(index) {
+        return this.flags[index] || `Unknown ${index}`;
+    }
+
+    getFlagIndex(flag) {
+        let index = Object.keys(this.flags).find(index => {
+            return this.flags[index] === flag;
+        });
+        if (index !== undefined) return parseInt(index);
+        let match = flag.match(unknownFlagExpr);
+        if (!match) throw new UnknownFlagError(flag);
+        return parseInt(match[1]);
+    }
+
+    dataToArray(element, data) {
+        let bits = getBits(data).reverse();
+        return bits.reduce((a, bit, index) => {
+            if (bit) a.push(this.getFlagValue(index));
             return a;
         }, []);
+    };
+
+    dataToValue(element, data) {
+        return this.dataToArray(element, data).join(', ');
     }
 
     valueToData(element, value) {
-        return value.reduce((data, flag) => {
-            let index = this.flags.indexOf(flag);
-            if (index === -1) throw new UnknownFlagError(flag);
+        return value.split(', ').reduce((data, flag) => {
+            let index = this.getFlagIndex(flag);
+            if (index > 8 * this.parent.size)
+                throw new Error(`Flag index out of bounds: ${index}`);
             return data + Math.pow(2, index);
         }, 0);
     }
