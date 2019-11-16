@@ -3,7 +3,7 @@ class UnknownSignatureError extends Error {
         let position = record.memoryMap.getPos().toString(16);
         super(`Encountered unknown signature ${sig} when parsing ` +
             `${record.signature} record at 0+${position}`);
-        Error.captureStackTrace(this, InvalidEnumValueError);
+        Error.captureStackTrace(this, UnknownSignatureError);
     }
 }
 
