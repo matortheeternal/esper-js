@@ -4,8 +4,8 @@ const path = require('path');
 let loadDefClasses = function(defsPath, keyStr) {
     if (!fs.existsSync(defsPath)) return;
     return fs.readdirSync(defsPath).reduce((defClasses, filename) => {
-        let defClassPath = path.join(basePath, filename);
-        if (fs.lstatSync(defClassPath).isDirectory()) return;
+        let defClassPath = path.join(defsPath, filename);
+        if (fs.lstatSync(defClassPath).isDirectory()) return defClasses;
         let DefClass = require(defClassPath),
             key = DefClass[keyStr];
         if (key) defClasses[key] = DefClass;
