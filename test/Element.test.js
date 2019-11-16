@@ -55,31 +55,27 @@ describe('Element', () => {
         });
     });
 
-    describe('name', () => {
+    describe('instance methods', () => {
         let element;
 
         beforeAll(() => {
             element = new Element(null, {name: 'Test'});
         });
 
-        it('should return def name', () => {
-            expect(element.name).toBe('Test');
-        });
-    });
-
-    describe('displayName', () => {
-        let element;
-
-        beforeAll(() => {
-            element = new Element(null, {name: 'Test'});
+        describe('name', () => {
+            it('should return def name', () => {
+                expect(element.name).toBe('Test');
+            });
         });
 
-        it('should return def name', () => {
-            expect(element.displayName).toBe('Test');
+        describe('displayName', () => {
+            it('should return def name', () => {
+                expect(element.displayName).toBe('Test');
+            });
         });
-    });
 
-    describe('path', () => {
-        // TODO
+        describe('path', () => {
+            // TODO
+        });
     });
 });

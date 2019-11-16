@@ -32,19 +32,21 @@ describe('Def', () => {
         });
     });
 
-    describe('containsSignature', () => {
+    describe('instance methods', () => {
         let def;
 
         beforeAll(() => {
             def = new Def(manager, {}, null);
         });
 
-        it('should be defined', () => {
-            expect(def.containsSignature).toBeDefined();
-        });
+        describe('containsSignature', () => {
+            it('should be defined', () => {
+                expect(def.containsSignature).toBeDefined();
+            });
 
-        it('should return false', () => {
-            expect(def.containsSignature('ABCD')).toBe(false);
+            it('should return false', () => {
+                expect(def.containsSignature('ABCD')).toBe(false);
+            });
         });
     });
 });

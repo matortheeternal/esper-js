@@ -19,14 +19,12 @@ describe('EnumDef', () => {
     });
 
     describe('constructor', () => {
-        let def;
-
         it('should be defined', () => {
             expect(EnumDef).toBeDefined();
         });
 
         it('should create a new instance', () => {
-            def = new EnumDef(manager, {}, null);
+            let def = new EnumDef(manager, {}, null);
             expect(def).toBeInstanceOf(EnumDef);
         });
 
@@ -35,59 +33,55 @@ describe('EnumDef', () => {
         });
     });
 
-    describe('dataToValue', () => {
+    describe('instance methods', () => {
         let def;
 
         beforeAll(() => {
             def = new EnumDef(manager, animalEnum, null);
         });
 
-        it('should be defined', () => {
-            expect(def.dataToValue).toBeDefined();
-        });
+        describe('dataToValue', () => {
+            it('should be defined', () => {
+                expect(def.dataToValue).toBeDefined();
+            });
 
-        describe('known option', () => {
-            it('should return the enumeration option value', () => {
-                expect(def.dataToValue(null, 1)).toBe('Giraffe');
-                expect(def.dataToValue(null, 2)).toBe('Hippo');
+            describe('known option', () => {
+                it('should return the enumeration option value', () => {
+                    expect(def.dataToValue(null, 1)).toBe('Giraffe');
+                    expect(def.dataToValue(null, 2)).toBe('Hippo');
+                });
+            });
+
+            describe('unknown option', () => {
+                it('should return the unknownOption string if provided', () => {
+                    expect(def.dataToValue(null, 3)).toBe('<Unknown Animal>');
+                });
+
+                it('should return default format if unknownOption not provided', () => {
+                    delete def.unknownOption;
+                    expect(def.dataToValue(null, 3)).toBe('<Unknown 3>');
+                });
             });
         });
 
-        describe('unknown option', () => {
-            it('should return the unknownOption string if provided', () => {
-                expect(def.dataToValue(null, 3)).toBe('<Unknown Animal>');
+        describe('valueToData', () => {
+            describe('known option', () => {
+                it('should return the option id', () => {
+                    expect(def.valueToData(null, 'Giraffe')).toBe(1);
+                    expect(def.valueToData(null, 'Hippo')).toBe(2);
+                });
             });
 
-            it('should return default format if unknownOption not provided', () => {
-                delete def.unknownOption;
-                expect(def.dataToValue(null, 3)).toBe('<Unknown 3>');
-            });
-        });
-    });
+            describe('unknown option', () => {
+                it('should return number if in default format', () => {
+                    expect(def.valueToData(null, '<Unknown 3>')).toBe(3);
+                });
 
-    describe('valueToData', () => {
-        let def;
-
-        beforeAll(() => {
-            def = new EnumDef(manager, animalEnum, null);
-        });
-
-        describe('known option', () => {
-            it('should return the option id', () => {
-                expect(def.valueToData(null, 'Giraffe')).toBe(1);
-                expect(def.valueToData(null, 'Hippo')).toBe(2);
-            });
-        });
-
-        describe('unknown option', () => {
-            it('should return number if in default format', () => {
-                expect(def.valueToData(null, '<Unknown 3>')).toBe(3);
-            });
-
-            it('should throw an error if not in default format', () => {
-                expect(() => {
-                    def.valueToData(null, '<Unknown Animal>');
-                }).toThrow(InvalidEnumValueError);
+                it('should throw an error if not in default format', () => {
+                    expect(() => {
+                        def.valueToData(null, '<Unknown Animal>');
+                    }).toThrow(InvalidEnumValueError);
+                });
             });
         });
     });

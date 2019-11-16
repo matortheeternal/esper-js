@@ -27,48 +27,50 @@ describe('ValueDef', () => {
         });
     });
 
-    describe('toBytes', () => {
-        let def;
+    describe('instance methods', () => {
+        describe('toBytes', () => {
+            let def;
 
-        beforeAll(() => {
-            def = new ValueDef(manager, {}, null);
-        });
-
-        it('should be defined', () => {
-            expect(def.toBytes).toBeDefined();
-        });
-
-        it('should throw an unimplemented error', () => {
-            expect(() => {
-                def.toBytes();
-            }).toThrow(UnimplementedError)
-        });
-    });
-
-    describe('write', () => {
-        let stream, buf, def;
-
-        beforeAll(() => {
-            stream = {write: jest.fn()};
-            buf = new Buffer(1);
-            class ExampleValueDef extends ValueDef {}
-            ExampleValueDef.prototype.toBytes = jest.fn(() => {
-                return buf;
+            beforeAll(() => {
+                def = new ValueDef(manager, {}, null);
             });
-            def = new ExampleValueDef(manager, {}, null);
+
+            it('should be defined', () => {
+                expect(def.toBytes).toBeDefined();
+            });
+
+            it('should throw an unimplemented error', () => {
+                expect(() => {
+                    def.toBytes();
+                }).toThrow(UnimplementedError)
+            });
         });
 
-        it('should be defined', () => {
-            expect(def.write).toBeDefined();
-        });
+        describe('write', () => {
+            let stream, buf, def;
 
-        it('should call toBytes with data', () => {
-            def.write(0, stream);
-            expect(def.toBytes).toHaveBeenCalledWith(0);
-        });
+            beforeAll(() => {
+                stream = {write: jest.fn()};
+                buf = new Buffer(1);
+                class ExampleValueDef extends ValueDef {}
+                ExampleValueDef.prototype.toBytes = jest.fn(() => {
+                    return buf;
+                });
+                def = new ExampleValueDef(manager, {}, null);
+            });
 
-        it('should call stream.write', () => {
-            expect(stream.write).toHaveBeenCalledWith(buf);
+            it('should be defined', () => {
+                expect(def.write).toBeDefined();
+            });
+
+            it('should call toBytes with data', () => {
+                def.write(0, stream);
+                expect(def.toBytes).toHaveBeenCalledWith(0);
+            });
+
+            it('should call stream.write', () => {
+                expect(stream.write).toHaveBeenCalledWith(buf);
+            });
         });
     });
 });

@@ -26,35 +26,31 @@ describe('FormatDef', () => {
         });
     });
 
-    describe('dataToValue', () => {
+    describe('instance methods', () => {
         let def;
 
         beforeAll(() => {
             def = new FormatDef(manager, {}, null);
         });
 
-        it('should be defined', () => {
-            expect(def.dataToValue).toBeDefined();
+        describe('dataToValue', () => {
+            it('should be defined', () => {
+                expect(def.dataToValue).toBeDefined();
+            });
+
+            it('should return the data converted to a string', () => {
+                expect(def.dataToValue(null, 40)).toBe('40');
+            });
         });
 
-        it('should return the data converted to a string', () => {
-            expect(def.dataToValue(null, 40)).toBe('40');
-        });
-    });
+        describe('valueToData', () => {
+            it('should be defined', () => {
+                expect(def.valueToData).toBeDefined();
+            });
 
-    describe('valueToData', () => {
-        let def;
-
-        beforeAll(() => {
-            def = new FormatDef(manager, {}, null);
-        });
-
-        it('should be defined', () => {
-            expect(def.valueToData).toBeDefined();
-        });
-
-        it('should return the value converted to an integer', () => {
-            expect(def.valueToData(null, '40')).toBe(40);
+            it('should return the value converted to an integer', () => {
+                expect(def.valueToData(null, '40')).toBe(40);
+            });
         });
     });
 });
