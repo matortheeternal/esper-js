@@ -1,5 +1,5 @@
 {
-  "name": "esp-api",
+  "name": "esper",
   "description": "An API for reading and writing Bethesda Plugin files.",
   "version": "0.0.1",
   "author": "Mator",
