@@ -28,13 +28,16 @@ class IntegerDef extends ValueDef {
     }
 
     getValue(element) {
-        // TODO: format
-        return element._data.toString();
+        return this.formatDef
+            ? this.formatDef.dataToValue(element, element._data)
+            : element._data.toString();
     }
 
     setValue(element, value) {
-        // TODO: format
-        this.setData(element, parseInt(value));
+        let data = this.formatDef
+            ? this.formatDef.valueToData(element, value)
+            : parseInt(value);
+        this.setData(element, data);
     }
 }
 
