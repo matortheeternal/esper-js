@@ -34,7 +34,7 @@ class FlagsDef extends FormatDef {
     valueToData(element, value) {
         return value.split(', ').reduce((data, flag) => {
             let index = this.getFlagIndex(flag);
-            if (index > 8 * this.parent.size)
+            if (index >= 8 * this.parent.size)
                 throw new Error(`Flag index out of bounds: ${index}`);
             return data + Math.pow(2, index);
         }, 0);

@@ -2,6 +2,7 @@ const DefinitionManager = require('../src/DefinitionManager');
 const FlagsDef = require('../src/defs/FlagsDef');
 const FormatDef = require('../src/defs/FormatDef');
 const UInt32Def = require('../src/defs/UInt32Def');
+const UnknownFlagError = require('../src/errors/UnknownFlagError');
 
 const exampleFlags = {
     flags: {
@@ -65,8 +66,14 @@ describe('FlagsDef', () => {
                 expect(def.getFlagIndex('No Havok')).toBe(1);
             });
 
-            it('should return the flag index for unknown flags', () => {
+            it('should return the index for "Unknown #" flags', () => {
                 expect(def.getFlagIndex('Unknown 3')).toBe(3);
+            });
+
+            it('should throw an error if flag is not known', () => {
+                expect(() => {
+                    def.getFlagIndex('sdfk')
+                }).toThrow(UnknownFlagError);
             });
         });
 
@@ -94,6 +101,24 @@ describe('FlagsDef', () => {
         describe('valueToData', () => {
             it('should be defined', () => {
                 expect(def.valueToData).toBeDefined();
+            });
+
+            it('should convert single flags', () => {
+                expect(def.valueToData(null, 'Initially Disabled')).toBe(1);
+                expect(def.valueToData(null, 'No Havok')).toBe(2);
+            });
+
+            it('should convert multiple flags', () => {
+                expect(def.valueToData(null,
+                    'Initially Disabled, No Havok'
+                )).toBe(3);
+                expect(def.valueToData(null, 'Unknown 2, Unknown 3')).toBe(12);
+            });
+
+            it('should throw an error if value exceeds data size', () => {
+                expect(() => {
+                    def.valueToData(null, 'Unknown 32')
+                }).toThrow('Flag index out of bounds: 32');
             });
         });
     });
