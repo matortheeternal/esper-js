@@ -85,8 +85,14 @@ let pad = function(num, amount, str = '0') {
     return num.toString().padStart(amount, str);
 };
 
+let isPositiveInteger = function(num) {
+    return typeof num === 'number' &&
+        Math.floor(num) === num &&
+        num >= 0;
+};
+
 module.exports = {
     minmax, strToBuffer, strEquals, readUntil,
     expectProperties, getFileName, clone, getBits,
-    pad
+    pad, isPositiveInteger
 };
