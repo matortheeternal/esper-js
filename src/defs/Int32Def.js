@@ -10,6 +10,10 @@ class Int32Def extends IntegerDef {
         buf.writeInt32LE(data);
         return buf;
     }
+
+    get size() {
+        return 4;
+    }
 }
 
 module.exports = Object.assign(Int32Def, {

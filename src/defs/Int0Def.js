@@ -4,6 +4,10 @@ class Int0Def extends IntegerDef {
     read() {
         return 0;
     }
+
+    get size() {
+        return 0;
+    }
 }
 
 module.exports = Object.assign(Int0Def, {

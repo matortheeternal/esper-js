@@ -10,6 +10,10 @@ class UInt16Def extends IntegerDef {
         buf.writeUInt16LE(data);
         return buf;
     }
+
+    get size() {
+        return 2;
+    }
 }
 
 module.exports = Object.assign(UInt16Def, {

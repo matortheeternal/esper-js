@@ -10,6 +10,10 @@ class UInt8Def extends IntegerDef {
         buf.writeUInt8(data);
         return buf;
     }
+
+    get size() {
+        return 1;
+    }
 }
 
 module.exports = Object.assign(UInt8Def, {

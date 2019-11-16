@@ -16,6 +16,10 @@ class FloatDef extends ValueDef {
     setValue(element, value) {
         this.setData(element, parseFloat(value));
     }
+
+    get size() {
+        return 4;
+    }
 }
 
 module.exports = Object.assign(FloatDef, {
