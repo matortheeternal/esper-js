@@ -105,28 +105,13 @@ describe('helpers', () => {
     });
 
     describe('getBits', () => {
-        it('should extract bits from a buffer', () => {
-            let buf = new Buffer([255, 128 + 32 + 8 + 2]),
-                bits = helpers.getBits(buf);
-            expect(bits).toBeDefined();
-            expect(bits.length).toBe(16);
-            expect(bits).toEqual([
-                1, 1, 1, 1, 1, 1, 1, 1,
-                1, 0, 1, 0, 1, 0, 1, 0
+        it('should return bits', () => {
+            expect(helpers.getBits(255)).toEqual([
+                1, 1, 1, 1,
+                1, 1, 1, 1
             ]);
-        });
-
-        describe('littleEndian param', () => {
-            it('should reverse byte order', () => {
-                let buf = new Buffer([255, 128 + 32 + 8 + 2]),
-                    bits = helpers.getBits(buf, true);
-                expect(bits).toBeDefined();
-                expect(bits.length).toBe(16);
-                expect(bits).toEqual([
-                    1, 0, 1, 0, 1, 0, 1, 0,
-                    1, 1, 1, 1, 1, 1, 1, 1
-                ]);
-            });
+            expect(helpers.getBits(4)).toEqual([1, 0, 0]);
+            expect(helpers.getBits(1)).toEqual([1]);
         });
     });
 

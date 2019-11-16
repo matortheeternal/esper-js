@@ -64,20 +64,12 @@ let cloneObject = function(obj) {
     }, {});
 };
 
-let getBits = function(buf, littleEndian = false) {
-    let bits = [],
-        a = Array.from(buf);
-    if (littleEndian) a.reverse();
-    a.forEach(byte => {
-        bits.push(+Boolean(byte & 0x80));
-        bits.push(+Boolean(byte & 0x40));
-        bits.push(+Boolean(byte & 0x20));
-        bits.push(+Boolean(byte & 0x10));
-        bits.push(+Boolean(byte & 0x8));
-        bits.push(+Boolean(byte & 0x4));
-        bits.push(+Boolean(byte & 0x2));
-        bits.push(+Boolean(byte & 0x1));
-    });
+let getBits = function(num) {
+    let bits = [];
+    while (num > 0) {
+        bits.unshift(num % 2);
+        num = Math.floor(num / 2);
+    }
     return bits;
 };
 
