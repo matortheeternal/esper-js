@@ -1,5 +1,5 @@
 const FormatDef = require('../FormatDef');
-const InvalidFormatValueError = require('../../errors/InvalidFormatValueError');
+const InvalidValueError = require('../../errors/InvalidValueError');
 
 const functionAndMemberExpr = /^([^:]+):([^:]+)$/;
 
@@ -21,7 +21,7 @@ class EventFunctionAndMemberFormat extends FormatDef {
 
     valueToData(element, value) {
         let match = value.match(functionAndMemberExpr);
-        if (!match) throw new InvalidFormatValueError(this, value);
+        if (!match) throw new InvalidValueError(this, value);
         return this.fEnumDef.valueToData(match[1]) +
             this.mEnumDef.valueToData(match[2]) * Math.pow(2, 16);
     }

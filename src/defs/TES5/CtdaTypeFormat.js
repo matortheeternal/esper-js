@@ -1,5 +1,5 @@
 const FormatDef = require('../FormatDef');
-const InvalidFormatValueError = require('../../errors/InvalidFormatValueError');
+const InvalidValueError = require('../../errors/InvalidValueError');
 
 const valueExpr = /^([\w\s]+)(?:\/ ([\s\w,]+))?$/;
 
@@ -26,7 +26,7 @@ class CtdaTypeFormat extends FormatDef {
 
     valueToData(element, value) {
         let match = value.match(valueExpr);
-        if (!match) throw new InvalidFormatValueError(this, value);
+        if (!match) throw new InvalidValueError(this, value);
         let op = match[1].trimRight(),
             opData = this.enumDef.valueToData(element, op),
             flags = match[2] ? match[2].split(', ') : '',
