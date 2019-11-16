@@ -1,6 +1,15 @@
 const ValueDef = require('./ValueDef');
+const InvalidDefSizeError = require('../errors/InvalidDefSizeError');
+const {isPositiveInteger} = require('../helpers');
 
 class BytesDef extends ValueDef {
+    constructor(manager, def, parent) {
+        if (def.size === undefined) def.size = 0;
+        if (!isPositiveInteger(def.size))
+            throw new InvalidDefSizeError(def);
+        super(manager, def, parent);
+    }
+
     read(stream) {
         return stream.read(this.size);
     }
