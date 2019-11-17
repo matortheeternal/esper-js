@@ -1,4 +1,4 @@
-const IntegerDef = require('./ValueDef');
+const IntegerDef = require('./IntegerDef');
 
 class Int0Def extends IntegerDef {
     read() {
