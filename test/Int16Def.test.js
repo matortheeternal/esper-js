@@ -31,7 +31,7 @@ describe('Int16Def', () => {
             expect(def).toBeInstanceOf(Int16Def);
         });
 
-        it('should extend FormatDef', () => {
+        it('should extend IntegerDef', () => {
             expect(Int16Def.prototype).toBeInstanceOf(IntegerDef);
         });
 

@@ -31,7 +31,7 @@ describe('UInt8Def', () => {
             expect(def).toBeInstanceOf(UInt8Def);
         });
 
-        it('should extend FormatDef', () => {
+        it('should extend IntegerDef', () => {
             expect(UInt8Def.prototype).toBeInstanceOf(IntegerDef);
         });
 

@@ -31,7 +31,7 @@ describe('UInt32Def', () => {
             expect(def).toBeInstanceOf(UInt32Def);
         });
 
-        it('should extend FormatDef', () => {
+        it('should extend IntegerDef', () => {
             expect(UInt32Def.prototype).toBeInstanceOf(IntegerDef);
         });
 
