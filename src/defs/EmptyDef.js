@@ -13,6 +13,10 @@ class EmptyDef extends ValueDef {
 
     setValue(element, value) {
     }
+
+    get size() {
+        return 0;
+    }
 }
 
 module.exports = Object.assign(EmptyDef, {
