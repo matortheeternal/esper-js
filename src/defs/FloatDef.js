@@ -19,6 +19,12 @@ class FloatDef extends ValueDef {
         this.setData(element, parseFloat(value));
     }
 
+    toBytes(data) {
+        let buf = new Buffer(this.size);
+        buf.writeFloatLE(data);
+        return buf;
+    }
+
     get size() {
         return 4;
     }
