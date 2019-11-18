@@ -6,6 +6,8 @@ class FloatDef extends ValueDef {
     }
 
     setData(element, data) {
+        if (typeof data !== 'number')
+            throw new Error(`Expected a number, found: ${typeof data}`);
         element._data = data;
     }
 
