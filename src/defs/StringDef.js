@@ -1,6 +1,7 @@
 const ValueDef = require('./ValueDef');
-const {readUntil} = require('../helpers');
 const legacy = require('legacy-encoding');
+
+const nullTerminator = new Buffer([0x00]);
 
 // TODO: other encoding support
 // TODO: translated string support
@@ -8,7 +9,7 @@ class StringDef extends ValueDef {
     read(stream) {
         let buf = this.hasOwnProperty('size')
             ? stream.read(this.size)
-            : readUntil(stream, 0x00);
+            : stream.readUntil(nullTerminator);
         return legacy.decode(buf, 'cp1252');
     }
 

@@ -17,16 +17,6 @@ let strEquals = function(str1, str2) {
     }) === 0;
 };
 
-let readUntil = function(stream, val, size = 1, methodName = 'readUInt8') {
-    let bytes = [];
-    while (true) {
-        let chunk = stream.read(size);
-        if (chunk[methodName]() === val) break;
-        bytes.push(chunk);
-    }
-    return Buffer.concat(bytes);
-};
-
 let getPropType = function(prop) {
     if (prop === null) return 'null';
     let propType = typeof prop;
@@ -84,7 +74,6 @@ let isPositiveInteger = function(num) {
 };
 
 module.exports = {
-    minmax, strToBuffer, strEquals, readUntil,
-    expectProperties, getFileName, clone, getBits,
-    pad, isPositiveInteger
+    minmax, strToBuffer, strEquals, expectProperties,
+    getFileName, clone, getBits, pad, isPositiveInteger
 };

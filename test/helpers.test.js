@@ -34,12 +34,6 @@ describe('helpers', () => {
         });
     });
 
-    /*describe('readUntil', () => {
-        it('should return a buffer up until the specified byte', () => {
-            // TODO
-        });
-    });*/
-
     describe('expectProperties', () => {
         it('should succeed if properties match', () => {
             helpers.expectProperties({
