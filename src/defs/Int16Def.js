@@ -2,11 +2,11 @@ const IntegerDef = require('./IntegerDef');
 
 class Int16Def extends IntegerDef {
     read(stream) {
-        return stream.read(2).readInt16LE();
+        return stream.read(this.size).readInt16LE();
     }
 
     toBytes(data) {
-        let buf = new Buffer(2);
+        let buf = new Buffer(this.size);
         buf.writeInt16LE(data);
         return buf;
     }

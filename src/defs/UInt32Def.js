@@ -2,11 +2,11 @@ const IntegerDef = require('./IntegerDef');
 
 class UInt32Def extends IntegerDef {
     read(stream) {
-        return stream.read(4).readUInt32LE();
+        return stream.read(this.size).readUInt32LE();
     }
 
     toBytes(data) {
-        let buf = new Buffer(4);
+        let buf = new Buffer(this.size);
         buf.writeUInt32LE(data);
         return buf;
     }
