@@ -15,7 +15,7 @@ class CtdaTypeFormat extends FormatDef {
     }
 
     getFlags(element, data) {
-        return this.flagsDef.dataToValue(element, data & 0x1F)
+        return this.flagsDef.dataToValue(element, data & 0x1F);
     }
 
     dataToValue(element, data) {
