@@ -11,7 +11,5 @@ class Int0Def extends IntegerDef {
 }
 
 module.exports = Object.assign(Int0Def, {
-    defType: 'int0',
-    MIN_VALUE: 0,
-    MAX_VALUE: 0
+    defType: 'int0'
 });

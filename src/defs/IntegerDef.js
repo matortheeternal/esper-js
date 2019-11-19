@@ -42,6 +42,6 @@ class IntegerDef extends ValueDef {
 }
 
 module.exports = Object.assign(IntegerDef, {
-    MIN_VALUE: -Infinity,
-    MAX_VALUE: Infinity
+    MIN_VALUE: 0,
+    MAX_VALUE: 0
 });
