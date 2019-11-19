@@ -2,6 +2,8 @@ const FormatDef = require('../FormatDef');
 const UnknownCTDAFunctionError = require('../../errors/UnknownCTDAFunctionError');
 const CTDAFunctions = require('./data/CTDAFunctions');
 
+const unknownFunctionExpr = /^<Unknown (-?\d+)>$/;
+
 class CTDAFunctionFormat extends FormatDef {
     dataToValue(element, data) {
         let option = CTDAFunctions[data];
@@ -9,11 +11,13 @@ class CTDAFunctionFormat extends FormatDef {
     }
 
     valueToData(element, value) {
-        let data = Object.keys(CTDAFunctions).find(index => {
+        let key = Object.keys(CTDAFunctions).find(index => {
             return CTDAFunctions[index].name === value;
         });
-        if (data === undefined) throw new UnknownCTDAFunctionError(value);
-        return parseInt(data);
+        if (key !== undefined) return parseInt(key);
+        let match = value.match(unknownFunctionExpr);
+        if (!match) throw new UnknownCTDAFunctionError(value);
+        return parseInt(match[1]);
     }
 }
 
