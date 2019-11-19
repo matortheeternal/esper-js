@@ -3,8 +3,11 @@ const MembersDef = require('../src/defs/MembersDef');
 const Def = require('../src/defs/Def');
 const Element = require('../src/elements/Element');
 const ExpectedDefMembersError = require('../src/errors/ExpectedDefMembersError');
+const UnknownSignatureError = require('../src/errors/UnknownSignatureError');
 const {subrecord, uint32, float, string} = require('./helpers/defHelpers');
 const {sortedContainer} = require('./helpers/elementHelpers');
+
+Element.load = jest.fn();
 
 const example = {
     members: [
@@ -107,7 +110,22 @@ describe('MembersDef', () => {
         });
 
         describe('loadElement', () => {
+            it('should throw an error if a matching member def is not found', () => {
+                expect(() => {
+                    def.loadElement(container, 'A1B2');
+                }).toThrow(UnknownSignatureError);
+            });
 
+            it('should initialize non-existent elements', () => {
+                def.loadElement(container, 'TNG2');
+                let e = container._elements[1];
+                expect(e).toBeDefined();
+                expect(e).toBeInstanceOf(Element);
+            });
+
+            it('should call subrecordFound', () => {
+                expect(Element.load).toHaveBeenCalledTimes(1);
+            });
         });
     });
 });

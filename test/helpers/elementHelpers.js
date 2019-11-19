@@ -11,8 +11,10 @@ let plugin = function(params) {
 };
 
 let sortedContainer = function(def) {
-    let container = Object.create(Container.prototype);
+    let container = Object.create(Container.prototype),
+        mmap = { getPos: () => 0 };
     Object.defineProperty(container, 'sorted', { get: () => true });
+    Object.defineProperty(container, 'memoryMap', { get: () => mmap });
     return Object.assign(container, { def, _elements: [] });
 };
 
