@@ -2,7 +2,7 @@ const DefinitionManager = require('../src/DefinitionManager');
 const FormIdValue = require('../src/FormIdValue');
 const UInt32Def = require('../src/defs/UInt32Def');
 const FormIdDef = require('../src/defs/FormIdDef');
-const basicFile = require('./helpers/basicFile');
+const {plugin, makeDummyFile} = require('./helpers');
 
 describe('FormIdDef', () => {
     let manager;
@@ -33,10 +33,14 @@ describe('FormIdDef', () => {
     });
 
     describe('instance methods', () => {
-        let def, element, stream;
+        let def, element, basicFile, stream;
 
         beforeAll(() => {
             def = new FormIdDef(manager, {}, null);
+            basicFile = plugin({
+                filename: 'Basic.esp',
+                _masters: [makeDummyFile('Skyrim.esm')]
+            });
             element = {file: basicFile, _data: 0};
             let b = new Buffer([0x3E, 0xAE, 0x01, 0x00]);
             stream = {read: jest.fn(() => b)};
