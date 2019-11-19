@@ -1,7 +1,7 @@
-const DefinitionManager = require('../src/DefinitionManager');
-const IntegerDef = require('../src/defs/IntegerDef');
-const Int32Def = require('../src/defs/Int32Def');
-const EnumDef = require('../src/defs/EnumDef');
+const DefinitionManager = require('../../src/DefinitionManager');
+const IntegerDef = require('../../src/defs/IntegerDef');
+const UInt16Def = require('../../src/defs/UInt16Def');
+const EnumDef = require('../../src/defs/EnumDef');
 
 const animalEnum = {
     type: 'enum',
@@ -12,9 +12,9 @@ const animalEnum = {
     }
 };
 
-const exampleInt32 = {format: animalEnum};
+const exampleUInt16 = {format: animalEnum};
 
-describe('Int32Def', () => {
+describe('UInt16Def', () => {
     let manager;
 
     beforeAll(() => {
@@ -23,20 +23,20 @@ describe('Int32Def', () => {
 
     describe('constructor', () => {
         it('should be defined', () => {
-            expect(Int32Def).toBeDefined();
+            expect(UInt16Def).toBeDefined();
         });
 
         it('should create a new instance', () => {
-            let def = new Int32Def(manager, {}, null);
-            expect(def).toBeInstanceOf(Int32Def);
+            let def = new UInt16Def(manager, {}, null);
+            expect(def).toBeInstanceOf(UInt16Def);
         });
 
         it('should extend IntegerDef', () => {
-            expect(Int32Def.prototype).toBeInstanceOf(IntegerDef);
+            expect(UInt16Def.prototype).toBeInstanceOf(IntegerDef);
         });
 
         it('should initialize formatDef if def has format property', () => {
-            let def = new Int32Def(manager, exampleInt32, null);
+            let def = new UInt16Def(manager, exampleUInt16, null);
             expect(def.formatDef).toBeDefined();
             expect(def.formatDef).toBeInstanceOf(EnumDef)
         });
@@ -46,10 +46,10 @@ describe('Int32Def', () => {
         let def, defWithEnum, element, stream;
 
         beforeAll(() => {
-            def = new Int32Def(manager, {}, null);
-            defWithEnum = new Int32Def(manager, exampleInt32, null);
+            def = new UInt16Def(manager, {}, null);
+            defWithEnum = new UInt16Def(manager, exampleUInt16, null);
             element = {_data: 0};
-            stream = {read: jest.fn(() => new Buffer([0xFF, 0xFF, 0xFF, 0xFF]))};
+            stream = {read: jest.fn(() => new Buffer([0xA3, 0xF1]))};
         });
 
         describe('setData', () => {
@@ -58,18 +58,18 @@ describe('Int32Def', () => {
             });
 
             it('should set element data', () => {
-                def.setData(element, -35735723);
-                expect(element._data).toBe(-35735723);
+                def.setData(element, 0x89F1);
+                expect(element._data).toBe(0x89F1);
             });
 
-            it('should set data to 2147483647 if a higher value is passed', () => {
-                def.setData(element, 2147483648);
-                expect(element._data).toBe(2147483647);
+            it('should set data to 0xFFFF if a higher value is passed', () => {
+                def.setData(element, 0xFFFFFF);
+                expect(element._data).toBe(0xFFFF);
             });
 
-            it('should set data to -2147483648 if a lower value is passed', () => {
-                def.setData(element, -2147483649);
-                expect(element._data).toBe(-2147483648);
+            it('should set data to 0 if a lower value is passed', () => {
+                def.setData(element, -1);
+                expect(element._data).toBe(0);
             });
         });
 
@@ -80,8 +80,8 @@ describe('Int32Def', () => {
 
             describe('no format', () => {
                 it('should convert data to a string', () => {
-                    element._data = -3456378;
-                    expect(def.getValue(element)).toBe('-3456378');
+                    element._data = 23486;
+                    expect(def.getValue(element)).toBe('23486');
                 });
             });
 
@@ -100,8 +100,8 @@ describe('Int32Def', () => {
 
             describe('no format', () => {
                 it('should parse integer value', () => {
-                    def.setValue(element, '-12345678');
-                    expect(element._data).toBe(-12345678);
+                    def.setValue(element, '7234');
+                    expect(element._data).toBe(7234);
                 });
             });
 
@@ -120,12 +120,12 @@ describe('Int32Def', () => {
 
             it('should call stream.read', () => {
                 def.read(stream);
-                expect(stream.read).toHaveBeenCalledWith(4);
+                expect(stream.read).toHaveBeenCalledWith(2);
             });
 
-            it('should return the Int32 read from the stream', () => {
+            it('should return the UInt16 read from the stream', () => {
                 let data = def.read(stream);
-                expect(data).toBe(-1);
+                expect(data).toBe(0xF1A3);
             });
         });
 
@@ -135,34 +135,32 @@ describe('Int32Def', () => {
             });
 
             it('should return the data written into a buffer', () => {
-                let buf = def.toBytes(-1);
+                let buf = def.toBytes(0x1FA0);
                 expect(buf).toBeDefined();
                 expect(buf).toBeInstanceOf(Buffer);
-                expect(buf.length).toBe(4);
-                expect(buf[0]).toBe(0xFF);
-                expect(buf[1]).toBe(0xFF);
-                expect(buf[2]).toBe(0xFF);
-                expect(buf[3]).toBe(0xFF);
+                expect(buf.length).toBe(2);
+                expect(buf[0]).toBe(0xA0);
+                expect(buf[1]).toBe(0x1F);
             });
         });
 
         describe('size', () => {
-            it('should be 4', () => {
-                expect(def.size).toBe(4);
+            it('should be 2', () => {
+                expect(def.size).toBe(2);
             });
         });
     });
 
     describe('static properties', () => {
         describe('MIN_VALUE', () => {
-            it('should be -2147483648', () => {
-                expect(Int32Def.MIN_VALUE).toBe(-2147483648);
+            it('should be 0', () => {
+                expect(UInt16Def.MIN_VALUE).toBe(0);
             });
         });
 
         describe('MAX_VALUE', () => {
-            it('should be 2147483647', () => {
-                expect(Int32Def.MAX_VALUE).toBe(2147483647);
+            it('should be 0xFFFF', () => {
+                expect(UInt16Def.MAX_VALUE).toBe(0xFFFF);
             });
         });
     });

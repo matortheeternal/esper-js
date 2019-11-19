@@ -1,4 +1,4 @@
-const Element = require('../src/elements/Element');
+const Element = require('../../src/elements/Element');
 
 describe('Element', () => {
     describe('constructor', () => {

@@ -1,5 +1,5 @@
-const DefinitionManager = require('../src/DefinitionManager');
-const Def = require('../src/defs/Def');
+const DefinitionManager = require('../../src/DefinitionManager');
+const Def = require('../../src/defs/Def');
 
 describe('Def', () => {
     let manager;

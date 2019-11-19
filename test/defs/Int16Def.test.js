@@ -1,7 +1,7 @@
-const DefinitionManager = require('../src/DefinitionManager');
-const IntegerDef = require('../src/defs/IntegerDef');
-const Int8Def = require('../src/defs/Int8Def');
-const EnumDef = require('../src/defs/EnumDef');
+const DefinitionManager = require('../../src/DefinitionManager');
+const IntegerDef = require('../../src/defs/IntegerDef');
+const Int16Def = require('../../src/defs/Int16Def');
+const EnumDef = require('../../src/defs/EnumDef');
 
 const animalEnum = {
     type: 'enum',
@@ -12,9 +12,9 @@ const animalEnum = {
     }
 };
 
-const exampleInt8 = {format: animalEnum};
+const exampleInt16 = {format: animalEnum};
 
-describe('Int8Def', () => {
+describe('Int16Def', () => {
     let manager;
 
     beforeAll(() => {
@@ -23,20 +23,20 @@ describe('Int8Def', () => {
 
     describe('constructor', () => {
         it('should be defined', () => {
-            expect(Int8Def).toBeDefined();
+            expect(Int16Def).toBeDefined();
         });
 
         it('should create a new instance', () => {
-            let def = new Int8Def(manager, {}, null);
-            expect(def).toBeInstanceOf(Int8Def);
+            let def = new Int16Def(manager, {}, null);
+            expect(def).toBeInstanceOf(Int16Def);
         });
 
         it('should extend IntegerDef', () => {
-            expect(Int8Def.prototype).toBeInstanceOf(IntegerDef);
+            expect(Int16Def.prototype).toBeInstanceOf(IntegerDef);
         });
 
         it('should initialize formatDef if def has format property', () => {
-            let def = new Int8Def(manager, exampleInt8, null);
+            let def = new Int16Def(manager, exampleInt16, null);
             expect(def.formatDef).toBeDefined();
             expect(def.formatDef).toBeInstanceOf(EnumDef)
         });
@@ -46,10 +46,10 @@ describe('Int8Def', () => {
         let def, defWithEnum, element, stream;
 
         beforeAll(() => {
-            def = new Int8Def(manager, {}, null);
-            defWithEnum = new Int8Def(manager, exampleInt8, null);
+            def = new Int16Def(manager, {}, null);
+            defWithEnum = new Int16Def(manager, exampleInt16, null);
             element = {_data: 0};
-            stream = {read: jest.fn(() => new Buffer([0xFF]))};
+            stream = {read: jest.fn(() => new Buffer([0xFF, 0xFF]))};
         });
 
         describe('setData', () => {
@@ -58,18 +58,18 @@ describe('Int8Def', () => {
             });
 
             it('should set element data', () => {
-                def.setData(element, -64);
-                expect(element._data).toBe(-64);
+                def.setData(element, -15623);
+                expect(element._data).toBe(-15623);
             });
 
-            it('should set data to 127 if a higher value is passed', () => {
-                def.setData(element, 255);
-                expect(element._data).toBe(127);
+            it('should set data to 32767 if a higher value is passed', () => {
+                def.setData(element, 0xFFFF);
+                expect(element._data).toBe(32767);
             });
 
-            it('should set data to -128 if a lower value is passed', () => {
-                def.setData(element, -255);
-                expect(element._data).toBe(-128);
+            it('should set data to -32768 if a lower value is passed', () => {
+                def.setData(element, -452345);
+                expect(element._data).toBe(-32768);
             });
         });
 
@@ -80,8 +80,8 @@ describe('Int8Def', () => {
 
             describe('no format', () => {
                 it('should convert data to a string', () => {
-                    element._data = -61;
-                    expect(def.getValue(element)).toBe('-61');
+                    element._data = -3561;
+                    expect(def.getValue(element)).toBe('-3561');
                 });
             });
 
@@ -100,8 +100,8 @@ describe('Int8Def', () => {
 
             describe('no format', () => {
                 it('should parse integer value', () => {
-                    def.setValue(element, '-42');
-                    expect(element._data).toBe(-42);
+                    def.setValue(element, '-7345');
+                    expect(element._data).toBe(-7345);
                 });
             });
 
@@ -120,10 +120,10 @@ describe('Int8Def', () => {
 
             it('should call stream.read', () => {
                 def.read(stream);
-                expect(stream.read).toHaveBeenCalledWith(1);
+                expect(stream.read).toHaveBeenCalledWith(2);
             });
 
-            it('should return the Int8 read from the stream', () => {
+            it('should return the Int16 read from the stream', () => {
                 let data = def.read(stream);
                 expect(data).toBe(-1);
             });
@@ -135,31 +135,32 @@ describe('Int8Def', () => {
             });
 
             it('should return the data written into a buffer', () => {
-                let buf = def.toBytes(-127);
+                let buf = def.toBytes(-1);
                 expect(buf).toBeDefined();
                 expect(buf).toBeInstanceOf(Buffer);
-                expect(buf.length).toBe(1);
-                expect(buf[0]).toBe(129);
+                expect(buf.length).toBe(2);
+                expect(buf[0]).toBe(0xFF);
+                expect(buf[1]).toBe(0xFF);
             });
         });
 
         describe('size', () => {
-            it('should be 1', () => {
-                expect(def.size).toBe(1);
+            it('should be 2', () => {
+                expect(def.size).toBe(2);
             });
         });
     });
 
     describe('static properties', () => {
         describe('MIN_VALUE', () => {
-            it('should be -128', () => {
-                expect(Int8Def.MIN_VALUE).toBe(-128);
+            it('should be -32768', () => {
+                expect(Int16Def.MIN_VALUE).toBe(-32768);
             });
         });
 
         describe('MAX_VALUE', () => {
-            it('should be 127', () => {
-                expect(Int8Def.MAX_VALUE).toBe(127);
+            it('should be 32767', () => {
+                expect(Int16Def.MAX_VALUE).toBe(32767);
             });
         });
     });

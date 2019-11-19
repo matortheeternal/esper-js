@@ -1,7 +1,7 @@
-const DefinitionManager = require('../src/DefinitionManager');
-const IntegerDef = require('../src/defs/IntegerDef');
-const Int0Def = require('../src/defs/Int0Def');
-const EnumDef = require('../src/defs/EnumDef');
+const DefinitionManager = require('../../src/DefinitionManager');
+const IntegerDef = require('../../src/defs/IntegerDef');
+const UInt8Def = require('../../src/defs/UInt8Def');
+const EnumDef = require('../../src/defs/EnumDef');
 
 const animalEnum = {
     type: 'enum',
@@ -12,9 +12,9 @@ const animalEnum = {
     }
 };
 
-const exampleInt0 = {format: animalEnum};
+const exampleUInt8 = {format: animalEnum};
 
-describe('Int0Def', () => {
+describe('UInt8Def', () => {
     let manager;
 
     beforeAll(() => {
@@ -23,20 +23,20 @@ describe('Int0Def', () => {
 
     describe('constructor', () => {
         it('should be defined', () => {
-            expect(Int0Def).toBeDefined();
+            expect(UInt8Def).toBeDefined();
         });
 
         it('should create a new instance', () => {
-            let def = new Int0Def(manager, {}, null);
-            expect(def).toBeInstanceOf(Int0Def);
+            let def = new UInt8Def(manager, {}, null);
+            expect(def).toBeInstanceOf(UInt8Def);
         });
 
         it('should extend IntegerDef', () => {
-            expect(Int0Def.prototype).toBeInstanceOf(IntegerDef);
+            expect(UInt8Def.prototype).toBeInstanceOf(IntegerDef);
         });
 
         it('should initialize formatDef if def has format property', () => {
-            let def = new Int0Def(manager, exampleInt0, null);
+            let def = new UInt8Def(manager, exampleUInt8, null);
             expect(def.formatDef).toBeDefined();
             expect(def.formatDef).toBeInstanceOf(EnumDef)
         });
@@ -46,10 +46,10 @@ describe('Int0Def', () => {
         let def, defWithEnum, element, stream;
 
         beforeAll(() => {
-            def = new Int0Def(manager, {}, null);
-            defWithEnum = new Int0Def(manager, exampleInt0, null);
+            def = new UInt8Def(manager, {}, null);
+            defWithEnum = new UInt8Def(manager, exampleUInt8, null);
             element = {_data: 0};
-            stream = {read: jest.fn(() => new Buffer([]))};
+            stream = {read: jest.fn(() => new Buffer([170]))};
         });
 
         describe('setData', () => {
@@ -58,18 +58,17 @@ describe('Int0Def', () => {
             });
 
             it('should set element data', () => {
-                element._data = null;
-                def.setData(element, 0);
-                expect(element._data).toBe(0);
+                def.setData(element, 128);
+                expect(element._data).toBe(128);
             });
 
-            it('should set data to 0 if a higher value is passed', () => {
-                def.setData(element, 255);
-                expect(element._data).toBe(0);
+            it('should set data to 255 if a higher value is passed', () => {
+                def.setData(element, 1024);
+                expect(element._data).toBe(255);
             });
 
             it('should set data to 0 if a lower value is passed', () => {
-                def.setData(element, -255);
+                def.setData(element, -1);
                 expect(element._data).toBe(0);
             });
         });
@@ -81,15 +80,15 @@ describe('Int0Def', () => {
 
             describe('no format', () => {
                 it('should convert data to a string', () => {
-                    element._data = 0;
-                    expect(def.getValue(element)).toBe('0');
+                    element._data = 129;
+                    expect(def.getValue(element)).toBe('129');
                 });
             });
 
             describe('with format', () => {
                 it(`should call the formatDef's dataToValue function`, () => {
-                    element._data = 0;
-                    expect(defWithEnum.getValue(element)).toBe('Giraffe');
+                    element._data = 1;
+                    expect(defWithEnum.getValue(element)).toBe('Hippo');
                 });
             });
         });
@@ -101,15 +100,15 @@ describe('Int0Def', () => {
 
             describe('no format', () => {
                 it('should parse integer value', () => {
-                    def.setValue(element, '0');
-                    expect(element._data).toBe(0);
+                    def.setValue(element, '63');
+                    expect(element._data).toBe(63);
                 });
             });
 
             describe('with format', () => {
                 it(`should call the formatDef's valueToData function`, () => {
-                    defWithEnum.setValue(element, 'Giraffe');
-                    expect(element._data).toBe(0);
+                    defWithEnum.setValue(element, 'Lion');
+                    expect(element._data).toBe(2);
                 });
             });
         });
@@ -119,15 +118,34 @@ describe('Int0Def', () => {
                 expect(def.read).toBeDefined();
             });
 
-            it('should return the Int0 read from the stream', () => {
+            it('should call stream.read', () => {
+                def.read(stream);
+                expect(stream.read).toHaveBeenCalledWith(1);
+            });
+
+            it('should return the UInt8 read from the stream', () => {
                 let data = def.read(stream);
-                expect(data).toBe(0);
+                expect(data).toBe(170);
+            });
+        });
+
+        describe('toBytes', () => {
+            it('should be defined', () => {
+                expect(def.toBytes).toBeDefined();
+            });
+
+            it('should return the data written into a buffer', () => {
+                let buf = def.toBytes(0xFF);
+                expect(buf).toBeDefined();
+                expect(buf).toBeInstanceOf(Buffer);
+                expect(buf.length).toBe(1);
+                expect(buf[0]).toBe(0xFF);
             });
         });
 
         describe('size', () => {
-            it('should be 0', () => {
-                expect(def.size).toBe(0);
+            it('should be 1', () => {
+                expect(def.size).toBe(1);
             });
         });
     });
@@ -135,13 +153,13 @@ describe('Int0Def', () => {
     describe('static properties', () => {
         describe('MIN_VALUE', () => {
             it('should be 0', () => {
-                expect(Int0Def.MIN_VALUE).toBe(0);
+                expect(UInt8Def.MIN_VALUE).toBe(0);
             });
         });
 
         describe('MAX_VALUE', () => {
-            it('should be 0', () => {
-                expect(Int0Def.MAX_VALUE).toBe(0);
+            it('should be 255', () => {
+                expect(UInt8Def.MAX_VALUE).toBe(255);
             });
         });
     });

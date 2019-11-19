@@ -1,8 +1,8 @@
-const DefinitionManager = require('../src/DefinitionManager');
-const BytesDef = require('../src/defs/BytesDef');
-const ValueDef = require('../src/defs/ValueDef');
-const InvalidDefSizeError = require('../src/errors/InvalidDefSizeError');
-const InvalidValueError = require('../src/errors/InvalidValueError');
+const DefinitionManager = require('../../src/DefinitionManager');
+const BytesDef = require('../../src/defs/BytesDef');
+const ValueDef = require('../../src/defs/ValueDef');
+const InvalidDefSizeError = require('../../src/errors/InvalidDefSizeError');
+const InvalidValueError = require('../../src/errors/InvalidValueError');
 
 const bytesDef = {size: 4};
 

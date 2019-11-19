@@ -1,6 +1,6 @@
-const DefinitionManager = require('../src/DefinitionManager');
-const ValueDef = require('../src/defs/ValueDef');
-const EmptyDef = require('../src/defs/EmptyDef');
+const DefinitionManager = require('../../src/DefinitionManager');
+const ValueDef = require('../../src/defs/ValueDef');
+const EmptyDef = require('../../src/defs/EmptyDef');
 
 describe('EmptyDef', () => {
     let manager;

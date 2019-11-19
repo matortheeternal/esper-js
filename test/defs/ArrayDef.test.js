@@ -1,17 +1,17 @@
-const DefinitionManager = require('../src/DefinitionManager');
-const SubrecordDef = require('../src/defs/SubrecordDef');
-const Def = require('../src/defs/Def');
-const Subrecord = require('../src/elements/Subrecord');
+const DefinitionManager = require('../../src/DefinitionManager');
+const ArrayDef = require('../../src/defs/ArrayDef');
+const Def = require('../../src/defs/Def');
+const ArrayElement = require('../../src/elements/ArrayElement');
 
-const exampleSubrecord = {
-    signature: 'ABCD',
+const basicArray = {
+    name: 'Basic Array',
     element: {
-        name: 'Example',
+        name: 'Number',
         type: 'uint32'
     }
 };
 
-describe('SubrecordDef', () => {
+describe('ArrayDef', () => {
     let manager;
 
     beforeAll(() => {
@@ -22,16 +22,16 @@ describe('SubrecordDef', () => {
         let def;
 
         it('should be defined', () => {
-            expect(SubrecordDef).toBeDefined();
+            expect(ArrayDef).toBeDefined();
         });
 
         it('should extend Def', () => {
-            expect(SubrecordDef.prototype).toBeInstanceOf(Def);
+            expect(ArrayDef.prototype).toBeInstanceOf(Def);
         });
 
         it('should create a new instance', () => {
-            def = new SubrecordDef(manager, exampleSubrecord, null);
-            expect(def).toBeInstanceOf(SubrecordDef);
+            def = new ArrayDef(manager, basicArray, null);
+            expect(def).toBeInstanceOf(ArrayDef);
         });
 
         it('should set elementDef', () => {
@@ -44,14 +44,14 @@ describe('SubrecordDef', () => {
         let def;
 
         beforeAll(() => {
-            def = new SubrecordDef(manager, exampleSubrecord, null);
+            def = new ArrayDef(manager, basicArray, null);
         });
 
         describe('initElement', () => {
-            it('should return a new Subrecord', () => {
+            it('should return a new ArrayElement', () => {
                 let a = def.initElement();
                 expect(a).toBeDefined();
-                expect(a).toBeInstanceOf(Subrecord);
+                expect(a).toBeInstanceOf(ArrayElement);
                 expect(a.def).toBe(def);
                 expect(a.container).toBeUndefined();
             });

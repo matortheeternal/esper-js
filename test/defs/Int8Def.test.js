@@ -1,7 +1,7 @@
-const DefinitionManager = require('../src/DefinitionManager');
-const IntegerDef = require('../src/defs/IntegerDef');
-const UInt32Def = require('../src/defs/UInt32Def');
-const EnumDef = require('../src/defs/EnumDef');
+const DefinitionManager = require('../../src/DefinitionManager');
+const IntegerDef = require('../../src/defs/IntegerDef');
+const Int8Def = require('../../src/defs/Int8Def');
+const EnumDef = require('../../src/defs/EnumDef');
 
 const animalEnum = {
     type: 'enum',
@@ -12,9 +12,9 @@ const animalEnum = {
     }
 };
 
-const exampleUInt32 = {format: animalEnum};
+const exampleInt8 = {format: animalEnum};
 
-describe('UInt32Def', () => {
+describe('Int8Def', () => {
     let manager;
 
     beforeAll(() => {
@@ -23,20 +23,20 @@ describe('UInt32Def', () => {
 
     describe('constructor', () => {
         it('should be defined', () => {
-            expect(UInt32Def).toBeDefined();
+            expect(Int8Def).toBeDefined();
         });
 
         it('should create a new instance', () => {
-            let def = new UInt32Def(manager, {}, null);
-            expect(def).toBeInstanceOf(UInt32Def);
+            let def = new Int8Def(manager, {}, null);
+            expect(def).toBeInstanceOf(Int8Def);
         });
 
         it('should extend IntegerDef', () => {
-            expect(UInt32Def.prototype).toBeInstanceOf(IntegerDef);
+            expect(Int8Def.prototype).toBeInstanceOf(IntegerDef);
         });
 
         it('should initialize formatDef if def has format property', () => {
-            let def = new UInt32Def(manager, exampleUInt32, null);
+            let def = new Int8Def(manager, exampleInt8, null);
             expect(def.formatDef).toBeDefined();
             expect(def.formatDef).toBeInstanceOf(EnumDef)
         });
@@ -46,11 +46,10 @@ describe('UInt32Def', () => {
         let def, defWithEnum, element, stream;
 
         beforeAll(() => {
-            def = new UInt32Def(manager, {}, null);
-            defWithEnum = new UInt32Def(manager, exampleUInt32, null);
+            def = new Int8Def(manager, {}, null);
+            defWithEnum = new Int8Def(manager, exampleInt8, null);
             element = {_data: 0};
-            let b = new Buffer([0x3E, 0x01, 0xA0, 0xFF]);
-            stream = {read: jest.fn(() => b)};
+            stream = {read: jest.fn(() => new Buffer([0xFF]))};
         });
 
         describe('setData', () => {
@@ -59,18 +58,18 @@ describe('UInt32Def', () => {
             });
 
             it('should set element data', () => {
-                def.setData(element, 0x80000000);
-                expect(element._data).toBe(0x80000000);
+                def.setData(element, -64);
+                expect(element._data).toBe(-64);
             });
 
-            it('should set data to 0xFFFFFFFF if a higher value is passed', () => {
-                def.setData(element, Math.pow(2, 40));
-                expect(element._data).toBe(0xFFFFFFFF);
+            it('should set data to 127 if a higher value is passed', () => {
+                def.setData(element, 255);
+                expect(element._data).toBe(127);
             });
 
-            it('should set data to 0 if a lower value is passed', () => {
-                def.setData(element, -1);
-                expect(element._data).toBe(0);
+            it('should set data to -128 if a lower value is passed', () => {
+                def.setData(element, -255);
+                expect(element._data).toBe(-128);
             });
         });
 
@@ -81,8 +80,8 @@ describe('UInt32Def', () => {
 
             describe('no format', () => {
                 it('should convert data to a string', () => {
-                    element._data = 123456789;
-                    expect(def.getValue(element)).toBe('123456789');
+                    element._data = -61;
+                    expect(def.getValue(element)).toBe('-61');
                 });
             });
 
@@ -101,8 +100,8 @@ describe('UInt32Def', () => {
 
             describe('no format', () => {
                 it('should parse integer value', () => {
-                    def.setValue(element, '432012345');
-                    expect(element._data).toBe(432012345);
+                    def.setValue(element, '-42');
+                    expect(element._data).toBe(-42);
                 });
             });
 
@@ -121,12 +120,12 @@ describe('UInt32Def', () => {
 
             it('should call stream.read', () => {
                 def.read(stream);
-                expect(stream.read).toHaveBeenCalledWith(4);
+                expect(stream.read).toHaveBeenCalledWith(1);
             });
 
-            it('should return the UInt32 read from the stream', () => {
+            it('should return the Int8 read from the stream', () => {
                 let data = def.read(stream);
-                expect(data).toBe(0xFFA0013E);
+                expect(data).toBe(-1);
             });
         });
 
@@ -136,34 +135,31 @@ describe('UInt32Def', () => {
             });
 
             it('should return the data written into a buffer', () => {
-                let buf = def.toBytes(0xFFA0013E);
+                let buf = def.toBytes(-127);
                 expect(buf).toBeDefined();
                 expect(buf).toBeInstanceOf(Buffer);
-                expect(buf.length).toBe(4);
-                expect(buf[0]).toBe(0x3E);
-                expect(buf[1]).toBe(0x01);
-                expect(buf[2]).toBe(0xA0);
-                expect(buf[3]).toBe(0xFF);
+                expect(buf.length).toBe(1);
+                expect(buf[0]).toBe(129);
             });
         });
 
         describe('size', () => {
-            it('should be 4', () => {
-                expect(def.size).toBe(4);
+            it('should be 1', () => {
+                expect(def.size).toBe(1);
             });
         });
     });
 
     describe('static properties', () => {
         describe('MIN_VALUE', () => {
-            it('should be 0', () => {
-                expect(UInt32Def.MIN_VALUE).toBe(0);
+            it('should be -128', () => {
+                expect(Int8Def.MIN_VALUE).toBe(-128);
             });
         });
 
         describe('MAX_VALUE', () => {
-            it('should be 0xFFFFFFFF', () => {
-                expect(UInt32Def.MAX_VALUE).toBe(0xFFFFFFFF);
+            it('should be 127', () => {
+                expect(Int8Def.MAX_VALUE).toBe(127);
             });
         });
     });

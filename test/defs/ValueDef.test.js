@@ -1,7 +1,7 @@
-const DefinitionManager = require('../src/DefinitionManager');
-const ValueDef = require('../src/defs/ValueDef');
-const Def = require('../src/defs/Def');
-const UnimplementedError = require('../src/errors/UnimplementedError');
+const DefinitionManager = require('../../src/DefinitionManager');
+const ValueDef = require('../../src/defs/ValueDef');
+const Def = require('../../src/defs/Def');
+const UnimplementedError = require('../../src/errors/UnimplementedError');
 
 describe('ValueDef', () => {
     let manager;

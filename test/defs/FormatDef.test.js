@@ -1,6 +1,6 @@
-const DefinitionManager = require('../src/DefinitionManager');
-const FormatDef = require('../src/defs/FormatDef');
-const Def = require('../src/defs/Def');
+const DefinitionManager = require('../../src/DefinitionManager');
+const FormatDef = require('../../src/defs/FormatDef');
+const Def = require('../../src/defs/Def');
 
 describe('FormatDef', () => {
     let manager;

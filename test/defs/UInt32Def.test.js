@@ -1,7 +1,7 @@
-const DefinitionManager = require('../src/DefinitionManager');
-const IntegerDef = require('../src/defs/IntegerDef');
-const UInt8Def = require('../src/defs/UInt8Def');
-const EnumDef = require('../src/defs/EnumDef');
+const DefinitionManager = require('../../src/DefinitionManager');
+const IntegerDef = require('../../src/defs/IntegerDef');
+const UInt32Def = require('../../src/defs/UInt32Def');
+const EnumDef = require('../../src/defs/EnumDef');
 
 const animalEnum = {
     type: 'enum',
@@ -12,9 +12,9 @@ const animalEnum = {
     }
 };
 
-const exampleUInt8 = {format: animalEnum};
+const exampleUInt32 = {format: animalEnum};
 
-describe('UInt8Def', () => {
+describe('UInt32Def', () => {
     let manager;
 
     beforeAll(() => {
@@ -23,20 +23,20 @@ describe('UInt8Def', () => {
 
     describe('constructor', () => {
         it('should be defined', () => {
-            expect(UInt8Def).toBeDefined();
+            expect(UInt32Def).toBeDefined();
         });
 
         it('should create a new instance', () => {
-            let def = new UInt8Def(manager, {}, null);
-            expect(def).toBeInstanceOf(UInt8Def);
+            let def = new UInt32Def(manager, {}, null);
+            expect(def).toBeInstanceOf(UInt32Def);
         });
 
         it('should extend IntegerDef', () => {
-            expect(UInt8Def.prototype).toBeInstanceOf(IntegerDef);
+            expect(UInt32Def.prototype).toBeInstanceOf(IntegerDef);
         });
 
         it('should initialize formatDef if def has format property', () => {
-            let def = new UInt8Def(manager, exampleUInt8, null);
+            let def = new UInt32Def(manager, exampleUInt32, null);
             expect(def.formatDef).toBeDefined();
             expect(def.formatDef).toBeInstanceOf(EnumDef)
         });
@@ -46,10 +46,11 @@ describe('UInt8Def', () => {
         let def, defWithEnum, element, stream;
 
         beforeAll(() => {
-            def = new UInt8Def(manager, {}, null);
-            defWithEnum = new UInt8Def(manager, exampleUInt8, null);
+            def = new UInt32Def(manager, {}, null);
+            defWithEnum = new UInt32Def(manager, exampleUInt32, null);
             element = {_data: 0};
-            stream = {read: jest.fn(() => new Buffer([170]))};
+            let b = new Buffer([0x3E, 0x01, 0xA0, 0xFF]);
+            stream = {read: jest.fn(() => b)};
         });
 
         describe('setData', () => {
@@ -58,13 +59,13 @@ describe('UInt8Def', () => {
             });
 
             it('should set element data', () => {
-                def.setData(element, 128);
-                expect(element._data).toBe(128);
+                def.setData(element, 0x80000000);
+                expect(element._data).toBe(0x80000000);
             });
 
-            it('should set data to 255 if a higher value is passed', () => {
-                def.setData(element, 1024);
-                expect(element._data).toBe(255);
+            it('should set data to 0xFFFFFFFF if a higher value is passed', () => {
+                def.setData(element, Math.pow(2, 40));
+                expect(element._data).toBe(0xFFFFFFFF);
             });
 
             it('should set data to 0 if a lower value is passed', () => {
@@ -80,8 +81,8 @@ describe('UInt8Def', () => {
 
             describe('no format', () => {
                 it('should convert data to a string', () => {
-                    element._data = 129;
-                    expect(def.getValue(element)).toBe('129');
+                    element._data = 123456789;
+                    expect(def.getValue(element)).toBe('123456789');
                 });
             });
 
@@ -100,8 +101,8 @@ describe('UInt8Def', () => {
 
             describe('no format', () => {
                 it('should parse integer value', () => {
-                    def.setValue(element, '63');
-                    expect(element._data).toBe(63);
+                    def.setValue(element, '432012345');
+                    expect(element._data).toBe(432012345);
                 });
             });
 
@@ -120,12 +121,12 @@ describe('UInt8Def', () => {
 
             it('should call stream.read', () => {
                 def.read(stream);
-                expect(stream.read).toHaveBeenCalledWith(1);
+                expect(stream.read).toHaveBeenCalledWith(4);
             });
 
-            it('should return the UInt8 read from the stream', () => {
+            it('should return the UInt32 read from the stream', () => {
                 let data = def.read(stream);
-                expect(data).toBe(170);
+                expect(data).toBe(0xFFA0013E);
             });
         });
 
@@ -135,17 +136,20 @@ describe('UInt8Def', () => {
             });
 
             it('should return the data written into a buffer', () => {
-                let buf = def.toBytes(0xFF);
+                let buf = def.toBytes(0xFFA0013E);
                 expect(buf).toBeDefined();
                 expect(buf).toBeInstanceOf(Buffer);
-                expect(buf.length).toBe(1);
-                expect(buf[0]).toBe(0xFF);
+                expect(buf.length).toBe(4);
+                expect(buf[0]).toBe(0x3E);
+                expect(buf[1]).toBe(0x01);
+                expect(buf[2]).toBe(0xA0);
+                expect(buf[3]).toBe(0xFF);
             });
         });
 
         describe('size', () => {
-            it('should be 1', () => {
-                expect(def.size).toBe(1);
+            it('should be 4', () => {
+                expect(def.size).toBe(4);
             });
         });
     });
@@ -153,13 +157,13 @@ describe('UInt8Def', () => {
     describe('static properties', () => {
         describe('MIN_VALUE', () => {
             it('should be 0', () => {
-                expect(UInt8Def.MIN_VALUE).toBe(0);
+                expect(UInt32Def.MIN_VALUE).toBe(0);
             });
         });
 
         describe('MAX_VALUE', () => {
-            it('should be 255', () => {
-                expect(UInt8Def.MAX_VALUE).toBe(255);
+            it('should be 0xFFFFFFFF', () => {
+                expect(UInt32Def.MAX_VALUE).toBe(0xFFFFFFFF);
             });
         });
     });
