@@ -1,22 +1,11 @@
 const fs = require('fs');
 const path = require('path');
-
-let loadDefClasses = function(defsPath, keyStr) {
-    if (!fs.existsSync(defsPath)) return;
-    return fs.readdirSync(defsPath).reduce((defClasses, filename) => {
-        let defClassPath = path.join(defsPath, filename);
-        if (fs.lstatSync(defClassPath).isDirectory()) return defClasses;
-        let DefClass = require(defClassPath),
-            key = DefClass[keyStr];
-        if (key) defClasses[key] = DefClass;
-        return defClasses;
-    }, {});
-};
+const {buildIndex} = require('./helpers');
 
 let getDefClasses = function(game) {
     return Object.assign(
-        loadDefClasses(path.resolve('./src/defs'), 'defType'),
-        loadDefClasses(path.resolve(`./src/defs/${game}`), 'name')
+        buildIndex(path.resolve('./src/defs'), 'defType'),
+        buildIndex(path.resolve(`./src/defs/${game}`), 'name')
     );
 };
 

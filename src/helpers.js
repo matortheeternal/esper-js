@@ -1,5 +1,6 @@
 const PropertyTypeError = require('./errors/PropertyTypeError');
 const path = require('path');
+const fs = require('fs');
 
 let minmax = function(num, minimum, maximum) {
     return Math.min(Math.max(num, minimum), maximum);
@@ -73,7 +74,21 @@ let isPositiveInteger = function(num) {
         num >= 0;
 };
 
+let buildIndex = function(folderPath, keyStr) {
+    if (!fs.existsSync(folderPath)) return {};
+    return fs.readdirSync(folderPath).reduce((obj, filename) => {
+        if (filename === 'index') return obj;
+        let filePath = path.join(folderPath, filename);
+        if (fs.lstatSync(filePath).isDirectory()) return obj;
+        let exports = require(filePath),
+            key = exports[keyStr];
+        if (key) obj[key] = exports;
+        return obj;
+    }, {});
+};
+
 module.exports = {
     minmax, strToBuffer, strEquals, expectProperties,
-    getFileName, clone, getBits, pad, isPositiveInteger
+    getFileName, clone, getBits, pad, isPositiveInteger,
+    buildIndex
 };
