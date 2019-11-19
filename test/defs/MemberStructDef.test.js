@@ -2,7 +2,7 @@ const DefinitionManager = require('../../src/DefinitionManager');
 const MemberStructDef = require('../../src/defs/MemberStructDef');
 const MembersDef = require('../../src/defs/MembersDef');
 const MemberStruct = require('../../src/elements/MemberStruct');
-const {ExpectedDefMembersError} = require('../../src/errors');
+const {ExpectedDefPropertyError} = require('../../src/errors');
 
 const example = { members: [] };
 
@@ -27,7 +27,7 @@ describe('MemberStructDef', () => {
         it('should throw an error if members undefined', () => {
             expect(() => {
                 new MemberStructDef(manager, {}, null);
-            }).toThrow(ExpectedDefMembersError);
+            }).toThrow(ExpectedDefPropertyError);
         });
 
         it('should create a new instance', () => {

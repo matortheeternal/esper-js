@@ -30,6 +30,12 @@ describe('ArrayDef', () => {
             expect(ArrayDef.prototype).toBeInstanceOf(Def);
         });
 
+        it('should throw an error if element def is not provided', () => {
+            expect(() => {
+                new ArrayDef(manager, {} , null);
+            }).toThrow(ExpectedDefPropertyError);
+        });
+
         it('should create a new instance', () => {
             def = new ArrayDef(manager, basicArray, null);
             expect(def).toBeInstanceOf(ArrayDef);

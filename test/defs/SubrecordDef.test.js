@@ -2,6 +2,7 @@ const DefinitionManager = require('../../src/DefinitionManager');
 const SubrecordDef = require('../../src/defs/SubrecordDef');
 const Def = require('../../src/defs/Def');
 const Subrecord = require('../../src/elements/Subrecord');
+const {ExpectedDefPropertyError} = require('../../src/errors');
 
 const exampleSubrecord = {
     signature: 'ABCD',
@@ -27,6 +28,12 @@ describe('SubrecordDef', () => {
 
         it('should extend Def', () => {
             expect(SubrecordDef.prototype).toBeInstanceOf(Def);
+        });
+
+        it('should throw an error if element is undefined', () => {
+            expect(() => {
+                new SubrecordDef(manager, {}, null);
+            }).toThrow(ExpectedDefPropertyError);
         });
 
         it('should create a new instance', () => {

@@ -3,7 +3,7 @@ const MembersDef = require('../../src/defs/MembersDef');
 const Def = require('../../src/defs/Def');
 const Element = require('../../src/elements/Element');
 const {
-    ExpectedDefMembersError,
+    ExpectedDefPropertyError,
     UnknownSignatureError
 } = require('../../src/errors');
 const {subrecord, uint32, float, string} = require('../helpers/defHelpers');
@@ -40,7 +40,7 @@ describe('MembersDef', () => {
         it('should throw an error if members undefined', () => {
             expect(() => {
                 new MembersDef(manager, {}, null);
-            }).toThrow(ExpectedDefMembersError);
+            }).toThrow(ExpectedDefPropertyError);
         });
 
         it('should create a new instance', () => {
