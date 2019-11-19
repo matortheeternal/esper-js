@@ -9,7 +9,7 @@ class PluginFile extends Container {
         super();
         this.session = session;
         this.filePath = filePath;
-        this.fileName = getFileName(filePath);
+        this.filename = getFileName(filePath);
         this.file = this;
         this._highObjectId = 2048;
         this._recordsByFormId = {};
