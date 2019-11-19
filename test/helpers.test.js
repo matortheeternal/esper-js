@@ -40,12 +40,14 @@ describe('helpers', () => {
                 a: 'text',
                 b: 123,
                 c: [0, 1, 2],
-                d: {}
+                d: {},
+                e: null
             }, {
                 a: 'string',
                 b: 'number',
                 c: 'Array',
-                d: 'Object'
+                d: 'Object',
+                e: 'null'
             });
         });
 
