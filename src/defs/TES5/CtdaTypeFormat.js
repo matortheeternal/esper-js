@@ -29,9 +29,9 @@ class CtdaTypeFormat extends FormatDef {
         if (!match) throw new InvalidValueError(this, value);
         let op = match[1].trimRight(),
             opData = this.enumDef.valueToData(element, op),
-            flags = match[2] ? match[2].split(', ') : '',
+            flags = match[2] ? match[2] : '',
             flagData = this.flagsDef.valueToData(element, flags);
-        return opData * Math.pow(2, 5) + flagData;
+        return opData + flagData;
     }
 }
 
