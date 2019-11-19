@@ -109,4 +109,9 @@ describe('helpers', () => {
         });
     });
 
+    describe('pad', () => {
+        it('should convert number to string and pad with zeros', () => {
+            expect(helpers.pad(3, 6)).toBe('000003');
+        });
+    });
 });
