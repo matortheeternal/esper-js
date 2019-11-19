@@ -20,13 +20,6 @@ class MembersDef extends Def {
         return Boolean(this.getMemberDef(signature));
     }
 
-    findMemberDef(signature) {
-        return this.memberDefs.find(member => {
-            return member.signature === signature ||
-                member.containsSignature(signature);
-        });
-    }
-
     getOrInitElement(container, memberDef) {
         return container._elements[memberDef.sortOrder] ||
             memberDef.initElement(container);
@@ -34,7 +27,7 @@ class MembersDef extends Def {
 
     loadElement(container, signature) {
         let sig = signature.toString(),
-            memberDef = this.findMemberDef(sig);
+            memberDef = this.getMemberDef(sig);
         if (!memberDef) throw new UnknownSignatureError(container, sig);
         let element = this.getOrInitElement(container, memberDef);
         element.subrecordFound(signature);
