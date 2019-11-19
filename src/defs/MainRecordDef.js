@@ -1,4 +1,3 @@
-const MainRecord = require('../elements/MainRecord');
 const MembersDef = require('./MembersDef');
 const {clone} = require('../helpers');
 
@@ -23,12 +22,11 @@ class MainRecordDef extends MembersDef {
     initElements(record) {
         record._elements = Array.prototype.concat(
             this.getAdditionalElements(record),
-            this.memberDefs.map(() => {})
+            this.memberDefs.map(() => undefined)
         );
     }
 }
 
 module.exports = Object.assign(MainRecordDef, {
-    defType: 'record',
-    ElementClass: MainRecord
+    defType: 'record'
 });
