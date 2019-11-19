@@ -77,7 +77,7 @@ let isPositiveInteger = function(num) {
 let buildIndex = function(folderPath, keyStr) {
     if (!fs.existsSync(folderPath)) return {};
     return fs.readdirSync(folderPath).reduce((obj, filename) => {
-        if (filename === 'index') return obj;
+        if (filename === 'index.js') return obj;
         let filePath = path.join(folderPath, filename);
         if (fs.lstatSync(filePath).isDirectory()) return obj;
         let exports = require(filePath),
