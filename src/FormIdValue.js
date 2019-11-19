@@ -32,7 +32,7 @@ class FormIdValue {
     }
 
     toString() {
-        return `{${this.file.fileName}:${this.localFormId.toString(16)}}`;
+        return `{${this.file.filename}:${this.localFormId.toString(16)}}`;
     }
 
     isNull() {
