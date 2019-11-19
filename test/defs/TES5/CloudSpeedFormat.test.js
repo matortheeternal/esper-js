@@ -34,18 +34,21 @@ describe('CloudSpeedFormat', () => {
 
         describe('dataToValue', () => {
             it('should return float string', () => {
-                expect(def.dataToValue(null, 1270 + 127)).toBe('1.0000');
-                expect(def.dataToValue(null, 1270/2 + 127)).toBe('0.5000');
+                expect(def.dataToValue(null, 0x00)).toBe('-0.1000');
+                expect(def.dataToValue(null, 0x7F)).toBe('0.0000');
+                expect(def.dataToValue(null, 0xFE)).toBe('0.1000');
             });
         });
 
         describe('valueToData', () => {
             it('should parse float string', () => {
-                expect(def.valueToData(null, '0.0181')).toBe(150);
+                expect(def.valueToData(null, '-0.1000')).toBe(0);
+                expect(def.valueToData(null, '0.0000')).toBe(0x7F);
+                expect(def.valueToData(null, '0.1000')).toBe(0xFE);
             });
 
             it('should have maximum value of 254', () => {
-                expect(def.valueToData(null, '1.0')).toBe(254);
+                expect(def.valueToData(null, '1.0')).toBe(0xFE);
             });
         });
     });
