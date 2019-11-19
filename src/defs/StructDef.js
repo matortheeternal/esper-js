@@ -1,9 +1,11 @@
 const Def = require('./Def');
+const {ExpectedDefPropertyError} = require('../errors');
 
 class StructDef extends Def {
     constructor(manager, def, parent) {
         super(manager, def, parent);
-        this.elementDefs = manager.buildDefs(this.elements, this);
+        if (!def.elements) throw new ExpectedDefPropertyError(def, 'elements');
+        this.elementDefs = manager.buildDefs(def.elements, this);
     }
 }
 

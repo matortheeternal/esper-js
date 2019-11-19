@@ -1,11 +1,10 @@
-const UnknownSignatureError = require('../errors/UnknownSignatureError');
-const ExpectedDefMembersError = require('../errors/ExpectedDefMembersError');
+const {UnknownSignatureError, ExpectedDefPropertyError} = require('../errors');
 const Def = require('./Def');
 
 class MembersDef extends Def {
     constructor(manager, def, parent) {
         super(manager, def, parent);
-        if (!def.members) throw new ExpectedDefMembersError(def);
+        if (!def.members) throw new ExpectedDefPropertyError(def, 'members');
         this.memberDefs = manager.buildDefs(def.members, this);
     }
 

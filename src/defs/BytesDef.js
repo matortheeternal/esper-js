@@ -1,6 +1,5 @@
 const ValueDef = require('./ValueDef');
-const InvalidDefSizeError = require('../errors/InvalidDefSizeError');
-const InvalidValueError = require('../errors/InvalidValueError');
+const {InvalidDefSizeError, InvalidValueError} = require('../errors');
 const {isPositiveInteger} = require('../helpers');
 
 const bytesExpr = /^([0-9a-f]{2} )*([0-9a-f]{2})$/i;

@@ -1,5 +1,5 @@
 const FormatDef = require('./FormatDef');
-const InvalidEnumValueError = require('../errors/InvalidEnumValueError');
+const {InvalidEnumValueError} = require('../errors');
 
 const unknownExpr = /^<(?:Unknown )?(-?\d+)>$/;
 

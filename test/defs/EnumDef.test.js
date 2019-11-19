@@ -1,7 +1,7 @@
 const DefinitionManager = require('../../src/DefinitionManager');
 const EnumDef = require('../../src/defs/EnumDef');
 const FormatDef = require('../../src/defs/FormatDef');
-const InvalidEnumValueError = require('../../src/errors/InvalidEnumValueError');
+const {InvalidEnumValueError} = require('../../src/errors');
 
 const animalEnum = {
     options: {

@@ -1,10 +1,12 @@
 const Def = require('./Def');
 const MemberArray = require('../elements/MemberArray');
+const {ExpectedDefPropertyError} = require('../errors');
 
 class MemberArrayDef extends Def {
     constructor(manager, def, parent) {
         super(manager, def, parent);
-        this.memberDef = manager.buildDef(this.member, this);
+        if (!def.member) throw new ExpectedDefPropertyError(def, 'member');
+        this.memberDef = manager.buildDef(def.member, this);
     }
 
     initElement(record) {

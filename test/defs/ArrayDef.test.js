@@ -2,6 +2,7 @@ const DefinitionManager = require('../../src/DefinitionManager');
 const ArrayDef = require('../../src/defs/ArrayDef');
 const Def = require('../../src/defs/Def');
 const ArrayElement = require('../../src/elements/ArrayElement');
+const {ExpectedDefPropertyError} = require('../../src/errors');
 
 const basicArray = {
     name: 'Basic Array',

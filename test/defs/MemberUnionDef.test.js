@@ -2,7 +2,7 @@ const DefinitionManager = require('../../src/DefinitionManager');
 const MemberUnionDef = require('../../src/defs/MemberUnionDef');
 const MembersDef = require('../../src/defs/MembersDef');
 const MemberUnion = require('../../src/elements/MemberUnion');
-const ExpectedDefMembersError = require('../../src/errors/ExpectedDefMembersError');
+const {ExpectedDefMembersError} = require('../../src/errors');
 
 const example = { members: [] };
 

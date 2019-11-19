@@ -1,6 +1,6 @@
 const Def = require('./Def');
 const ValueElement = require('../elements/ValueElement');
-const UnimplementedError = require('../errors/UnimplementedError');
+const {UnimplementedError} = require('../errors');
 
 class ValueDef extends Def {
     write(data, stream) {

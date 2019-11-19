@@ -1,5 +1,5 @@
 const FormatDef = require('./FormatDef');
-const UnknownFlagError = require('../errors/UnknownFlagError');
+const {UnknownFlagError} = require('../errors');
 const {getBits} = require('../helpers');
 
 const unknownFlagExpr = /^Unknown (\d+)$/;

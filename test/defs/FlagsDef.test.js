@@ -2,7 +2,7 @@ const DefinitionManager = require('../../src/DefinitionManager');
 const FlagsDef = require('../../src/defs/FlagsDef');
 const FormatDef = require('../../src/defs/FormatDef');
 const UInt32Def = require('../../src/defs/UInt32Def');
-const UnknownFlagError = require('../../src/errors/UnknownFlagError');
+const {UnknownFlagError} = require('../../src/errors');
 
 const exampleFlags = {
     flags: {

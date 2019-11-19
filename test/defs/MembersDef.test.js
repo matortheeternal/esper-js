@@ -2,8 +2,10 @@ const DefinitionManager = require('../../src/DefinitionManager');
 const MembersDef = require('../../src/defs/MembersDef');
 const Def = require('../../src/defs/Def');
 const Element = require('../../src/elements/Element');
-const ExpectedDefMembersError = require('../../src/errors/ExpectedDefMembersError');
-const UnknownSignatureError = require('../../src/errors/UnknownSignatureError');
+const {
+    ExpectedDefMembersError,
+    UnknownSignatureError
+} = require('../../src/errors');
 const {subrecord, uint32, float, string} = require('../helpers/defHelpers');
 const {sortedContainer} = require('../helpers/elementHelpers');
 
