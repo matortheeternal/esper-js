@@ -1,3 +1,5 @@
+const {MissingMasterError} = require('./errors');
+
 class FormIdValue {
     constructor(file, localFormId) {
         this.file = file;
@@ -25,8 +27,7 @@ class FormIdValue {
 
     toFileFormId(file) {
         let ordinal = file.fileToOrdinal(this.file);
-        if (ordinal === -1)
-            throw new Error(`Target file ${file.filename} does not have ${this.file.filename} as a master.`);
+        if (ordinal === -1) throw new MissingMasterError(file, this.file);
         return ordinal * 0x1000000 + this.localFormId;
     }
 
