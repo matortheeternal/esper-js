@@ -1,8 +1,9 @@
 const MembersDef = require('./MembersDef');
+const MemberUnion = require('../elements/MemberUnion');
 
 class MemberUnionDef extends MembersDef {
     initElement(container) {
-        return new MemberUnionElement(container, this);
+        return new MemberUnion(container, this);
     }
 }
 
