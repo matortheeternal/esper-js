@@ -106,8 +106,8 @@ class PluginFile extends Container {
     }
 
     fileToOrdinal(file) {
-        if (this === file) return this.masters.length;
-        return file.masters.indexOf(file);
+        if (this === file) return this._masters.length;
+        return this._masters.indexOf(file);
     }
 
     getRecordByFormId(formId) {
