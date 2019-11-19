@@ -103,22 +103,40 @@ describe('FlagsDef', () => {
                 expect(def.valueToData).toBeDefined();
             });
 
-            it('should convert single flags', () => {
-                expect(def.valueToData(null, 'Initially Disabled')).toBe(1);
-                expect(def.valueToData(null, 'No Havok')).toBe(2);
+            describe('value exceeds data size', () => {
+                it('should throw an error', () => {
+                    expect(() => {
+                        def.valueToData(null, 'Unknown 32')
+                    }).toThrow('Flag index out of bounds: 32');
+                });
             });
 
-            it('should convert multiple flags', () => {
-                expect(def.valueToData(null,
-                    'Initially Disabled, No Havok'
-                )).toBe(3);
-                expect(def.valueToData(null, 'Unknown 2, Unknown 3')).toBe(12);
+            describe('empty string passed', () => {
+                it('should return 0', () => {
+                    expect(def.valueToData(null, '')).toBe(0);
+                });
             });
 
-            it('should throw an error if value exceeds data size', () => {
-                expect(() => {
-                    def.valueToData(null, 'Unknown 32')
-                }).toThrow('Flag index out of bounds: 32');
+            describe('valid flags', () => {
+                it('should convert single flags', () => {
+                    expect(def.valueToData(null, 'Initially Disabled')).toBe(1);
+                    expect(def.valueToData(null, 'No Havok')).toBe(2);
+                });
+
+                it('should convert multiple flags', () => {
+                    expect(def.valueToData(null,
+                        'Initially Disabled, No Havok'
+                    )).toBe(3);
+                    expect(def.valueToData(null, 'Unknown 2, Unknown 3')).toBe(12);
+                });
+            });
+
+            describe('invalid flags', () => {
+                it('should throw an error', () => {
+                    expect(() => {
+                        def.valueToData(null, 'abcdefsgzxcsdfrg')
+                    }).toThrow(UnknownFlagError);
+                });
             });
         });
     });

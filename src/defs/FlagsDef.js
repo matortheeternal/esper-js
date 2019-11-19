@@ -32,6 +32,7 @@ class FlagsDef extends FormatDef {
     }
 
     valueToData(element, value) {
+        if (value === '') return 0;
         return value.split(', ').reduce((data, flag) => {
             let index = this.getFlagIndex(flag);
             if (index >= 8 * this.parent.size)
