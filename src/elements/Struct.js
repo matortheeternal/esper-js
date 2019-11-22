@@ -1,17 +1,10 @@
-const Element = require('./Element');
 const Container = require('./Container');
 
-class StructElement extends Container {
+class Struct extends Container {
     static load(container, def) {
         let struct = new Struct(container, def);
-        struct.loadElements();
+        def.elementDefs.forEach(elementDef => elementDef.load(struct));
         return struct;
-    }
-
-    loadElements() {
-        this.def.elementDefs.forEach(elementDef => {
-            elementDef.load(this);
-        });
     }
 
     get sorted() {
@@ -19,4 +12,4 @@ class StructElement extends Container {
     }
 }
 
-module.exports = StructElement;
+module.exports = Struct;

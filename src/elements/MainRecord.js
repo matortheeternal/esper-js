@@ -10,12 +10,15 @@ class MainRecord extends Record {
         if (signature) this.init(signature);
     }
 
+    // We have to parse the signature first because we need to know the
+    // def before we can parse the record header.  Technically we could
+    // parse the record header in its entirety and then change the
+    // format of the flags def field, but it's cleaner this way.
     static load(container, expectedSig) {
         let record = new MainRecord(container);
-        record.parseSignature(expectedSig);
+        record.loadSignature(expectedSig);
         record.loadDef();
-        record.parseRecordHeader();
-        record._bodyOffset = this.memoryMap.getPos();
+        record.loadHeader();
         return record;
     }
 
@@ -23,13 +26,13 @@ class MainRecord extends Record {
         let record = new MainRecord(container);
         record._signature = signature;
         record.loadDef();
-        record.parseRecordHeader();
-        record._bodyOffset = this.memoryMap.getPos();
+        record.loadHeader();
         return record;
     }
 
-    parseRecordHeader() {
-        this._recordHeader = StructElement.load(this, this.def.headerDef);
+    loadHeader() {
+        this._header = StructElement.load(this, this.def.headerDef);
+        this._bodyOffset = this.memoryMap.getPos();
         this.trackOverrides();
     }
 
@@ -43,11 +46,11 @@ class MainRecord extends Record {
         this._master.addOverride(this);
     };
 
-    parseMembers() {
+    loadMembers() {
         this.memoryMap.setPos(this._bodyOffset);
-        let endPos = this._bodyOffset + this.recordHeader.dataSize;
+        let endPos = this.nextOffset;
         while (this.memoryMap.getPos() < endPos) {
-            let signature = Signature.parse(this.memoryMap);
+            let signature = Signature.load(this.memoryMap);
             this.def.loadElement(this, signature);
         }
     }
@@ -55,7 +58,7 @@ class MainRecord extends Record {
     init(signature) {
         this.signature = signature;
         this.loadDef();
-        this._recordHeader = new StructElement(this, this.def.headerDef);
+        this._header = new StructElement(this, this.def.headerDef);
         this.def.initElements(this);
     }
 
@@ -75,11 +78,11 @@ class MainRecord extends Record {
             if (ovr.file === file || file._masters.includes(ovr.file))
                 return ovr;
         }
-        return this;
+        return this.master;
     }
 
     get recordHeader() {
-        return this._recordHeader;
+        return this._header;
     }
 
     get nextOffset() {
@@ -111,11 +114,11 @@ class MainRecord extends Record {
     }
 
     get dataSize() {
-        return this._recordHeader._elements[0].data;
+        return this._header._elements[0].data;
     }
 
     get formId() {
-        return this._recordHeader._elements[3].value;
+        return this._header._elements[3].value;
     }
 }
 
