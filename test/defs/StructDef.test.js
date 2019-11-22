@@ -1,5 +1,6 @@
 const DefinitionManager = require('../../src/DefinitionManager');
 const StructDef = require('../../src/defs/StructDef');
+const Struct = require('../../src/elements/Struct');
 const Def = require('../../src/defs/Def');
 const {ExpectedDefPropertyError} = require('../../src/errors');
 const {uint32, string} = require('../helpers/defHelpers');
@@ -44,6 +45,23 @@ describe('StructDef', () => {
             expect(def.elementDefs).toBeDefined();
             expect(def.elementDefs[0]).toBeInstanceOf(Def);
             expect(def.elementDefs[1]).toBeInstanceOf(Def);
+        });
+    });
+
+    describe('instance methods', () => {
+        let def;
+
+        beforeAll(() => {
+            def = new StructDef(manager, {elements:[]}, null);
+        });
+
+        describe('load', () => {
+            it('should return a struct element', () => {
+                let s = def.load(null);
+                expect(s).toBeDefined();
+                expect(s).toBeInstanceOf(Struct);
+                expect(s.def).toBe(def);
+            });
         });
     });
 

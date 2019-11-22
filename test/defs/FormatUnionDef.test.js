@@ -44,7 +44,7 @@ describe('FormatUnionDef', () => {
 
         it('should throw an error if formats is not provided', () => {
             expect(() => {
-                new FormatUnionDef(manager, {decider:''}, null);
+                new FormatUnionDef(manager, {decider:'A'}, null);
             }).toThrow(ExpectedDefPropertyError);
         });
 

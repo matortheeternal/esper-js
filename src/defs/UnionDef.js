@@ -1,5 +1,5 @@
 const Def = require('./Def');
-const {ExpectedDefPropertyError} = require('../errors');
+const {ExpectedDefPropertyError, UnionDecideError} = require('../errors');
 const Union = require('../elements/Union');
 
 class UnionDef extends Def {
