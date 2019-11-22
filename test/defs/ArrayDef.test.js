@@ -1,7 +1,7 @@
 const DefinitionManager = require('../../src/DefinitionManager');
 const ArrayDef = require('../../src/defs/ArrayDef');
 const Def = require('../../src/defs/Def');
-const ArrayElement = require('../../src/elements/ArrayElement');
+const ElementArray = require('../../src/elements/ElementArray');
 const {ExpectedDefPropertyError} = require('../../src/errors');
 
 const basicArray = {
@@ -54,11 +54,11 @@ describe('ArrayDef', () => {
             def = new ArrayDef(manager, basicArray, null);
         });
 
-        describe('initElement', () => {
+        describe('load', () => {
             it('should return a new ArrayElement', () => {
-                let a = def.initElement();
+                let a = def.load();
                 expect(a).toBeDefined();
-                expect(a).toBeInstanceOf(ArrayElement);
+                expect(a).toBeInstanceOf(ElementArray);
                 expect(a.def).toBe(def);
                 expect(a.container).toBeUndefined();
             });

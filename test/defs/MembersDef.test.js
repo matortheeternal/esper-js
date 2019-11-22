@@ -9,8 +9,6 @@ const {
 const {subrecord, uint32, float, string} = require('../helpers/defHelpers');
 const {sortedContainer} = require('../helpers/elementHelpers');
 
-Element.load = jest.fn();
-
 const example = {
     members: [
         subrecord('TNG1', uint32('Thing 1')),
@@ -112,6 +110,10 @@ describe('MembersDef', () => {
         });
 
         describe('loadElement', () => {
+            beforeAll(() => {
+                def.memberDefs[1].elementDef.load = jest.fn();
+            });
+
             it('should throw an error if a matching member def is not found', () => {
                 expect(() => {
                     def.loadElement(container, 'A1B2');
@@ -126,7 +128,7 @@ describe('MembersDef', () => {
             });
 
             it('should call subrecordFound', () => {
-                expect(Element.load).toHaveBeenCalledTimes(1);
+                expect(def.memberDefs[1].elementDef.load).toHaveBeenCalledTimes(1);
             });
         });
     });

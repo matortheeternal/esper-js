@@ -1,7 +1,7 @@
 const {strToBuffer} = require('../helpers');
 const Record = require('./Record');
 const MainRecord = require('./MainRecord');
-const StructElement = require('./StructElement');
+const StructElement = require('./Struct');
 
 class GroupRecord extends Record {
     constructor(container, values) {
@@ -34,7 +34,7 @@ class GroupRecord extends Record {
         let startPos = this.memoryMap.getPos(),
             endPos = startPos + this.groupHeader.groupSize;
         while (this.memoryMap.getPos() < endPos) {
-            let signature = Signature.parse(this.memoryMap),
+            let signature = Signature.load(this.memoryMap),
                 RecordClass = signature.toString() === 'GRUP'
                     ? GroupRecord
                     : MainRecord;

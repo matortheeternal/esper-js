@@ -20,8 +20,8 @@ describe('Def', () => {
             expect(def).toBeInstanceOf(Def);
         });
 
-        it(`should assign the def's properties to the class instance`, () => {
-            expect(def.prop).toBe(1);
+        it(`should assign the src to def.src`, () => {
+            expect(def.src.prop).toBe(1);
         });
 
         it('should assign parent if truthy', () => {

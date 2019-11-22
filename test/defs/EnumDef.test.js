@@ -53,11 +53,7 @@ describe('EnumDef', () => {
             });
 
             describe('unknown option', () => {
-                it('should return the unknownOption string if provided', () => {
-                    expect(def.dataToValue(null, 3)).toBe('<Unknown Animal>');
-                });
-
-                it('should return default format if unknownOption not provided', () => {
+                it('should return unknown format', () => {
                     delete def.unknownOption;
                     expect(def.dataToValue(null, 3)).toBe('<Unknown 3>');
                 });

@@ -1,6 +1,6 @@
 const Record = require('./Record');
 const Signature = require('../Signature');
-const StructElement = require('./StructElement');
+const StructElement = require('./Struct');
 
 class MainRecord extends Record {
     // TODO: initialize persistent flag for records added to Persistent groups

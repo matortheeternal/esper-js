@@ -10,7 +10,7 @@ class StructElement extends Container {
 
     loadElements() {
         this.def.elementDefs.forEach(elementDef => {
-            Element.load(this, elementDef);
+            elementDef.load(this);
         });
     }
 

@@ -5,6 +5,7 @@ const {ExpectedDefPropertyError} = require('../../src/errors');
 const {uint32, string} = require('../helpers/defHelpers');
 
 const example = {
+    decider: 'ExampleDecider',
     elements: [
         uint32('Number'),
         string('Text')

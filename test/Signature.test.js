@@ -25,7 +25,7 @@ describe('Signature', () => {
         describe('parse', () => {
             it('should return a new Signature', () => {
                 let buf = new Buffer('ACHR', 'ascii');
-                let signature = Signature.parse({
+                let signature = Signature.load({
                     read: () => buf
                 });
                 expect(signature).toBeDefined();

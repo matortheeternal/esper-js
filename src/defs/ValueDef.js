@@ -10,8 +10,14 @@ class ValueDef extends Def {
     toBytes(data) {
         throw new UnimplementedError();
     }
+
+    load(container) {
+        if (this.src.hasOwnProperty('inheritFrom')) {
+            let value = container[this.src.inheritFrom];
+            return new ValueElement(container, this, value);
+        }
+        return ValueElement.load(container, this);
+    }
 }
 
-module.exports = Object.assign(ValueDef, {
-    ElementClass: ValueElement
-});
+module.exports = Object.assign(ValueDef);

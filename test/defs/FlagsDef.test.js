@@ -103,14 +103,6 @@ describe('FlagsDef', () => {
                 expect(def.valueToData).toBeDefined();
             });
 
-            describe('value exceeds data size', () => {
-                it('should throw an error', () => {
-                    expect(() => {
-                        def.valueToData(null, 'Unknown 32')
-                    }).toThrow('Flag index out of bounds: 32');
-                });
-            });
-
             describe('empty string passed', () => {
                 it('should return 0', () => {
                     expect(def.valueToData(null, '')).toBe(0);

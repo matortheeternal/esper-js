@@ -12,9 +12,12 @@ class SubrecordDef extends Def {
     initElement(container) {
         return new SubrecordElement(container, this);
     }
+
+    get signature() {
+        return this.src.signature;
+    }
 }
 
 module.exports = Object.assign(SubrecordDef, {
-    defType: 'subrecord',
-    ElementClass: SubrecordElement
+    defType: 'subrecord'
 });

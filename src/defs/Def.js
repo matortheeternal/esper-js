@@ -1,7 +1,7 @@
 class Def {
     constructor(manager, def, parent) {
         this.manager = manager; // not necessary?
-        Object.assign(this, def);
+        this.src = def;
         if (parent) this.parent = parent;
     }
 

@@ -40,6 +40,10 @@ class FlagsDef extends FormatDef {
             return data + Math.pow(2, index);
         }, 0);
     }
+
+    get flags() {
+        return this.src.flags;
+    }
 }
 
 module.exports = Object.assign(FlagsDef, {

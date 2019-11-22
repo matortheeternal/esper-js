@@ -53,7 +53,7 @@ describe('CtdaTypeFormat', () => {
                         'Greater than or equal to'
                     );
                     expect(def.dataToValue(null, 0xC0)).toBe(
-                        '<Unknown Compare operator>'
+                        '<Unknown 192>'
                     );
                 });
             });

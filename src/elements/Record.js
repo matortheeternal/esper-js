@@ -1,11 +1,12 @@
 const Container = require('./Container');
 const Signature = require('../Signature');
+const {UnexpectedSignatureError} = require('../errors');
 
 class Record extends Container {
-    parseSignature(expectedSig) {
-        this._signature = Signature.parse(this.memoryMap);
+    loadSignature(expectedSig) {
+        this._signature = Signature.load(this.memoryMap);
         if (expectedSig && this.signature !== expectedSig)
-            throw new Error(`Expected signature ${expectedSig}, found ${this.signature}`);
+            throw new UnexpectedSignatureError(expectedSig, this.signature);
     }
 
     get signature() {

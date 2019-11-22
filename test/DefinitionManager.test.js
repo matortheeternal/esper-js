@@ -81,26 +81,26 @@ describe('DefinitionManager', () => {
 
         describe('buildDef', () => {
             it('should return a new instance of a def class', () => {
-                let defInstance = definitionManager.buildDef({
+                let src = {
                     name: 'Unknown',
                     type: 'bytes',
                     size: 4
-                });
+                };
+                let defInstance = definitionManager.buildDef(src);
 
                 expect(defInstance).toBeDefined();
-                expect(defInstance.name).toBe('Unknown');
-                expect(defInstance.size).toBe(4);
-                expect(defInstance.constructor.name).toBe('BytesDef');
+                expect(defInstance.src).toEqual(src);
             });
 
             it('should resolve referenced defs and merge them', () => {
-                let defInstance = definitionManager.buildDef({
+                let src = {
                     id: 'ByteColors',
                     name: 'Testing'
-                });
+                };
+                let defInstance = definitionManager.buildDef(src);
 
                 expect(defInstance).toBeDefined();
-                expect(defInstance.name).toBe('Testing');
+                expect(defInstance.src.name).toEqual('Testing');
                 expect(defInstance.constructor.name).toBe('StructDef');
             });
         });
@@ -120,10 +120,10 @@ describe('DefinitionManager', () => {
                 expect(builtDefs).toBeInstanceOf(Array);
                 expect(builtDefs.length).toBe(2);
                 expect(builtDefs[0]).toBeDefined();
-                expect(builtDefs[0].name).toBe('Unknown');
+                expect(builtDefs[0].src.name).toBe('Unknown');
                 expect(builtDefs[0].constructor.name).toBe('BytesDef');
                 expect(builtDefs[1]).toBeDefined();
-                expect(builtDefs[1].name).toBe('Description');
+                expect(builtDefs[1].src.name).toBe('Description');
                 expect(builtDefs[1].constructor.name).toBe('StringDef');
             });
 

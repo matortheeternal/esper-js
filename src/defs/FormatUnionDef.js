@@ -10,19 +10,19 @@ class FormatUnionDef extends FormatDef {
         this.formatDefs = manager.buildDefs(def.formats);
     }
 
-    getFormat(element) {
+    getFormatDef(element) {
         let index = this.decide(element) - 1;
         if (index === -1) throw new Error('Could not resolve union.');
         return this.formatDefs[index];
     }
 
     dataToValue(element, data) {
-        let format = this.getFormat(element);
+        let format = this.getFormatDef(element);
         return format.dataToValue(element, data);
     }
 
     valueToData(element, value) {
-        let format = this.getFormat(element);
+        let format = this.getFormatDef(element);
         return format.valueToData(element, value);
     }
 }

@@ -1,4 +1,4 @@
-const ArrayElement = require('../elements/ArrayElement');
+const ElementArray = require('../elements/ElementArray');
 const Def = require('./Def');
 const {ExpectedDefPropertyError} = require('../errors');
 
@@ -9,8 +9,8 @@ class ArrayDef extends Def {
         this.elementDef = manager.buildDef(def.element);
     }
 
-    initElement(container) {
-        return new ArrayElement(container, this);
+    load(container) {
+        return ElementArray.load(container, this);
     }
 }
 

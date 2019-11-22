@@ -7,8 +7,8 @@ const nullTerminator = new Buffer([0x00]);
 // TODO: translated string support
 class StringDef extends ValueDef {
     read(stream) {
-        let buf = this.hasOwnProperty('size')
-            ? stream.read(this.size)
+        let buf = this.src.hasOwnProperty('size')
+            ? stream.read(this.src.size)
             : stream.readUntil(nullTerminator);
         return legacy.decode(buf, 'cp1252');
     }

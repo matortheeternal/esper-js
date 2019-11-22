@@ -17,6 +17,10 @@ class EnumDef extends FormatDef {
         if (match) return parseInt(match[1]);
         throw new InvalidEnumValueError(value);
     }
+
+    get options() {
+        return this.src.options;
+    }
 }
 
 module.exports = Object.assign(EnumDef, {

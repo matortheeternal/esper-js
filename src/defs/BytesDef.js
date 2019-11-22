@@ -13,14 +13,14 @@ class BytesDef extends ValueDef {
     }
 
     read(stream) {
-        return stream.read(this.size);
+        return stream.read(this.src.size);
     }
 
     setData(element, data) {
         if (!data || data.constructor !== Buffer)
             throw new Error(`Expected a Buffer, found ${data}`);
-        if (data.length !== this.size)
-            throw new Error(`Expected buffer length ${this.size}, found buffer length ${data.length}.`);
+        if (data.length !== this.src.size)
+            throw new Error(`Expected buffer length ${this.src.size}, found buffer length ${data.length}.`);
         element._data = data;
     }
 

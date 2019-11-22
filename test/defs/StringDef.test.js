@@ -87,8 +87,8 @@ describe('StringDef', () => {
             });
 
             describe('fixed size', () => {
-                beforeAll(() => def.size = 3);
-                afterAll(() => delete def.size);
+                beforeAll(() => def.src.size = 3);
+                afterAll(() => delete def.src.size);
 
                 it('should read size bytes', () => {
                     stream.setPos(0x00);

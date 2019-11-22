@@ -21,8 +21,8 @@ class PluginFile extends Container {
     static load(session, filePath) {
         let plugin = new PluginFile(session, filePath, false);
         plugin.memoryMap = new MemoryMap(filePath);
-        plugin.parseFileHeader();
-        plugin.parseGroups();
+        plugin.loadFileHeader();
+        plugin.loadGroups();
         return plugin;
     }
 
@@ -36,12 +36,12 @@ class PluginFile extends Container {
         );
     }
 
-    parseFileHeader() {
-        this._fileHeader = MainRecord.load(this, 0, 'TES4');
-        this.loadMasters();
+    loadFileHeader() {
+        this._header = MainRecord.load(this, 'TES4');
+        this.initMasters();
     }
 
-    loadMasters() {
+    initMasters() {
         let masterFileElements = this.fileHeader.getElements('Masters Files');
         this._masters = masterFileElements.map(masterFileElement => {
             let filename = masterFileElement.getValue('MAST');
@@ -49,7 +49,7 @@ class PluginFile extends Container {
         });
     }
 
-    parseGroups() {
+    loadGroups() {
         this.memoryMap.setPos(this.fileHeader.nextOffset);
         while (this.memoryMap.getPos() < this.fileSize)
             GroupRecord.load(this);
@@ -60,7 +60,7 @@ class PluginFile extends Container {
     }
 
     get fileHeader() {
-        return this._fileHeader;
+        return this._header;
     }
 
     get masters() {
@@ -85,18 +85,18 @@ class PluginFile extends Container {
     }
 
     initHeaderDefs() {
-        let {resolveDef, buildDef} = this.definitionManager;
-        this.groupHeaderDef = buildDef(resolveDef('GroupRecordHeader'));
+        let {buildDef} = this.definitionManager;
+        this.groupHeaderDef = buildDef({id: 'GroupRecordHeader'});
     }
 
     init() {
         // TODO: initialize ESM/ESL flag based on filename
-        this._fileHeader = new MainRecord(this, 'TES4');
+        this._header = new MainRecord(this, 'TES4');
     }
 
     useNextFormId() {
         let nextId = this._highObjectId++;
-        this._fileHeader.setData('HEDR/Next Object ID', nextId + 1);
+        this._header.setData('HEDR/Next Object ID', nextId + 1);
         return nextId;
     }
 

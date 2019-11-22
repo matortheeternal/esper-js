@@ -7,15 +7,6 @@ class Element {
         container.elementAdded(this);
     }
 
-    static load(container, def) {
-        let {ElementClass} = def.constructor;
-        if (def.hasOwnProperty('inheritFrom')) {
-            let value = container[def.inheritFrom];
-            return new ElementClass(container, def, value);
-        }
-        return ElementClass.load(container, def);
-    }
-
     get name() {
         return this.def.name;
     }
