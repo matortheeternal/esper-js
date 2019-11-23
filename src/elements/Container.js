@@ -1,5 +1,3 @@
-const UnsupportedElementError = require('../errors/UnsupportedElementError');
-const InvalidPathError = require('../errors/InvalidPathError');
 const Element = require('./Element');
 
 class Container extends Element {
@@ -9,11 +7,18 @@ class Container extends Element {
     }
 
     elementAdded(element) {
+        this.lastElement = element;
         if (this.sorted) {
             this._elements[element.def.sortOrder] = element;
         } else {
             this._elements.push(element);
         }
+    }
+
+    unknownSubrecord(u) {
+        if (!this._unknownSubrecords)
+            this._unknownSubrecords = [];
+        this._unknownSubrecords.push(u);
     }
 
     get elements() {
@@ -28,37 +33,10 @@ class Container extends Element {
         return false;
     }
 
-    resolveElement(pathPart) {
-        let strategies = Container.resolutionStrategies;
-        for (let strategy of strategies) {
-            let match = strategy.match(pathPart);
-            if (match) return strategy.resolve(this, match);
-        }
-    }
-
-    getElement(path) {
-        let [pathPart, remainingPath] = Element.splitPath(path),
-            element = this.resolveElement(pathPart);
-        return remainingPath.length > 0
-            ? element.getElement(remainingPath)
-            : element;
-    }
-
-    getData(path) {
-        let element = this.getElement(path);
-        if (!element) return;
-        return element.data;
-    }
-
-    setData(path, data) {
-        let element = this.getElement(path);
-        if (!element) throw new InvalidPathError(this, path);
-        if (!element.hasOwnProperty('data'))
-            throw new UnsupportedElementError(element, 'setData');
-        element.data = data;
+    get unknownSubrecords() {
+        return this._unknownSubrecords.slice();
     }
 }
 
-module.exports = Object.assign(Container, {
-    resolutionStrategies: []
-});
+module.exports = Container;
+

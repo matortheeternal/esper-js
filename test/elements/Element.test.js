@@ -68,12 +68,6 @@ describe('Element', () => {
             });
         });
 
-        describe('displayName', () => {
-            it('should return def name', () => {
-                expect(element.displayName).toBe('Test');
-            });
-        });
-
         describe('path', () => {
             // TODO
         });
