@@ -65,13 +65,13 @@ describe('EmptyDef', () => {
             });
         });
 
-        describe('read', () => {
+        describe('readData', () => {
             it('should be defined', () => {
-                expect(def.read).toBeDefined();
+                expect(def.readData).toBeDefined();
             });
 
             it('should return undefined', () => {
-                let data = def.read(stream);
+                let data = def.readData(stream);
                 expect(data).toBeUndefined();
                 expect(stream.read).toHaveBeenCalledTimes(0);
             });

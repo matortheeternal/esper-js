@@ -1,9 +1,10 @@
-const Def = require('./Def');
+const MaybeSubrecordDef = require('./MaybeSubrecordDef');
 const ValueElement = require('../elements/ValueElement');
 const {UnimplementedError} = require('../errors');
 
-class ValueDef extends Def {
+class ValueDef extends MaybeSubrecordDef {
     write(data, stream) {
+        super.write(stream);
         stream.write(this.toBytes(data));
     }
 
@@ -18,6 +19,11 @@ class ValueDef extends Def {
         }
         return ValueElement.load(container, this);
     }
+
+    read(element) {
+        super.read(element);
+        element._data = this.readData(element.file.memoryMap);
+    }
 }
 
-module.exports = Object.assign(ValueDef);
+module.exports = ValueDef;

@@ -6,7 +6,7 @@ const nullTerminator = new Buffer([0x00]);
 // TODO: other encoding support
 // TODO: translated string support
 class StringDef extends ValueDef {
-    read(stream) {
+    readData(stream) {
         let buf = this.src.hasOwnProperty('size')
             ? stream.read(this.src.size)
             : stream.readUntil(nullTerminator);

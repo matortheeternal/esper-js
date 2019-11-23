@@ -78,7 +78,7 @@ describe('UnionDef', () => {
 
         describe('load', () => {
             beforeAll(() => {
-                Union.prototype.loadElement = jest.fn();
+                UnionDef.prototype.read = jest.fn();
             });
 
             it('should return a new union element', () => {

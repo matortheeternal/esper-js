@@ -114,13 +114,13 @@ describe('Int0Def', () => {
             });
         });
 
-        describe('read', () => {
+        describe('readData', () => {
             it('should be defined', () => {
-                expect(def.read).toBeDefined();
+                expect(def.readData).toBeDefined();
             });
 
-            it('should return the Int0 read from the stream', () => {
-                let data = def.read(stream);
+            it('should return 0', () => {
+                let data = def.readData(stream);
                 expect(data).toBe(0);
             });
         });

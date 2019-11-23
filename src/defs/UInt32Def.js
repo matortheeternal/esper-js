@@ -1,7 +1,7 @@
 const IntegerDef = require('./IntegerDef');
 
 class UInt32Def extends IntegerDef {
-    read(stream) {
+    readData(stream) {
         return stream.read(this.size).readUInt32LE();
     }
 

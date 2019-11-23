@@ -42,13 +42,13 @@ describe('BytesDef', () => {
             element = {_data: null};
         });
 
-        describe('read', () => {
+        describe('readData', () => {
             it('should be defined', () => {
-                expect(def.read).toBeDefined();
+                expect(def.readData).toBeDefined();
             });
 
             it('should call stream.read passing the bytesDef size', () => {
-                def.read(stream);
+                def.readData(stream);
                 expect(stream.read).toHaveBeenCalledWith(4);
             });
         });

@@ -1,8 +1,8 @@
-const Def = require('./Def');
+const MaybeSubrecordDef = require('./MaybeSubrecordDef');
 const {ExpectedDefPropertyError, UnionDecideError} = require('../errors');
 const Union = require('../elements/Union');
 
-class UnionDef extends Def {
+class UnionDef extends MaybeSubrecordDef {
     constructor(manager, def, parent) {
         super(manager, def, parent);
         if (!def.decider) throw new ExpectedDefPropertyError(def, 'decider');
@@ -19,6 +19,12 @@ class UnionDef extends Def {
 
     load(container) {
         return Union.load(container, this);
+    }
+
+    read(unionElement) {
+        super.read(unionElement);
+        let elementDef = this.getElementDef(unionElement);
+        unionElement._element = elementDef.load(unionElement);
     }
 }
 

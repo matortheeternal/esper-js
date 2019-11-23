@@ -1,7 +1,7 @@
 const ValueDef = require('./ValueDef');
 
 class FloatDef extends ValueDef {
-    read(stream) {
+    readData(stream) {
         return stream.read(this.size).readFloatLE();
     }
 

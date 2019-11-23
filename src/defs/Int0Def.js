@@ -1,7 +1,7 @@
 const IntegerDef = require('./IntegerDef');
 
 class Int0Def extends IntegerDef {
-    read() {
+    readData() {
         return 0;
     }
 

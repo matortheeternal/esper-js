@@ -69,20 +69,20 @@ describe('StringDef', () => {
             });
         });
 
-        describe('read', () => {
+        describe('readData', () => {
             it('should be defined', () => {
-                expect(def.read).toBeDefined();
+                expect(def.readData).toBeDefined();
             });
 
             describe('variable size', () => {
                 it('should return the string', () => {
                     stream.setPos(0x00);
-                    expect(def.read(stream)).toBe('abcdefghijkl');
+                    expect(def.readData(stream)).toBe('abcdefghijkl');
                 });
 
                 it('should work with empty strings', () => {
                     stream.setPos(0x0D);
-                    expect(def.read(stream)).toBe('');
+                    expect(def.readData(stream)).toBe('');
                 });
             });
 
@@ -92,9 +92,9 @@ describe('StringDef', () => {
 
                 it('should read size bytes', () => {
                     stream.setPos(0x00);
-                    expect(def.read(stream)).toBe('abc');
-                    expect(def.read(stream)).toBe('def');
-                    expect(def.read(stream)).toBe('ghi');
+                    expect(def.readData(stream)).toBe('abc');
+                    expect(def.readData(stream)).toBe('def');
+                    expect(def.readData(stream)).toBe('ghi');
                 });
             });
         });

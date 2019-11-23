@@ -1,8 +1,8 @@
 const ElementArray = require('../elements/ElementArray');
-const Def = require('./Def');
+const MaybeSubrecordDef = require('./MaybeSubrecordDef');
 const {ExpectedDefPropertyError} = require('../errors');
 
-class ArrayDef extends Def {
+class ArrayDef extends MaybeSubrecordDef {
     constructor(manager, def, parent) {
         super(manager, def, parent);
         if (!def.element) throw new ExpectedDefPropertyError(def, 'element');
@@ -11,6 +11,11 @@ class ArrayDef extends Def {
 
     load(container) {
         return ElementArray.load(container, this);
+    }
+
+    read(element) {
+        super.read(element);
+        // TODO
     }
 }
 

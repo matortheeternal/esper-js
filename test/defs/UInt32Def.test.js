@@ -114,18 +114,18 @@ describe('UInt32Def', () => {
             });
         });
 
-        describe('read', () => {
+        describe('readData', () => {
             it('should be defined', () => {
-                expect(def.read).toBeDefined();
+                expect(def.readData).toBeDefined();
             });
 
             it('should call stream.read', () => {
-                def.read(stream);
+                def.readData(stream);
                 expect(stream.read).toHaveBeenCalledWith(4);
             });
 
             it('should return the UInt32 read from the stream', () => {
-                let data = def.read(stream);
+                let data = def.readData(stream);
                 expect(data).toBe(0xFFA0013E);
             });
         });

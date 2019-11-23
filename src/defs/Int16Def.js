@@ -1,7 +1,7 @@
 const IntegerDef = require('./IntegerDef');
 
 class Int16Def extends IntegerDef {
-    read(stream) {
+    readData(stream) {
         return stream.read(this.size).readInt16LE();
     }
 

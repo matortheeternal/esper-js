@@ -12,7 +12,7 @@ class BytesDef extends ValueDef {
         super(manager, def, parent);
     }
 
-    read(stream) {
+    readData(stream) {
         return stream.read(this.src.size);
     }
 

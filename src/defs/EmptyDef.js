@@ -4,7 +4,7 @@ class EmptyDef extends ValueDef {
     setData() {
     }
 
-    read(stream) {
+    readData(stream) {
     }
 
     getValue() {
