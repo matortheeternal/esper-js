@@ -18,10 +18,22 @@ class Signature {
         return new Signature(data);
     }
 
+    static fromDefString(str) {
+        let data = new Buffer(4);
+        str.split('').forEach((char, n) => {
+            data[n] = char.charCodeAt(0);
+        });
+        return new Signature(data);
+    }
+
     toString() {
         return Array.from(this._data).map(n => {
             return getCharacter(n);
         }).join('');
+    }
+
+    write(stream) {
+        stream.write(this._data);
     }
 }
 
