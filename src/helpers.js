@@ -87,8 +87,12 @@ let buildIndex = function(folderPath, keyStr) {
     }, {});
 };
 
+let readSize = function(stream) {
+    return stream.read(2).readUInt16LE();
+};
+
 module.exports = {
     minmax, strToBuffer, strEquals, expectProperties,
     getFileName, clone, getBits, pad, isPositiveInteger,
-    buildIndex
+    buildIndex, readSize
 };
