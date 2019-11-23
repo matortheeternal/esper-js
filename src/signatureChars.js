@@ -24,7 +24,7 @@ let getCharCode = function(char) {
         return chars[key] === char;
     });
     if (charCode === undefined)
-        throw new Error(`Unknown signature character ${char}`);
+        throw new Error(`Unknown signature character #${char.charCodeAt(0)}`);
     return charCode;
 };
 
