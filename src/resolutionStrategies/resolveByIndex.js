@@ -1,6 +1,8 @@
+const indexExpr = /^\[(\d+)]$/;
+
 module.exports = {
     priority: 10,
-    match: /^\[(\d+)]$/.exec,
+    match: pathPart => pathPart.match(indexExpr),
     resolve: (element, match) => {
         let index = parseInt(match[1]),
             elements = element.assignedElements;

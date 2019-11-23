@@ -1,6 +1,8 @@
+const referenceExpr = /^@([WK])?$/;
+
 module.exports = {
     priority: 15,
-    match: /^@([WK])?$/.exec,
+    match: pathPart => pathPart.match(referenceExpr),
     resolve: (element, match) => {
         let rec = element.referencedRecord;
         if (match[1] === 'W') rec = rec.winningOverride;

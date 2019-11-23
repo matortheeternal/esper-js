@@ -5,8 +5,7 @@ module.exports = {
     match: pathPart => pathPart,
     resolve: (element, match) => {
         return element.assignedElements.find(e => {
-            return strEquals(e.name, match) ||
-                strEquals(e.displayName, match);
+            return strEquals(e.name, match);
         });
     }
 };
