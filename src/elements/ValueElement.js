@@ -7,13 +7,13 @@ class ValueElement extends Element {
     }
 
     static load(container, def) {
-        let valueElement = new ValueElement(container, def);
-        valueElement.readData();
-        return valueElement;
+        let element = new ValueElement(container, def);
+        def.read(element);
+        return element;
     }
 
     readData() {
-        this._data = this.def.read(this.memoryMap);
+        this._data = this.def.read(this.file.memoryMap);
     }
 
     get data() {

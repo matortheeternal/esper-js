@@ -1,8 +1,8 @@
 const Container = require('./Container');
 
 class MemberArray extends Container {
-    subrecordFound() {
-        this.def.memberDef.initElement(this);
+    subrecordFound(signature) {
+        return this.def.loadElement(this, signature);
     }
 
     get sorted() {

@@ -12,6 +12,19 @@ class MemberArrayDef extends Def {
     initElement(record) {
         return new MemberArray(record, this);
     }
+
+    getOrInitElement(container, signature) {
+        if (this.memberDef.hasPrimarySignature(signature))
+            return this.memberDef.initElement(container);
+        return container.lastElement;
+    }
+
+    loadElement(container, signature) {
+        if (this.memberDef.isSubrecord)
+            return this.memberDef.load(container);
+        let element = this.getOrInitElement(container, signature);
+        return element.subrecordFound(signature);
+    }
 }
 
 module.exports = Object.assign(MemberArrayDef, {

@@ -63,8 +63,8 @@ class MainRecord extends Record {
     }
 
     loadDef() {
-        let {resolveRecordDef} = this.file.definitionManager;
-        this.def = resolveRecordDef(this.signature);
+        let manager = this.file.definitionManager;
+        this.def = manager.resolveRecordDef(this.signature);
     }
 
     addOverride(rec) {
@@ -114,11 +114,15 @@ class MainRecord extends Record {
     }
 
     get dataSize() {
-        return this._header._elements[0].data;
+        return this._header._elements[1].data;
     }
 
     get formId() {
         return this._header._elements[3].value;
+    }
+
+    get pathName() {
+        return this.formId.toFileFormId(this.file).toString(16);
     }
 }
 

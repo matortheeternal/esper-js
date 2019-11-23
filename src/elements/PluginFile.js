@@ -13,6 +13,7 @@ class PluginFile extends Container {
         this.file = this;
         this._highObjectId = 2048;
         this._recordsByFormId = {};
+        this._masters = [];
         this.initHeaderDefs();
         this.fileManager.addFile(this);
         if (init) this.init();
@@ -38,12 +39,14 @@ class PluginFile extends Container {
 
     loadFileHeader() {
         this._header = MainRecord.load(this, 'TES4');
+        this._header.loadMembers();
         this.initMasters();
     }
 
     initMasters() {
-        let masterFileElements = this.fileHeader.getElements('Masters Files');
-        this._masters = masterFileElements.map(masterFileElement => {
+        let masterFilesElement = this.fileHeader.getElement('Master Files');
+        if (!masterFilesElement) return;
+        this._masters = masterFileElement._elements.map(masterFileElement => {
             let filename = masterFileElement.getValue('MAST');
             return this.fileManager.getFileByName(filename, true);
         });
@@ -84,9 +87,13 @@ class PluginFile extends Container {
         return this.memoryMap.getSize();
     }
 
+    get pathName() {
+        return this.filename;
+    }
+
     initHeaderDefs() {
-        let {buildDef} = this.definitionManager;
-        this.groupHeaderDef = buildDef({id: 'GroupRecordHeader'});
+        let manager = this.definitionManager;
+        this.groupHeaderDef = manager.buildDef({id: 'GroupRecordHeader'});
     }
 
     init() {
@@ -101,8 +108,8 @@ class PluginFile extends Container {
     }
 
     ordinalToFile(ordinal) {
-        if (this.masters.length <= ordinal) return this;
-        return this.masters[ordinal];
+        if (this._masters.length <= ordinal) return this;
+        return this._masters[ordinal];
     }
 
     fileToOrdinal(file) {

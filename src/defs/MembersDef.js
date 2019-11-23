@@ -1,5 +1,6 @@
-const {UnknownSignatureError, ExpectedDefPropertyError} = require('../errors');
+const {ExpectedDefPropertyError} = require('../errors');
 const Def = require('./Def');
+const UnknownSubrecord = require('../UnknownSubrecord');
 
 class MembersDef extends Def {
     constructor(manager, def, parent) {
@@ -27,9 +28,10 @@ class MembersDef extends Def {
     loadElement(container, signature) {
         let sig = signature.toString(),
             memberDef = this.getMemberDef(sig);
-        if (!memberDef) throw new UnknownSignatureError(container, sig);
+        if (!memberDef) return new UnknownSubrecord(container, signature);
+        if (memberDef.isSubrecord) return memberDef.load(container);
         let element = this.getOrInitElement(container, memberDef);
-        element.subrecordFound(signature);
+        return element.subrecordFound(signature);
     }
 }
 
