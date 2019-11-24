@@ -19,7 +19,7 @@ class MaybeSubrecordDef extends Def {
 
     read(element) {
         if (!this.isSubrecord) return;
-        element.size = readSize(element.file.memoryMap);
+        element._size = readSize(element.file.memoryMap);
     }
 
     write(stream) {

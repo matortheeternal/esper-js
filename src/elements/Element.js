@@ -57,6 +57,10 @@ class Element {
         return `${this.container.path}\\${this.pathName}`;
     }
 
+    get size() {
+        return this._size || this.def.size;
+    }
+
     resolveElement(pathPart) {
         let strategies = Element.resolutionStrategies;
         for (let strategy of strategies) {
