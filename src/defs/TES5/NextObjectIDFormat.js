@@ -1,9 +1,8 @@
 const FormatDef = require('../FormatDef');
-const {hex} = require('../../helpers');
 
 class NextObjectIDFormat extends FormatDef {
     dataToValue(element, data) {
-        return hex(data, 8);
+        return data.toString();
     }
 
     valueToData(element, value) {
