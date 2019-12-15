@@ -12,12 +12,8 @@ class ValueElement extends Element {
         return element;
     }
 
-    readData() {
-        this._data = this.def.read(this.file.memoryMap);
-    }
-
     get data() {
-        return this._data;
+        return this.def.getData(this);
     }
 
     set data(data) {

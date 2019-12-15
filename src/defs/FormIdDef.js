@@ -8,11 +8,23 @@ class FormIdDef extends UInt32Def {
     }
 
     getValue(element) {
-        return FormIdValue.fromElement(element);
+        return this._value;
     }
 
     setValue(element, value) {
-        this.setData(element, value.toFileFormId(element.file));
+        element._value = value;
+    }
+
+    getData(element) {
+        return element._value.toFileFormId(element.file);
+    }
+
+    setData(element, data) {
+        element._value = FormIdValue.fromFileFormId(element.file, data);
+    }
+
+    read(element) {
+        this.setData(this.readData(element.file.memoryMap));
     }
 }
 

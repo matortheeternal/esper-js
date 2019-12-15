@@ -8,6 +8,10 @@ class ValueDef extends MaybeSubrecordDef {
         stream.write(this.toBytes(data));
     }
 
+    getData(element) {
+        return element._data;
+    }
+
     toBytes(data) {
         throw new UnimplementedError();
     }
