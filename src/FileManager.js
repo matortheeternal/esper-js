@@ -3,6 +3,7 @@ class FileManager {
         this._game = game;
         this._files = [];
         this._dummyFiles = [];
+        this._loadOrder = [];
     }
 
     findOrCreateDummyFile(filename) {
@@ -26,6 +27,10 @@ class FileManager {
 
     addFile(pluginFile) {
         this._files.push(pluginFile);
+    }
+
+    getFileLoadOrder(pluginFile) {
+        return this._loadOrder.indexOf(pluginFile);
     }
 }
 
