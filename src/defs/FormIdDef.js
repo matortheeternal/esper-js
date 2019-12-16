@@ -26,6 +26,19 @@ class FormIdDef extends UInt32Def {
     read(element) {
         this.setData(this.readData(element.file.memoryMap));
     }
+
+    getMasterReferences(element, references, trackRefs) {
+        if (element._value.isNull()) return;
+        if (element._value.file === element.file) return;
+        let {filename} = element._value.file;
+        trackRefs
+            ? references[filename].push(element)
+            : references[filename]++;
+    }
+
+    referencedRecord(element) {
+        return element._value.resolveRecord();
+    }
 }
 
 module.exports = Object.assign(FormIdDef, {

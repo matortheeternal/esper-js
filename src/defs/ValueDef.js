@@ -28,6 +28,12 @@ class ValueDef extends MaybeSubrecordDef {
         super.read(element);
         element._data = this.readData(element.file.memoryMap);
     }
+
+    getMasterReferences() {}
+
+    referencedRecord(element) {
+        throw new Error(`${element.name} does not reference records.`);
+    }
 }
 
 module.exports = ValueDef;

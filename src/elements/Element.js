@@ -61,6 +61,8 @@ class Element {
         return this._size || this.def.size;
     }
 
+    getMasterReferences() {}
+
     resolveElement(pathPart) {
         let strategies = Element.resolutionStrategies;
         for (let strategy of strategies) {

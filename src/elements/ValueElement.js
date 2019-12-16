@@ -12,6 +12,10 @@ class ValueElement extends Element {
         return element;
     }
 
+    getMasterReferences(references, trackRefs) {
+        this.def.getMasterReferences(this, references, trackRefs);
+    }
+
     get data() {
         return this.def.getData(this);
     }
@@ -29,8 +33,7 @@ class ValueElement extends Element {
     }
 
     get referencedRecord() {
-        if (this.defType !== 'formId') return;
-        return this.value.resolveRecord();
+        return this.def.referencedRecord(this);
     }
 }
 

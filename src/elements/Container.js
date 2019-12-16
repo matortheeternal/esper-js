@@ -21,6 +21,12 @@ class Container extends Element {
         this._unknownSubrecords.push(u);
     }
 
+    getMasterReferences(references, trackRefs) {
+        this._elements.forEach(element => {
+            element.getMasterReferences(references, trackRefs);
+        });
+    }
+
     get elements() {
         return this._elements.slice();
     }
