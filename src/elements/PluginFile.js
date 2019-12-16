@@ -7,7 +7,7 @@ const MasterManager = require('../interfaces/MasterManager');
 const RecordManager = require('../interfaces/RecordManager');
 
 class PluginFile extends Container {
-    constructor(session, filePath, init = true) {
+    constructor(session, filePath, options = {}) {
         super();
         this.session = session;
         this.filePath = filePath;
@@ -16,15 +16,28 @@ class PluginFile extends Container {
         RecordManager.extend(this);
         MasterManager.extend(this);
         this.initHeaderDefs();
-        this.fileManager.addFile(this);
-        if (init) this.init();
+        if (!options.temporary) this.fileManager.addFile(this);
     }
 
     static load(session, filePath) {
-        let plugin = new PluginFile(session, filePath, false);
+        let plugin = new PluginFile(session, filePath);
         plugin.memoryMap = new MemoryMap(filePath);
         plugin.loadFileHeader();
         plugin.loadGroups();
+        return plugin;
+    }
+
+    static getMasterFilenames(session, filePath) {
+        let plugin = new PluginFile(session, filePath, { temporary: true });
+        plugin.memoryMap = new MemoryMap(filePath);
+        plugin.loadFileHeader();
+        return plugin.masterFilenames;
+    }
+
+    static init(session, filePath) {
+        let plugin = new PluginFile(session, filePath);
+        plugin._header = new MainRecord(this, 'TES4');
+        // TODO: initialize flags based on filename
         return plugin;
     }
 
@@ -32,12 +45,18 @@ class PluginFile extends Container {
         this._header = MainRecord.load(this, 'TES4');
         this._header.loadMembers();
         this.initMasters();
+        this.initMastersByFilename();
     }
 
     loadGroups() {
         this.memoryMap.setPos(this.fileHeader.nextOffset);
         while (this.memoryMap.getPos() < this.fileSize)
             GroupRecord.load(this);
+    }
+
+    initHeaderDefs() {
+        let manager = this.definitionManager;
+        this.groupHeaderDef = manager.buildDef({id: 'GroupRecordHeader'});
     }
 
     get fileHeader() {
@@ -65,14 +84,8 @@ class PluginFile extends Container {
         return this.filename;
     }
 
-    initHeaderDefs() {
-        let manager = this.definitionManager;
-        this.groupHeaderDef = manager.buildDef({id: 'GroupRecordHeader'});
-    }
-
-    init() {
-        // TODO: initialize ESM/ESL flag based on filename
-        this._header = new MainRecord(this, 'TES4');
+    get loadOrder() {
+        return this.fileManager.getFileLoadOrder(this.filename);
     }
 }
 
