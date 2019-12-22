@@ -3,7 +3,7 @@ const MainRecordDef = require('../../src/defs/MainRecordDef');
 const MembersDef = require('../../src/defs/MembersDef');
 const StructDef = require('../../src/defs/StructDef');
 const {ExpectedDefPropertyError} = require('../../src/errors');
-const {subrecord, string, float, flags} = require('../helpers/defHelpers');
+const {subrecord, string, float, flags} = require('../testHelpers/defHelpers');
 
 const example = {
     type: 'record',

@@ -1,4 +1,4 @@
-const Session = require('../src/setup/Session');
+const Session = require('../../src/setup/Session');
 
 describe('Session', () => {
     describe('constructor', () => {

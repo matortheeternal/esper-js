@@ -3,7 +3,7 @@ const StructDef = require('../../src/defs/StructDef');
 const Struct = require('../../src/elements/Struct');
 const Def = require('../../src/defs/Def');
 const {ExpectedDefPropertyError} = require('../../src/errors');
-const {uint32, string} = require('../helpers/defHelpers');
+const {uint32, string} = require('../testHelpers/defHelpers');
 
 const example = {
     elements: [

@@ -1,6 +1,6 @@
-const FormIdValue = require('../src/values/FormIdValue');
-const {plugin, makeDummyFile} = require('./helpers/elementHelpers');
-const {MissingMasterError} = require('../src/errors');
+const FormIdValue = require('../../src/values/FormIdValue');
+const {plugin, makeDummyFile} = require('../testHelpers/elementHelpers');
+const {MissingMasterError} = require('../../src/errors');
 
 describe('FormIdValue', () => {
     let skyrim, file, file2;

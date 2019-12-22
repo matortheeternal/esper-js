@@ -6,8 +6,8 @@ const {
     ExpectedDefPropertyError,
     UnknownSignatureError
 } = require('../../src/errors');
-const {subrecord, uint32, float, string} = require('../helpers/defHelpers');
-const {sortedContainer} = require('../helpers/elementHelpers');
+const {subrecord, uint32, float, string} = require('../testHelpers/defHelpers');
+const {sortedContainer} = require('../testHelpers/elementHelpers');
 
 const example = {
     members: [

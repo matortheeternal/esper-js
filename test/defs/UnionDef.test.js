@@ -3,7 +3,7 @@ const UnionDef = require('../../src/defs/UnionDef');
 const Union = require('../../src/elements/Union');
 const Def = require('../../src/defs/Def');
 const {ExpectedDefPropertyError, UnionDecideError} = require('../../src/errors');
-const {uint32, string} = require('../helpers/defHelpers');
+const {uint32, string} = require('../testHelpers/defHelpers');
 
 const example = {
     decider: 'ExampleDecider',

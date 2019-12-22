@@ -3,7 +3,7 @@ const MemberArrayDef = require('../../src/defs/MemberArrayDef');
 const Def = require('../../src/defs/Def');
 const MemberArray = require('../../src/elements/MemberArray');
 const {ExpectedDefPropertyError} = require('../../src/errors');
-const {subrecord, uint32} = require('../helpers/defHelpers');
+const {subrecord, uint32} = require('../testHelpers/defHelpers');
 
 const example = {
     name: 'Example Member Array',

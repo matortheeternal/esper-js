@@ -1,4 +1,4 @@
-const Signature = require('../src/values/Signature');
+const Signature = require('../../src/values/Signature');
 
 describe('Signature', () => {
     describe('constructor', () => {
