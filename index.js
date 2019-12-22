@@ -1,12 +1,13 @@
-const FormIdValue = require('./src/FormIdValue');
+const Session = require('./src/Session');
+const GameInstallation = require('./src/GameInstallation');
 const PluginFile = require('./src/elements/PluginFile');
 const Element = require('./src/elements/Element');
 const Container = require('./src/elements/Container');
-const Subrecord = require('./src/elements/Subrecord');
-const Session = require('./src/Session');
+const FormIdValue = require('./src/FormIdValue');
 
 // EXPORTS
 module.exports = {
-    PluginFile, Element, Container, Subrecord,
-    FormIdValue, Session
+    Session, GameInstallation,
+    PluginFile, Element, Container,
+    FormIdValue,
 };
