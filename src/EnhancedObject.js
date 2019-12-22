@@ -1,4 +1,4 @@
-class ValidatedObject {
+class EnhancedObject {
     constructor(params) {
         this.constructor.check(params);
         Object.assign(this, params);
@@ -14,4 +14,4 @@ class ValidatedObject {
     }
 }
 
-module.exports = ValidatedObject;
+module.exports = EnhancedObject;

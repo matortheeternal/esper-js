@@ -1,10 +1,10 @@
-const ValidatedObject = require('../ValidatedObject');
+const EnhancedObject = require('../EnhancedObject');
 const {
     strictValidator, array, object,
     optional, id, string
 } = require('../helpers/validation');
 
-class Game extends ValidatedObject {
+class Game extends EnhancedObject {
     get defaults() {
         return {
             baseName: () => this.name,
