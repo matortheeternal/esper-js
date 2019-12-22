@@ -4,9 +4,10 @@ const path = require('path');
 const assert = require('assert');
 
 class Session {
-    constructor(game) {
+    constructor(game, options = {}) {
         this._game = game;
         this.dataPath = process.cwd();
+        this.options = Object.assign(Session.defaultOptions, options);
         this.definitionManager = new DefinitionManager(game);
         this.pluginManager = new PluginManager(game);
     }
@@ -30,5 +31,7 @@ class Session {
         });
     }
 }
+
+Session.defaultOptions = require('./defaultSessionOptions');
 
 module.exports = Session;
