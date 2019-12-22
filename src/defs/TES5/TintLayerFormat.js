@@ -1,5 +1,5 @@
 const FormatDef = require('../FormatDef');
-const {getTintLayerName} = require('../../tintLayerCache');
+const {getTintLayerName} = require('../../services/tintLayerCache');
 
 class TintLayerFormat extends FormatDef {
     dataToValue(element, data) {
