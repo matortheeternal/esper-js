@@ -16,7 +16,7 @@ class PluginFile extends Container {
         RecordManager.extend(this);
         MasterManager.extend(this);
         this.initHeaderDefs();
-        if (!options.temporary) this.fileManager.addFile(this);
+        if (!options.temporary) this.pluginManager.addFile(this);
     }
 
     static load(session, filePath) {
@@ -68,7 +68,7 @@ class PluginFile extends Container {
         return this._groups.slice();
     }
 
-    get fileManager() {
+    get pluginManager() {
         return this.session.pluginManager;
     }
 
@@ -86,7 +86,7 @@ class PluginFile extends Container {
     }
 
     get loadOrder() {
-        return this.fileManager.getFileLoadOrder(this.filename);
+        return this.pluginManager.getFileLoadOrder(this.filename);
     }
 }
 
