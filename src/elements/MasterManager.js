@@ -1,10 +1,11 @@
-const Interface = require('../Interface');
+const EmptyClass = require('../base/EmptyClass');
 
-class MasterManager extends Interface {
-    static extend(instance) {
-        instance._masters = [];
-        instance._mastersByFilename = {};
-        Interface.extend(MasterManager, instance);
+module.exports = (BaseClass = EmptyClass) =>
+class MasterManager extends BaseClass {
+    constructor() {
+        super();
+        this._masters = [];
+        this._mastersByFilename = {};
     }
 
     initMasters() {
@@ -43,7 +44,7 @@ class MasterManager extends Interface {
 
     mastersUpdated() {
         this.initMastersByFilename();
-        if (!MasterManager.keepMasterElementsUpdated) return;
+        if (!this.keepMasterElementsUpdated) return;
         this.updateMastersElement();
     }
 
@@ -92,6 +93,10 @@ class MasterManager extends Interface {
         this.mastersUpdated();
     }
 
+    get keepMasterElementsUpdated() {
+        return this.session.options.keepMasterElementsUpdated;
+    }
+
     get masters() {
         return this._masters.slice();
     }
@@ -99,8 +104,4 @@ class MasterManager extends Interface {
     get masterFilenames() {
         return this._masters.map(m => m.filename);
     }
-}
-
-module.exports = Object.assign(MasterManager, {
-    keepMasterElementsUpdated: false
-});
+};

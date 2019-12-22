@@ -1,6 +1,7 @@
-const Interface = require('../Interface');
+const EmptyClass = require('../base/EmptyClass');
 
-class RecordManager extends Interface {
+module.exports = (BaseClass = EmptyClass) =>
+class RecordManager extends BaseClass {
     static extend(instance) {
         instance._highObjectId = 2048;
         instance._recordsByFormId = {};
@@ -31,6 +32,4 @@ class RecordManager extends Interface {
     get highObjectId() {
         return this._highObjectId;
     }
-}
-
-module.exports = RecordManager;
+};

@@ -1,5 +1,5 @@
 const {fileExists, dirExists, assertFileExists} = require('../helpers');
-const LoadOrderInterface = require('../interfaces/LoadOrderInterface');
+const LoadOrderInterface = require('./LoadOrderInterface');
 const {Ini} = require('ini-api');
 const path = require('path');
 const fs = require('fs');
@@ -8,7 +8,7 @@ let getFindGameStrategy = function(strategyName) {
     return require(`./strategies/${strategyName}`);
 };
 
-class GameInstallation {
+class GameInstallation extends LoadOrderInterface() {
     static findGamePath(game, strategyName = 'registry') {
         let strategy = getFindGameStrategy(strategyName);
         return strategy.find(game);
@@ -21,9 +21,9 @@ class GameInstallation {
     }
 
     constructor(game, gamePath) {
+        super();
         this._game = game;
         this._gamePath = gamePath;
-        LoadOrderInterface.extend(this);
     }
 
     loadGameIni() {

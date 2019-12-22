@@ -3,18 +3,16 @@ const Container = require('./Container');
 const MemoryMap = require('memory-map');
 const GroupRecord = require('./GroupRecord');
 const MainRecord = require('./MainRecord');
-const MasterManager = require('../interfaces/MasterManager');
-const RecordManager = require('../interfaces/RecordManager');
+const MasterManager = require('./MasterManager');
+const RecordManager = require('./RecordManager');
 
-class PluginFile extends Container {
+class PluginFile extends RecordManager(MasterManager(Container)) {
     constructor(session, filePath, options = {}) {
         super();
         this.session = session;
         this.filePath = filePath;
         this.filename = getFileName(filePath);
         this.file = this;
-        RecordManager.extend(this);
-        MasterManager.extend(this);
         this.initHeaderDefs();
         if (!options.temporary) this.pluginManager.addFile(this);
     }

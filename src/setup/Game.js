@@ -1,4 +1,4 @@
-const EnhancedObject = require('../EnhancedObject');
+const EnhancedObject = require('../base/EnhancedObject');
 const {
     strictValidator, array, object,
     optional, id, string

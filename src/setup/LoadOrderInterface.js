@@ -1,14 +1,11 @@
 const {fileExists} = require('../helpers');
-const Interface = require('../Interface');
-const pluginsTxtParsers = require('../setup/pluginsTxtParsers');
+const pluginsTxtParsers = require('./pluginsTxtParsers');
+const EmptyClass = require('../base/EmptyClass');
 const path = require('path');
 const fs = require('fs');
 
-class LoadOrderInterface extends Interface {
-    static extend(instance) {
-        Interface.extend(LoadOrderInterface, instance);
-    }
-
+module.exports = (BaseClass = EmptyClass) =>
+class LoadOrderInterface extends BaseClass {
     getAvailableHardcodedPlugins() {
         return this.hardcodedPlugins.filter(({filename}) => {
             let filePath = path.resolve(this.dataPath, filename);
@@ -90,6 +87,4 @@ class LoadOrderInterface extends Interface {
     get loadOrder() {
 
     }
-}
-
-module.exports = Object.assign(LoadOrderInterface);
+};
