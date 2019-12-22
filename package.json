@@ -27,8 +27,11 @@
     "test": "jest --bail"
   },
   "dependencies": {
+    "fastest-validator": "^1.0.0",
+    "ini-api": "^1.2.0",
     "legacy-encoding": "^3.0.0",
-    "memory-map": "github:matortheeternal/memory-map"
+    "memory-map": "github:matortheeternal/memory-map",
+    "registry-js": "^1.9.0"
   },
   "devDependencies": {
     "codecov": "^3.6.1",
