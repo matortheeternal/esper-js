@@ -19,7 +19,7 @@ let splitPath = function(path) {
 };
 
 let loadResolutionStrategies = function() {
-    let folderPath = path.resolve('../src/strategies/pathResolution');
+    let folderPath = path.resolve('./src/strategies/pathResolution');
     fs.readdirSync(folderPath).forEach(filename => {
         let filePath = path.join(folderPath, filename),
             strategy = require(filePath);
