@@ -10,7 +10,7 @@ let parsePlainLine = line => ({
 });
 
 let notCommentOrEmpty = line => {
-    return line[0] !== ' ' && line[0] !== '#';
+    return line.trimLeft().length > 0 && line[0] !== '#';
 };
 
 let asteriskParser = {
