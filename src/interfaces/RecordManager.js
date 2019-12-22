@@ -1,4 +1,4 @@
-const Interface = require('./Interface');
+const Interface = require('../Interface');
 
 class RecordManager extends Interface {
     static extend(instance) {

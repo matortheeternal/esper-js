@@ -1,4 +1,4 @@
-const Interface = require('./Interface');
+const Interface = require('../Interface');
 
 class MasterManager extends Interface {
     static extend(instance) {

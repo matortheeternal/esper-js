@@ -1,5 +1,5 @@
 const {fileExists} = require('../helpers');
-const Interface = require('./Interface');
+const Interface = require('../Interface');
 const pluginsTxtParsers = require('../setup/pluginsTxtParsers');
 const path = require('path');
 const fs = require('fs');
