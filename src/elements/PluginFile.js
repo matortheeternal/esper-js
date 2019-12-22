@@ -1,4 +1,4 @@
-const {getFileName} = require('../helpers');
+const {getFileName, assertFileExists} = require('../helpers');
 const Container = require('./Container');
 const MemoryMap = require('memory-map');
 const GroupRecord = require('./GroupRecord');
@@ -20,6 +20,7 @@ class PluginFile extends Container {
     }
 
     static load(session, filePath) {
+        assertFileExists(filePath);
         let plugin = new PluginFile(session, filePath);
         plugin.memoryMap = new MemoryMap(filePath);
         plugin.loadFileHeader();
