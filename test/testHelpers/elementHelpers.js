@@ -4,10 +4,12 @@ const Container = require('../../src/elements/Container');
 let makeDummyFile = filename => ({filename, dummy: true});
 
 let plugin = function(params) {
-    return Object.assign(
+    let p = Object.assign(
         Object.create(PluginFile.prototype),
         params
     );
+    p.initMastersByFilename();
+    return p;
 };
 
 let sortedContainer = function(def) {
