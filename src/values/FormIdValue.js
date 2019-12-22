@@ -27,7 +27,8 @@ class FormIdValue {
 
     toFileFormId(file) {
         let ordinal = file.fileToOrdinal(this.file);
-        if (ordinal === -1) throw new MissingMasterError(file, this.file);
+        if (ordinal === undefined)
+            throw new MissingMasterError(file, this.file);
         return ordinal * 0x1000000 + this.localFormId;
     }
 

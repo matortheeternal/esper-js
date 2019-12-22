@@ -27,7 +27,7 @@ module.exports = [
         name: 'Fallout 3',
         baseName: 'Fallout3',
         fullName: 'Fallout 3',
-        abbreviation: 'TES5',
+        abbreviation: 'FO3',
         registryName: 'Fallout 3',
         myGamesFolderName: 'Fallout 3',
         appDataFolderName: 'Fallout 3',

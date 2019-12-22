@@ -2,10 +2,10 @@ const EmptyClass = require('../base/EmptyClass');
 
 module.exports = (BaseClass = EmptyClass) =>
 class RecordManager extends BaseClass {
-    static extend(instance) {
-        instance._highObjectId = 2048;
-        instance._recordsByFormId = {};
-        Interface.extend(RecordManager, instance);
+    constructor() {
+        super();
+        this._highObjectId = 2048;
+        this._recordsByFormId = {};
     }
 
     recordAdded(record) {

@@ -51,19 +51,20 @@ describe('FormIdDef', () => {
                 expect(def.setData).toBeDefined();
             });
 
-            it('should set element data', () => {
+            it('should set element._value', () => {
                 def.setData(element, 0x00123456);
-                expect(element._data).toBe(0x00123456);
+                expect(element._value.localFormId).toBe(0x00123456);
             });
 
-            it('should set data to 0xFFFFFFFF if a higher value is passed', () => {
+            it('should set localFormID to 0xFFFFFF if a higher value is passed', () => {
                 def.setData(element, Math.pow(2, 40));
-                expect(element._data).toBe(0xFFFFFFFF);
+                expect(element._value.file).toBe(basicFile);
+                expect(element._value.localFormId).toBe(0xFFFFFF);
             });
 
-            it('should set data to 0 if a lower value is passed', () => {
+            it('should set localFormID to 0 if a lower value is passed', () => {
                 def.setData(element, -1);
-                expect(element._data).toBe(0);
+                expect(element._value.localFormId).toBe(0);
             });
         });
 
@@ -72,8 +73,8 @@ describe('FormIdDef', () => {
                 expect(def.getValue).toBeDefined();
             });
 
-            it('should convert data to a FormIdValue', () => {
-                element._data = 0x00654321;
+            it('should return a FormIdValue', () => {
+                def.setData(element, 0x00654321);
                 let fid = def.getValue(element);
                 expect(fid).toBeInstanceOf(FormIdValue);
                 expect(fid.file).toBeDefined();
@@ -87,9 +88,10 @@ describe('FormIdDef', () => {
                 expect(def.setValue).toBeDefined();
             });
 
-            it('should parse integer value', () => {
-                def.setValue(element, new FormIdValue(basicFile, 0x234567));
-                expect(element._data).toBe(0x01234567);
+            it('should set element._value', () => {
+                let fid = new FormIdValue(basicFile, 0x234567);
+                def.setValue(element, fid);
+                expect(element._value).toBe(fid);
             });
         });
 

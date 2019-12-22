@@ -6,7 +6,6 @@ class MainRecord extends Record {
     // TODO: initialize persistent flag for records added to Persistent groups
     constructor(container, signature) {
         super(container);
-        this.file.recordAdded(this);
         if (signature) this.init(signature);
     }
 
@@ -33,7 +32,8 @@ class MainRecord extends Record {
     loadHeader() {
         this._header = StructElement.load(this, this.def.headerDef);
         this._bodyOffset = this.memoryMap.getPos();
-        this.trackOverrides();
+        //this.trackOverrides();
+        this.file.recordAdded(this);
     }
 
     trackOverrides() {
@@ -59,6 +59,7 @@ class MainRecord extends Record {
         this.signature = signature;
         this.loadDef();
         this._header = new StructElement(this, this.def.headerDef);
+        this.file.recordAdded(this);
         this.def.initElements(this);
     }
 
@@ -119,6 +120,10 @@ class MainRecord extends Record {
 
     get formId() {
         return this._header._elements[3].value;
+    }
+
+    get fileFormId() {
+        return this._header._elements[3].data;
     }
 
     get pathName() {

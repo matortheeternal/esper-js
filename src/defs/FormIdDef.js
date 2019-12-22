@@ -1,5 +1,6 @@
 const UInt32Def = require('./UInt32Def');
 const FormIdValue = require('../values/FormIdValue');
+const {minmax} = require('../helpers');
 
 class FormIdDef extends UInt32Def {
     constructor(manager, def, parent) {
@@ -8,11 +9,11 @@ class FormIdDef extends UInt32Def {
     }
 
     getValue(element) {
-        return this._value;
+        return element._value;
     }
 
     setValue(element, value) {
-        element.file.addMaster(value.file);
+        //element.file.addMaster(value.file);
         element._value = value;
     }
 
@@ -21,11 +22,14 @@ class FormIdDef extends UInt32Def {
     }
 
     setData(element, data) {
-        element._value = FormIdValue.fromFileFormId(element.file, data);
-    }
-
-    read(element) {
-        this.setData(this.readData(element.file.memoryMap));
+        element._value = FormIdValue.fromFileFormId(
+            element.file,
+            minmax(
+                Math.floor(data),
+                this.constructor.MIN_VALUE,
+                this.constructor.MAX_VALUE
+            )
+        );
     }
 
     getMasterReferences(element, references, trackRefs) {

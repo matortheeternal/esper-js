@@ -12,6 +12,10 @@ class ValueDef extends MaybeSubrecordDef {
         return element._data;
     }
 
+    setData(element, data) {
+        element._data = data;
+    }
+
     toBytes(data) {
         throw new UnimplementedError();
     }
@@ -26,7 +30,7 @@ class ValueDef extends MaybeSubrecordDef {
 
     read(element) {
         super.read(element);
-        element._data = this.readData(element.file.memoryMap);
+        this.setData(element, this.readData(element.file.memoryMap));
     }
 
     getMasterReferences() {}

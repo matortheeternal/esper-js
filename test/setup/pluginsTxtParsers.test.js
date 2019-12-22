@@ -2,7 +2,7 @@ const pluginsTxtParsers = require('../../src/setup/pluginsTxtParsers');
 
 describe('pluginsTxtParsers', () => {
     it('should be defined', () => {
-        expect(pluginsTxtParser).toBeDefined();
+        expect(pluginsTxtParsers).toBeDefined();
     });
 
     describe('asterisk parser', () => {
