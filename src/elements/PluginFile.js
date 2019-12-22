@@ -1,4 +1,4 @@
-const {getFileName, assertFileExists} = require('../helpers/helpers');
+const {getFileName, assertFileExists} = require('../helpers');
 const Container = require('./Container');
 const MemoryMap = require('memory-map');
 const GroupRecord = require('./GroupRecord');

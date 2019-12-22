@@ -1,4 +1,4 @@
-const {readSize} = require('../helpers/helpers');
+const {readSize} = require('../helpers');
 
 class UnknownSubrecord {
     constructor(container, signature) {

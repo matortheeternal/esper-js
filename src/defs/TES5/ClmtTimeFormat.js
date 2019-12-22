@@ -1,5 +1,5 @@
 const FormatDef = require('../FormatDef');
-const {pad} = require('../../helpers/helpers');
+const {pad} = require('../../helpers');
 
 const timeExpr = /^(\d{2}):(\d{2})$/;
 

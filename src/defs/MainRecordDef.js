@@ -1,5 +1,5 @@
 const MembersDef = require('./MembersDef');
-const {clone} = require('../helpers/helpers');
+const {clone} = require('../helpers');
 
 let buildFlagsDef = function(headerDef, def) {
     if (!def.flags) return;

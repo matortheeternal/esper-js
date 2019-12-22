@@ -1,6 +1,6 @@
 const UnsupportedElementError = require('../errors/UnsupportedElementError');
 const InvalidPathError = require('../errors/InvalidPathError');
-const {expectProperties} = require('../helpers/helpers');
+const {expectProperties} = require('../helpers');
 const path = require('path');
 const fs = require('fs');
 

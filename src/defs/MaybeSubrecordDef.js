@@ -1,6 +1,6 @@
 const Def = require('./Def');
 const Signature = require('../values/Signature');
-const {readSize} = require('../helpers/helpers');
+const {readSize} = require('../helpers');
 
 class MaybeSubrecordDef extends Def {
     constructor(manager, def, parent) {

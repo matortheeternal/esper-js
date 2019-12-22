@@ -1,5 +1,5 @@
 const ValueDef = require('./ValueDef');
-const {minmax} = require('../helpers/helpers');
+const {minmax} = require('../helpers');
 
 class IntegerDef extends ValueDef {
     constructor(manager, def, parent) {

@@ -1,4 +1,4 @@
-const {fileExists, dirExists, assertFileExists} = require('../helpers/helpers');
+const {fileExists, dirExists, assertFileExists} = require('../helpers');
 const LoadOrderInterface = require('../interfaces/LoadOrderInterface');
 const {Ini} = require('ini-api');
 const path = require('path');

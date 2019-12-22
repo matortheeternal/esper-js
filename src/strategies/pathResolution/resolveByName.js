@@ -1,4 +1,4 @@
-const {strEquals} = require('../../helpers/helpers');
+const {strEquals} = require('../../helpers');
 
 module.exports = {
     priority: 0,

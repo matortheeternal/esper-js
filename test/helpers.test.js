@@ -1,4 +1,4 @@
-const helpers = require('../src/helpers/helpers');
+const helpers = require('../src/helpers');
 
 describe('helpers', () => {
     describe('minmax', () => {
