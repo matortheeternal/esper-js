@@ -12,7 +12,7 @@ class MasterManager extends Interface {
         if (!masterFilesElement) return;
         this._masters = masterFilesElement._elements.map(masterFileElement => {
             let filename = masterFileElement.getValue('MAST');
-            return this.fileManager.getFileByName(filename, true);
+            return this.pluginManager.getFileByName(filename, true);
         });
     }
 

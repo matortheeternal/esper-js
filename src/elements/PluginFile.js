@@ -68,7 +68,7 @@ class PluginFile extends Container {
     }
 
     get fileManager() {
-        return this.session.fileManager;
+        return this.session.pluginManager;
     }
 
     get definitionManager() {

@@ -1,11 +1,11 @@
 const DefinitionManager = require('./DefinitionManager');
-const FileManager = require('./FileManager');
+const PluginManager = require('./PluginManager');
 
 class Session {
     constructor(game) {
         this._game = game;
         this.definitionManager = new DefinitionManager(game);
-        this.fileManager = new FileManager(game);
+        this.pluginManager = new PluginManager(game);
     }
 
     loadPlugins(loadOrder) {

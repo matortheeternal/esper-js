@@ -1,46 +1,46 @@
-const FileManager = require('../src/FileManager');
+const PluginManager = require('../src/PluginManager');
 
-describe('FileManager', () => {
+describe('PluginManager', () => {
     describe('constructor', () => {
-        let fileManager;
+        let pluginManager;
 
         it('should be defined', () => {
-            expect(FileManager).toBeDefined();
+            expect(PluginManager).toBeDefined();
         });
 
         it('should create a new instance', () => {
-            fileManager = new FileManager('TES5');
-            expect(fileManager).toBeDefined();
+            pluginManager = new PluginManager('TES5');
+            expect(pluginManager).toBeDefined();
         });
 
         it('should initialize files array', () => {
-            expect(fileManager._files).toBeDefined();
+            expect(pluginManager._files).toBeDefined();
         });
 
         it('should initialize dummyFiles array', () => {
-            expect(fileManager._dummyFiles).toBeDefined();
+            expect(pluginManager._dummyFiles).toBeDefined();
         });
     });
 
     describe('instance methods', () => {
-        let fileManager;
+        let pluginManager;
 
         beforeAll(() => {
-            fileManager = new FileManager('TES5');
+            pluginManager = new PluginManager('TES5');
         });
 
         describe('findOrCreateDummyFile', () => {
             let dummyFile;
 
             it('should create dummy file if not present', () => {
-                dummyFile = fileManager.findOrCreateDummyFile('Test.esp');
+                dummyFile = pluginManager.findOrCreateDummyFile('Test.esp');
                 expect(dummyFile).toBeDefined();
                 expect(dummyFile.filename).toBe('Test.esp');
                 expect(dummyFile.dummy).toBe(true);
             });
 
             it('should return existing dummy file', () => {
-                let dummyFile2 = fileManager.findOrCreateDummyFile('Test.esp');
+                let dummyFile2 = pluginManager.findOrCreateDummyFile('Test.esp');
                 expect(dummyFile2).toBeDefined();
                 expect(dummyFile2).toBe(dummyFile);
             });
@@ -48,21 +48,21 @@ describe('FileManager', () => {
 
         describe('getFileByName', () => {
             it('should return undefined if file is not found', () => {
-                let file = fileManager.getFileByName('Test.esp');
+                let file = pluginManager.getFileByName('Test.esp');
                 expect(file).toBeUndefined();
             });
 
             it('should return the file if found', () => {
                 let file = {filename: 'Fake.esp'};
-                fileManager._files.push(file);
-                let file2 = fileManager.getFileByName('Fake.esp');
+                pluginManager._files.push(file);
+                let file2 = pluginManager.getFileByName('Fake.esp');
                 expect(file2).toBeDefined();
                 expect(file).toBe(file2);
             });
 
             it('should return dummy file if returnDummies is passed', () => {
-                let dummyFile = fileManager._dummyFiles[0],
-                    file = fileManager.getFileByName('Test.esp', true);
+                let dummyFile = pluginManager._dummyFiles[0],
+                    file = pluginManager.getFileByName('Test.esp', true);
                 expect(file).toBeDefined();
                 expect(file).toBe(dummyFile);
             });
@@ -70,28 +70,28 @@ describe('FileManager', () => {
 
         describe('getFileByIndex', () => {
             it('should return undefined if index is negative', () => {
-                let file = fileManager.getFileByIndex(-1);
+                let file = pluginManager.getFileByIndex(-1);
                 expect(file).toBeUndefined();
             });
 
             it('should return undefined if index exceeds file count', () => {
-                let file = fileManager.getFileByIndex(999);
+                let file = pluginManager.getFileByIndex(999);
                 expect(file).toBeUndefined();
             });
 
             it('should return the file at the index', () => {
-                let file = fileManager.getFileByIndex(0);
+                let file = pluginManager.getFileByIndex(0);
                 expect(file).toBeDefined();
-                expect(file).toBe(fileManager._files[0]);
+                expect(file).toBe(pluginManager._files[0]);
             });
         });
 
         describe('addFile', () => {
             it('should push the file onto the files array', () => {
                 let file = {filename: 'New File.esp'};
-                fileManager.addFile(file);
-                expect(fileManager._files.length).toBe(2);
-                expect(file).toBe(fileManager._files[1]);
+                pluginManager.addFile(file);
+                expect(pluginManager._files.length).toBe(2);
+                expect(file).toBe(pluginManager._files[1]);
             });
         });
     });

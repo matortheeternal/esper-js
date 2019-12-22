@@ -1,4 +1,4 @@
-class FileManager {
+class PluginManager {
     constructor(game) {
         this._game = game;
         this._files = [];
@@ -34,4 +34,4 @@ class FileManager {
     }
 }
 
-module.exports = FileManager;
+module.exports = PluginManager;

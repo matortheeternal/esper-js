@@ -17,8 +17,8 @@ describe('Session', () => {
             expect(session.definitionManager).toBeDefined();
         });
 
-        it('should initialize a fileManager', () => {
-            expect(session.fileManager).toBeDefined();
+        it('should initialize a pluginManager', () => {
+            expect(session.pluginManager).toBeDefined();
         });
     })
 });
