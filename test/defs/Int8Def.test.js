@@ -1,4 +1,4 @@
-const DefinitionManager = require('../../src/DefinitionManager');
+const DefinitionManager = require('../../src/setup/DefinitionManager');
 const IntegerDef = require('../../src/defs/IntegerDef');
 const Int8Def = require('../../src/defs/Int8Def');
 const EnumDef = require('../../src/defs/EnumDef');

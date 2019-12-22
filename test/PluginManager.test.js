@@ -1,4 +1,4 @@
-const PluginManager = require('../src/PluginManager');
+const PluginManager = require('../src/setup/PluginManager');
 
 describe('PluginManager', () => {
     describe('constructor', () => {

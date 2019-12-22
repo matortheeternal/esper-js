@@ -1,4 +1,4 @@
-const DefinitionManager = require('../../src/DefinitionManager');
+const DefinitionManager = require('../../src/setup/DefinitionManager');
 const FormatUnionDef = require('../../src/defs/FormatUnionDef');
 const FormatDef = require('../../src/defs/FormatDef');
 const {ExpectedDefPropertyError, UnionDecideError} = require('../../src/errors');

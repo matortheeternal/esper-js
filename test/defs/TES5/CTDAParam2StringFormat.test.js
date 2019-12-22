@@ -1,4 +1,4 @@
-const DefinitionManager = require('../../../src/DefinitionManager');
+const DefinitionManager = require('../../../src/setup/DefinitionManager');
 const CTDAParam2StringFormat = require(
     '../../../src/defs/TES5/CTDAParam2StringFormat'
 );

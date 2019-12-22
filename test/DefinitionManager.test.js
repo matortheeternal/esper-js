@@ -1,4 +1,4 @@
-const DefinitionManager = require('../src/DefinitionManager');
+const DefinitionManager = require('../src/setup/DefinitionManager');
 
 describe('DefinitionManager', () => {
 

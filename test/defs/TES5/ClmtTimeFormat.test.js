@@ -1,4 +1,4 @@
-const DefinitionManager = require('../../../src/DefinitionManager');
+const DefinitionManager = require('../../../src/setup/DefinitionManager');
 const ClmtTimeFormat = require('../../../src/defs/TES5/ClmtTimeFormat');
 const FormatDef = require('../../../src/defs/FormatDef');
 

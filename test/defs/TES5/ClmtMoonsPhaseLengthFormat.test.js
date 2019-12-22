@@ -1,4 +1,4 @@
-const DefinitionManager = require('../../../src/DefinitionManager');
+const DefinitionManager = require('../../../src/setup/DefinitionManager');
 const ClmtMoonsPhaseLengthFormat = require(
     '../../../src/defs/TES5/ClmtMoonsPhaseLengthFormat'
 );

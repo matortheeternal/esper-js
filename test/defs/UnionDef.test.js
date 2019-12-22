@@ -1,4 +1,4 @@
-const DefinitionManager = require('../../src/DefinitionManager');
+const DefinitionManager = require('../../src/setup/DefinitionManager');
 const UnionDef = require('../../src/defs/UnionDef');
 const Union = require('../../src/elements/Union');
 const Def = require('../../src/defs/Def');

@@ -1,4 +1,4 @@
-const {strToBuffer} = require('../helpers');
+const {strToBuffer} = require('../helpers/helpers');
 const Record = require('./Record');
 const MainRecord = require('./MainRecord');
 const StructElement = require('./Struct');

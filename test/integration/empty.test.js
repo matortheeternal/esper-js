@@ -1,4 +1,4 @@
-const Session = require('../../src/Session');
+const Session = require('../../src/setup/Session');
 const PluginFile = require('../../src/elements/PluginFile');
 const path = require('path');
 

@@ -1,4 +1,4 @@
-const DefinitionManager = require('../../../src/DefinitionManager');
+const DefinitionManager = require('../../../src/setup/DefinitionManager');
 const CtdaTypeFormat = require('../../../src/defs/TES5/CtdaTypeFormat');
 const FormatDef = require('../../../src/defs/FormatDef');
 const {

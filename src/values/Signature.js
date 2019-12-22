@@ -1,4 +1,4 @@
-const {getCharCode, getCharacter} = require('./signatureChars');
+const {getCharCode, getCharacter} = require('../signatureChars');
 
 class Signature {
     constructor(data) {

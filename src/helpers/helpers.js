@@ -1,4 +1,4 @@
-const PropertyTypeError = require('./errors/PropertyTypeError');
+const PropertyTypeError = require('../errors/PropertyTypeError');
 const path = require('path');
 const fs = require('fs');
 

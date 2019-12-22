@@ -1,5 +1,5 @@
 const UInt32Def = require('./UInt32Def');
-const FormIdValue = require('../FormIdValue');
+const FormIdValue = require('../values/FormIdValue');
 
 class FormIdDef extends UInt32Def {
     constructor(manager, def, parent) {
@@ -12,6 +12,7 @@ class FormIdDef extends UInt32Def {
     }
 
     setValue(element, value) {
+        element.file.addMaster(value.file);
         element._value = value;
     }
 

@@ -1,4 +1,4 @@
-const DefinitionManager = require('../../src/DefinitionManager');
+const DefinitionManager = require('../../src/setup/DefinitionManager');
 const MainRecordDef = require('../../src/defs/MainRecordDef');
 const MembersDef = require('../../src/defs/MembersDef');
 const StructDef = require('../../src/defs/StructDef');

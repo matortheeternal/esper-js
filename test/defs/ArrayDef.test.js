@@ -1,4 +1,4 @@
-const DefinitionManager = require('../../src/DefinitionManager');
+const DefinitionManager = require('../../src/setup/DefinitionManager');
 const ArrayDef = require('../../src/defs/ArrayDef');
 const Def = require('../../src/defs/Def');
 const ElementArray = require('../../src/elements/ElementArray');

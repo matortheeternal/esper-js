@@ -1,4 +1,4 @@
-const DefinitionManager = require('../../../src/DefinitionManager');
+const DefinitionManager = require('../../../src/setup/DefinitionManager');
 const CloudSpeedFormat = require('../../../src/defs/TES5/CloudSpeedFormat');
 const FormatDef = require('../../../src/defs/FormatDef');
 

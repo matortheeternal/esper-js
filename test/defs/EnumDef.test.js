@@ -1,4 +1,4 @@
-const DefinitionManager = require('../../src/DefinitionManager');
+const DefinitionManager = require('../../src/setup/DefinitionManager');
 const EnumDef = require('../../src/defs/EnumDef');
 const FormatDef = require('../../src/defs/FormatDef');
 const {InvalidEnumValueError} = require('../../src/errors');

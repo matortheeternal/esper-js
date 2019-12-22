@@ -1,4 +1,4 @@
-const DefinitionManager = require('../../src/DefinitionManager');
+const DefinitionManager = require('../../src/setup/DefinitionManager');
 const BytesDef = require('../../src/defs/BytesDef');
 const ValueDef = require('../../src/defs/ValueDef');
 const {InvalidDefSizeError, InvalidValueError} = require('../../src/errors');

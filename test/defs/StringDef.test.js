@@ -1,6 +1,6 @@
 const path = require('path');
 const MemoryMap = require('memory-map');
-const DefinitionManager = require('../../src/DefinitionManager');
+const DefinitionManager = require('../../src/setup/DefinitionManager');
 const ValueDef = require('../../src/defs/ValueDef');
 const StringDef = require('../../src/defs/StringDef');
 

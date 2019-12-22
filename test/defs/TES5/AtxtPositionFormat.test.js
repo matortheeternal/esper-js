@@ -1,4 +1,4 @@
-const DefinitionManager = require('../../../src/DefinitionManager');
+const DefinitionManager = require('../../../src/setup/DefinitionManager');
 const AtxtPosititionFormat = require('../../../src/defs/TES5/AtxtPositionFormat');
 const FormatDef = require('../../../src/defs/FormatDef');
 

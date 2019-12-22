@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const {buildIndex} = require('./helpers');
+const {buildIndex} = require('../helpers/helpers');
 
 let getDefClasses = function(game) {
     return Object.assign(

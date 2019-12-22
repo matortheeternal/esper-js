@@ -1,4 +1,4 @@
-const DefinitionManager = require('../../src/DefinitionManager');
+const DefinitionManager = require('../../src/setup/DefinitionManager');
 const FormatDef = require('../../src/defs/FormatDef');
 const Def = require('../../src/defs/Def');
 

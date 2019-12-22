@@ -1,4 +1,4 @@
-const DefinitionManager = require('../../../src/DefinitionManager');
+const DefinitionManager = require('../../../src/setup/DefinitionManager');
 const AliasFormat = require('../../../src/defs/TES5/AliasFormat');
 const FormatDef = require('../../../src/defs/FormatDef');
 

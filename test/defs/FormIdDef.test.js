@@ -1,5 +1,5 @@
-const DefinitionManager = require('../../src/DefinitionManager');
-const FormIdValue = require('../../src/FormIdValue');
+const DefinitionManager = require('../../src/setup/DefinitionManager');
+const FormIdValue = require('../../src/values/FormIdValue');
 const UInt32Def = require('../../src/defs/UInt32Def');
 const FormIdDef = require('../../src/defs/FormIdDef');
 const {plugin, makeDummyFile} = require('../helpers/elementHelpers');

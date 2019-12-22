@@ -1,4 +1,4 @@
-const FormIdValue = require('../src/FormIdValue');
+const FormIdValue = require('../src/values/FormIdValue');
 const {plugin, makeDummyFile} = require('./helpers/elementHelpers');
 const {MissingMasterError} = require('../src/errors');
 

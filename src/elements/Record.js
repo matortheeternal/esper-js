@@ -1,5 +1,5 @@
 const Container = require('./Container');
-const Signature = require('../Signature');
+const Signature = require('../values/Signature');
 const {UnexpectedSignatureError} = require('../errors');
 
 class Record extends Container {

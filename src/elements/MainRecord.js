@@ -1,5 +1,5 @@
 const Record = require('./Record');
-const Signature = require('../Signature');
+const Signature = require('../values/Signature');
 const StructElement = require('./Struct');
 
 class MainRecord extends Record {

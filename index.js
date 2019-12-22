@@ -1,9 +1,9 @@
-const Session = require('./src/Session');
-const GameInstallation = require('./src/GameInstallation');
+const Session = require('./src/setup/Session');
+const GameInstallation = require('./src/setup/GameInstallation');
 const PluginFile = require('./src/elements/PluginFile');
 const Element = require('./src/elements/Element');
 const Container = require('./src/elements/Container');
-const FormIdValue = require('./src/FormIdValue');
+const FormIdValue = require('./src/values/FormIdValue');
 
 // EXPORTS
 module.exports = {

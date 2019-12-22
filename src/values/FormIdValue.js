@@ -1,4 +1,4 @@
-const {MissingMasterError} = require('./errors');
+const {MissingMasterError} = require('../errors');
 
 class FormIdValue {
     constructor(file, localFormId) {

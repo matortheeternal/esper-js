@@ -1,4 +1,4 @@
-const DefinitionManager = require('../../../src/DefinitionManager');
+const DefinitionManager = require('../../../src/setup/DefinitionManager');
 const CTDAFunctionFormat = require('../../../src/defs/TES5/CTDAFunctionFormat');
 const FormatDef = require('../../../src/defs/FormatDef');
 const {UnknownCTDAFunctionError} = require('../../../src/errors');

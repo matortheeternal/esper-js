@@ -1,6 +1,6 @@
 const {ExpectedDefPropertyError} = require('../errors');
 const Def = require('./Def');
-const UnknownSubrecord = require('../UnknownSubrecord');
+const UnknownSubrecord = require('../elements/UnknownSubrecord');
 
 class MembersDef extends Def {
     constructor(manager, def, parent) {
