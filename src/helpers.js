@@ -75,7 +75,7 @@ let isPositiveInteger = function(num) {
 };
 
 let buildIndex = function(folderPath, keyStr) {
-    if (!fs.existsSync(folderPath)) return {};
+    if (!dirExists(folderPath)) return {};
     return fs.readdirSync(folderPath).reduce((obj, filename) => {
         if (filename === 'index.js') return obj;
         let filePath = path.join(folderPath, filename);
@@ -91,8 +91,29 @@ let readSize = function(stream) {
     return stream.read(2).readUInt16LE();
 };
 
+let exists = function(callback) {
+    return function(filePath) {
+        try {
+            const stat = fs.lstatSync(filePath);
+            return callback(stat);
+        } catch (err) {
+            if (err.code !== 'ENOENT') throw err;
+        }
+
+        return false;
+    }
+};
+
+let fileExists = exists(stat => stat.isFile());
+let dirExists = exists(stat => stat.isDirectory());
+
+let assertFileExists = function(filePath) {
+    assert(fileExists(filePath), 'File does not exist.');
+};
+
 module.exports = {
     minmax, strToBuffer, strEquals, expectProperties,
     getFileName, clone, getBits, pad, isPositiveInteger,
-    buildIndex, readSize
+    buildIndex, readSize, fileExists, dirExists,
+    assertFileExists
 };
