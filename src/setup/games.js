@@ -1,4 +1,4 @@
-const Game = require('./setup/Game');
+const Game = require('./Game');
 
 let plugin = (filename) => ({ filename });
 
