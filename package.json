@@ -24,7 +24,8 @@
     "collectCoverage": true
   },
   "scripts": {
-    "test": "jest --bail"
+    "test": "jest --bail",
+    "test:debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand"
   },
   "dependencies": {
     "fastest-validator": "^1.0.0",
