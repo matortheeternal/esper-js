@@ -19,7 +19,7 @@ class MemberArrayDef extends Def {
     }
 
     getOrInitElement(container, signature) {
-        if (this.memberDef.hasPrimarySignature(signature))
+        if (this.memberDef.hasPrimarySignature(signature.toString()))
             return this.memberDef.initElement(container);
         return container.lastElement;
     }
