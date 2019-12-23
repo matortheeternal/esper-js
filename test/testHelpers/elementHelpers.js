@@ -20,4 +20,30 @@ let sortedContainer = function(def) {
     return Object.assign(container, { def, _elements: [] });
 };
 
-module.exports = {makeDummyFile, plugin, sortedContainer};
+let testElements = function(getRecord, elements) {
+    describe('elements', () => {
+        elements.forEach(({name, path, value}) => {
+            describe(name, () => {
+                let element;
+
+                beforeAll(() => {
+                    element = getRecord().getElement(path);
+                });
+
+                it('should be present', () => {
+                    expect(element).toBeDefined();
+                });
+
+                it(`should have name "${name}"`, () => {
+                    expect(element.name).toBe(name);
+                });
+
+                it(`should have value "${value}"`, () => {
+                    expect(element.value).toBe(value);
+                });
+            });
+        });
+    })
+};
+
+module.exports = {makeDummyFile, plugin, sortedContainer, testElements};
