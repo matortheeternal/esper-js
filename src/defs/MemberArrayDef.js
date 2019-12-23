@@ -13,6 +13,11 @@ class MemberArrayDef extends Def {
         return new MemberArray(record, this);
     }
 
+    containsSignature(signature) {
+        return this.memberDef.signatuture === signature ||
+            this.memberDef.containsSignature(signature);
+    }
+
     getOrInitElement(container, signature) {
         if (this.memberDef.hasPrimarySignature(signature))
             return this.memberDef.initElement(container);
