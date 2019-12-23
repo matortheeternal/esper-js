@@ -22,7 +22,7 @@ class ValueDef extends MaybeSubrecordDef {
 
     load(container) {
         if (this.src.hasOwnProperty('inheritFrom')) {
-            let value = container[this.src.inheritFrom];
+            let value = container.container[this.src.inheritFrom];
             return new ValueElement(container, this, value);
         }
         return ValueElement.load(container, this);
