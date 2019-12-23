@@ -18,6 +18,7 @@ class MainRecord extends Record {
         record.loadSignature(expectedSig);
         record.loadDef();
         record.loadHeader();
+        record.skipBody();
         return record;
     }
 
@@ -26,6 +27,7 @@ class MainRecord extends Record {
         record._signature = signature;
         record.loadDef();
         record.loadHeader();
+        record.skipBody();
         return record;
     }
 
@@ -34,6 +36,10 @@ class MainRecord extends Record {
         this._bodyOffset = this.memoryMap.getPos();
         //this.trackOverrides();
         this.file.recordAdded(this);
+    }
+
+    skipBody() {
+        this.memoryMap.setPos(this.nextOffset);
     }
 
     trackOverrides() {
