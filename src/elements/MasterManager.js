@@ -12,7 +12,7 @@ class MasterManager extends BaseClass {
         let masterFilesElement = this.fileHeader.getElement('Master Files');
         if (!masterFilesElement) return;
         this._masters = masterFilesElement._elements.map(masterFileElement => {
-            let filename = masterFileElement.getValue('MAST');
+            let filename = masterFileElement.getData('MAST');
             return this.pluginManager.getFileByName(filename, true);
         });
     }
@@ -28,7 +28,7 @@ class MasterManager extends BaseClass {
         let masterFilesElement = this.fileHeader.getElement('Master Files');
         this._masters.forEach(masterFile => {
             let masterFileElement = masterFilesElement.addElement();
-            masterFileElement.setValue('MAST', masterFile.filename);
+            masterFileElement.setData('MAST', masterFile.filename);
         });
     }
 
