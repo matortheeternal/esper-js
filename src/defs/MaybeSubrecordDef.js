@@ -17,6 +17,12 @@ class MaybeSubrecordDef extends Def {
         return this.src.signature;
     }
 
+    get name() {
+        return this.isSubrecord
+            ? `${this.src.signature} - ${this.src.name}`
+            : this.src.name;
+    }
+
     read(element) {
         if (!this.isSubrecord) return;
         element._size = readSize(element.file.memoryMap);
