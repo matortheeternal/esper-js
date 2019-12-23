@@ -14,4 +14,8 @@ let pad = function(num, amount, str = '0') {
     return num.toString().padStart(amount, str);
 };
 
-module.exports = {strToBuffer, strEquals, pad};
+let hex = function(num, width = 8) {
+    return num.toString(16).padStart(width, '0');
+};
+
+module.exports = {strToBuffer, strEquals, pad, hex};
