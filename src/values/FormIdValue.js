@@ -13,7 +13,7 @@ class FormIdValue {
         buf[0] = 0;
         let localFormId = buf.readUInt32BE();
         return [ordinal, localFormId];
-    };
+    }
 
     static fromFileFormId(file, fileFormId) {
         let [ordinal, localFormId] = FormIdValue.getFormIdParts(fileFormId),
