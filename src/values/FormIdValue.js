@@ -1,4 +1,5 @@
 const {MissingMasterError} = require('../errors');
+const {hex} = require('../helpers');
 
 class FormIdValue {
     constructor(file, localFormId) {
@@ -33,7 +34,7 @@ class FormIdValue {
     }
 
     toString() {
-        return `{${this.file.filename}:${this.localFormId.toString(16)}}`;
+        return `{${this.file.filename}:${hex(this.localFormId, 6)}}`;
     }
 
     isNull() {
