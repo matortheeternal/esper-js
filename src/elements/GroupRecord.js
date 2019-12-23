@@ -1,7 +1,10 @@
 const {strToBuffer} = require('../helpers');
 const Record = require('./Record');
 const MainRecord = require('./MainRecord');
+const Signature = require('../values/Signature');
 const StructElement = require('./Struct');
+
+const GROUP_HEADER_SIZE = 24; // TODO: calculate this
 
 class GroupRecord extends Record {
     constructor(container, values) {
@@ -12,7 +15,7 @@ class GroupRecord extends Record {
 
     static load(container) {
         let group = new GroupRecord(container);
-        group.parseSignature('GRUP');
+        group.loadSignature('GRUP');
         group.parseGroupHeader();
         group.parseRecords();
         return group;
@@ -28,11 +31,11 @@ class GroupRecord extends Record {
 
     parseGroupHeader() {
         this._groupHeader = StructElement.load(this, this.headerDef);
+        this._recordsOffset = this.memoryMap.getPos();
     }
 
     parseRecords() {
-        let startPos = this.memoryMap.getPos(),
-            endPos = startPos + this.groupHeader.groupSize;
+        let endPos = this.nextOffset;
         while (this.memoryMap.getPos() < endPos) {
             let signature = Signature.load(this.memoryMap),
                 RecordClass = signature.toString() === 'GRUP'
@@ -44,6 +47,18 @@ class GroupRecord extends Record {
 
     get groupHeader() {
         return this._groupHeader;
+    }
+
+    get nextOffset() {
+        return this._recordsOffset + this.groupSize - GROUP_HEADER_SIZE;
+    }
+
+    get groupSize() {
+        return this._groupHeader.getData('Group Size');
+    }
+
+    get label() {
+        return this._groupHeader.getData('Label');
     }
 
     init({groupType, label}) {
