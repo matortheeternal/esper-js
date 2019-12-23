@@ -53,6 +53,7 @@ class MainRecord extends Record {
     };
 
     loadMembers() {
+        this.membersLoaded = true;
         this.memoryMap.setPos(this._bodyOffset);
         let endPos = this.nextOffset;
         while (this.memoryMap.getPos() < endPos) {
@@ -86,6 +87,16 @@ class MainRecord extends Record {
                 return ovr;
         }
         return this.master;
+    }
+
+    get elements() {
+        if (!this.membersLoaded) this.loadMembers();
+        return super.elements;
+    }
+
+    get assignedElements() {
+        if (!this.membersLoaded) this.loadMembers();
+        return super.assignedElements;
     }
 
     get recordHeader() {
